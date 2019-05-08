@@ -1,0 +1,69 @@
+.header {
+    background-color: #64ffda;
+    color: white;
+    height: 10vh;
+}
+
+body {
+    margin: 0 0 0 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+.call-to-action {
+    text-align: center;
+}
+
+form {
+    width: 50%;
+    margin: auto;
+    font-size: 1rem;
+}
+
+form input{
+    width: 100%;
+    padding: 0.5rem;
+    
+}
+
+form div.container{
+    margin-top: 0.5rem;
+}
+
+button {
+    background-color: #ff9100;
+    width: 100%;
+    border: none;
+    color: black;
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+}
+
+.anchor-tag {
+    text-decoration: none;
+    color: white;
+}
+
+.logo {
+    font-size: 1.5em;
+}
+
+.left {
+    float: left;
+}
+
+.justify-right {
+    justify-content: flex-end
+}
