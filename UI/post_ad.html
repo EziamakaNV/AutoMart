@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Post Ad</title>
+</head>
+<body>
+    <header class='header flex-container'>
+        <div>
+            <a href='/' class='anchor-tag logo'>AutoMart</a>
+        </div>
+        <nav class='flex-container justify-right'>
+        </nav>
+    </header>
+    <main>
+        <h1 class="call-to-action">POST YOUR CAR AD</h1>
+        <section id='post-ad-container'>
+            <form class='form-structure'>
+                <h2 class='form-headers'>CAR DETAILS</h2>
+                <div>
+                    <label for='manufacturer'>Manufacturer</label>
+                    <input type='text' required name='manufacturer' id='manufacturer'>
+                </div>
+                <div>
+                    <label for='model'>Model</label>
+                    <input type='text' required name='model' id='model'>
+                </div>
+                <div>
+                    <label for='body-type'>Body-Type</label>
+                    <select name='body-type' required>
+                        <option value=''></option>
+                        <option value='car'>Car</option>
+                        <option value='truck'>Truck</option>
+                        <option value='trailer'>Trailer</option>
+                        <option value='van'>Van</option>
+                    </select>
+                </div>
+                <div>
+                    <label for='state'>State</label>
+                    <select name='state' required>
+                        <option value=''></option>
+                        <option value='new'>New</option>
+                        <option value='used'>Used</option>
+                    </select>
+                </div>
+                <div class="divider"></div>
+                <h2 class='form-headers'>SET PRICE</h2>
+                <div>
+                    <label for='price'>Price</label>
+                    <input type='number' required name='price' id='price'>
+                </div>
+                <div class="divider"></div>
+                <h2 class='form-headers'>UPLOAD PHOTOS</h2>
+                <div>
+                    <!-- <label for='car-photo'>Photos</label> -->
+                    <input type='file' id='carPhoto' name='car-photo' accept='image/png, image/jpeg'>
+                </div>
+                <div class="divider"></div>
+                <button class='button'>POST NOW</button>
+            </form>
+        </section>
+    </main>
+    <footer class='flex-container justify-content-center'>
+        <div>
+            <span>AutoMart C 2019</span>
+        </div>
+    </footer>
+</body>
+</html>
