@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Sign In</title>
+</head>
+<body>
+    <header class='header flex-container'>
+        <div>
+            <a href='/' class='anchor-tag logo'>AutoMart</a>
+        </div>
+        <nav class='flex-container justify-right'>
+            <a href='log_in.html' class='anchor-tag logo'>SIGNUP</a>
+        </nav>
+    </header>
+    <main>
+        <h1 class='call-to-action'>Sign in and begin trading cars!</h1>
+        <form onsubmit="event.preventDefault()">
+            <div class='container'>
+                Email:<br>
+                <input type='email' name='email' required>
+            </div>
+            <div class='container'>
+                Password:<br>
+                <input type='password' name='password' required>
+            </div>
+            <div class="container">
+                <button type='submit'>LOGIN</button>
+            </div>
+
+        </form>
+        
+    </main>
+    <footer></footer> 
+</body>
+</html>
