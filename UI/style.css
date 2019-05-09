@@ -1,17 +1,17 @@
 .header {
-    background-color: #64ffda;
+    background-color: #00baad;
     color: white;
     height: 10vh;
 }
 
 body {
     margin: 0 0 0 0;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-family: Roboto, sans-serif;
 }
 
 .call-to-action {
     text-align: center;
+    color: #22baae;
 }
 
 form {
@@ -34,9 +34,11 @@ button {
     background-color: #ff9100;
     width: 100%;
     border: none;
-    color: black;
+    color: white;
+    font-family: Roboto,sans-serif;
+    font-weight: 400;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
     padding: 0.5rem;
 }
 
@@ -66,4 +68,14 @@ button:hover{
 
 .justify-right {
     justify-content: flex-end
+}
+
+@media (min-width:700px){
+    form {
+        width: 392px;
+    }
+
+    .anchor-tag{
+        font-size: 1.2em
+    }
 }
