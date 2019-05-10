@@ -19,22 +19,24 @@
     </header>
     <main>
         <h1 class='call-to-action'>Sign in and begin trading cars!</h1>
-        <form onsubmit="event.preventDefault()" id='sign-in'>
-            <div class='container'>
-                Email:<br>
-                <input type='email' name='email' required>
-            </div>
-            <div class='container'>
-                Password:<br>
-                <input type='password' name='password' required>
-            </div>
-            <div class="container">
-                <button type='submit'>LOGIN</button>
-            </div>
-
-        </form>
+        <section id='post-ad-container'>
+            <form class='form-structure' onsubmit="event.preventDefault()">
+                <div class='container'>
+                    Email:<br>
+                    <input type='email' name='email' required>
+                </div>
+                <div class='container'>
+                    Password:<br>
+                    <input type='password' name='password' required>
+                </div>
+                <div class="container">
+                    <button type='submit'>LOGIN</button>
+                </div>
+            </form>
+        </section>
         
-    </main>
-    <footer></footer> 
+        
+        
+    </main> 
 </body>
 </html>

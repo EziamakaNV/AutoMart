@@ -19,34 +19,36 @@
     </header>
     <main>
         <h1 class='call-to-action'>Sign up and begin trading cars!</h1>
-        <form onsubmit="event.preventDefault()" id='sign-up'>
-            <div class='container'>
-                First Name:<br>
-                <input type='text' name='first_name' required>
-            </div>
-            <div class='container'>
-                Last Name:<br>
-                <input type='text' name='last_name' required>
-            </div>
-            <div class='container'>
-                Email:<br>
-                <input type='email' name='email' required>
-            </div>
-            <div class='container'>
-                Address:<br>
-                <input type='text' name='Address' required>
-            </div>
-            <div class='container'>
-                Password:<br>
-                <input type='password' name='password' required>
-            </div>
-            <div class="container">
-                <button type='submit'>Register</button>
-            </div>
-
-        </form>
+        <section id='post-ad-container'>
+                <form class='form-structure' onsubmit="event.preventDefault()">
+                        <div class='container'>
+                            First Name:<br>
+                            <input type='text' name='first_name' required>
+                        </div>
+                        <div class='container'>
+                            Last Name:<br>
+                            <input type='text' name='last_name' required>
+                        </div>
+                        <div class='container'>
+                            Email:<br>
+                            <input type='email' name='email' required>
+                        </div>
+                        <div class='container'>
+                            Address:<br>
+                            <input type='text' name='Address' required>
+                        </div>
+                        <div class='container'>
+                            Password:<br>
+                            <input type='password' name='password' required>
+                        </div>
+                        <div class="container">
+                            <button type='submit'>Register</button>
+                        </div>
+            
+                    </form>
+        </section>
+        
         
     </main>
-    <footer></footer> 
 </body>
 </html>
