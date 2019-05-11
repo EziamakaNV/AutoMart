@@ -9,7 +9,7 @@
 }
 
 body {
-    margin: 0 0 0 0;
+    margin: 0;
     font-family: Roboto, sans-serif;
     height: 100%
 }
@@ -120,9 +120,34 @@ footer {
     text-align: center;
 }
 
+.ad {
+    border: 1px solid rgba(0,47,52,.2);
+    width: 90%;
+    margin: 0 auto 12px auto;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0,47,52,.2), 0 1px 3px 0 rgba(0,47,52,.2);
+    color: #22baae;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.ad-img{
+    width: 100%;
+}
+
+.margin-bottom {
+    margin-bottom: 12px;
+}
+
 @media (min-width:700px){
     form {
         width: 392px;
+    }
+
+    #ad-container{
+        width: 700px;
+        margin:auto;
     }
 
     .anchor-tag{
