@@ -134,11 +134,153 @@ footer {
 
 .ad-img{
     width: 100%;
+    height: auto;
 }
 
 .margin-bottom {
     margin-bottom: 12px;
 }
+
+#pr-1-bnr {
+    margin-bottom: 12px;
+    margin-top:12px;
+    padding: 16px;
+}
+
+#pr-ad-cntnr{
+    margin-bottom: 12px;
+}
+
+.pr-ad {
+    border: 1px solid rgba(0,47,52,.2);
+    width: 90%;
+    margin: auto;
+    height: 130px;
+    margin-bottom:12px;
+    display: flex;
+    flex-direction: row;
+    color: #22baae;
+    text-align: center
+}
+
+.pr-ad figure {
+    width:43%;
+    margin: 0;
+    padding: 8px
+}
+
+.pr-ad-details {
+    padding: 8px;
+    width: 67%;
+}
+
+a{
+    text-decoration: none;
+}
+
+.menu-container {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 20px;
+    padding-right: 7px;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 30px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0 0 0;
+    transition: 0.4s;
+}
+
+.change .bar1{
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2{
+    opacity: 0;
+}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown button on hover & focus */
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 47px;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd}
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;}
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: white;
+    color: #22baae;
+  }
+
+  nav ul{
+      display: none;
+  }
 
 @media (min-width:700px){
     form {
@@ -156,13 +298,35 @@ footer {
 }
 
 @media (min-width: 992px){
+    #pr-ad-cntnr{
+        display:flex;
+        flex-direction: row;
+        margin:auto;
+        max-width: 930px;
+        flex-wrap: wrap;
+    }
+
+    .pr-ad{
+        width:300px;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    nav ul{
+        display: block;
+    }
+
+    .dropdown{
+        display:none
+    }
+
+    .logo{
+        padding-left: 8px;
+    }
+
     #post-ad-container{
         width:700px;
         border: 1px solid rgba(0,47,52,.2);
         margin: auto;
-    }
-
-    button{
-        width:40%
     }
 }
