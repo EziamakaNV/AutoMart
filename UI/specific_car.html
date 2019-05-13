@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Profile Page</title>
+</head>
+
+<body>
+    <header class='header flex-container'>
+        <div class='menu-logo-container'>
+            <div class='dropdown'>
+                <div class='menu-container' onclick='menuBarAnimation(this)'>
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+                <div id="myDropDown" class="dropdown-content">
+                    <a href="#">Create Ads</a>
+                    <a href="#">My Ads</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+            <a href='/' class='anchor-tag logo'>AutoMart</a>
+        </div>
+        <nav class='flex-container justify-right'>
+            <ul>
+                <li><a href="#">Create Ad</a></li>
+                <li><a href="#">My Ads</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="spec-car-ad-cntnr">
+            <div class='scac-div1'>
+                <figure>
+                    <img class='ad-img' src='Images/toyota_camry.jpg'>
+                </figure>
+            </div>
+            <div class="divider scac-div1"></div>
+            <div class="scac-div1">
+                <h3 id="itemPrice">N1,500,000</h3>
+                <p class="" id="itemDescription">Neat Reg Toyota Camry</p>
+            </div>
+            <div class="divider scac-div1"></div>
+            <div class="scac-div1">
+                <h3>Details</h3>
+                <div class="scac-div2">
+                    <span>Make</span>
+                    <span class ='scac-span'>Toyota</span>
+                </div>
+                <div class="scac-div2">
+                    <span>Model</span>
+                    <span class ='scac-span'>Camry</span>
+                </div>
+                <div class="scac-div2">
+                    <span>Body Type</span>
+                    <span class ='scac-span'>Car</span>
+                </div>
+                <div class="scac-div2">
+                    <span>State</span>
+                    <span class ='scac-span'>Used</span>
+                </div><div class="divider scac-div1"></div>
+                <div class="scac-div2">
+                    <h3>Description</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veniam, ullam laudantium laborum libero ex magnam consequatur deserunt voluptatum, temporibus beatae voluptate assumenda est? Quibusdam dicta blanditiis nihil fugiat unde!</p>
+                </div>
+            </div>
+            <div class="divider scac-div1"></div>
+            <div class="scac-div1">
+                <button>SUBMIT OFFER</button>
+            </div>
+            <div class="divider scac-div1"></div>
+            <div class="scac-div1">
+                <a href="#">REPORT THIS AD</a>
+            </div>
+        </section>
+
+    </main>
+    <footer class='flex-container justify-content-center'>
+        <div>
+            <span>AutoMart C 2019</span>
+        </div>
+    </footer>
+    <script src='Js/profile_page.js'></script>
+</body>
+
+</html>
