@@ -77,9 +77,24 @@
             </div>
             <div class="divider scac-div1"></div>
             <div class="scac-div1">
-                <a href="#">REPORT THIS AD</a>
+                <button id='myBtn'>REPORT THIS AD</button>
             </div>
         </section>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1 class='call-to-action'>Item Report</h1>
+                <form onsubmit="event.preventDefault()">
+                    <input type="radio" name="badContent" value="offensiveContent"> Offensive Content<br>
+                    <input type="radio" name="fraud" value="fraud"> Female<br>
+                    <input type="radio" name="duplicateAd" value="duplicateAd"> Duplicate Ad<br>
+                    <input type="radio" name="other" value="other"> Other<br>
+                    <br>
+                    <textarea max-length='500' name='Comment' placeholder="Comment"></textarea> 
+                    <button class="button">SEND COMPLAINT</button>
+                  </form> 
+            </div>
+        </div>
 
     </main>
     <footer class='flex-container justify-content-center'>
@@ -87,7 +102,7 @@
             <span>AutoMart C 2019</span>
         </div>
     </footer>
-    <script src='Js/profile_page.js'></script>
+    <script src='Js/specific_car.js'></script>
 </body>
 
 </html>
