@@ -41,7 +41,7 @@
         <section id='pr-1-bnr' class='flex-container'>
             <div id="num-of-ads">99,999 live ads</div>
             <div>
-                <button class="button">FILTER</button>
+                <button id='myBtn' class="button">FILTER</button>
             </div>
         </section>
         <section id="pr-ad-cntnr">
@@ -145,6 +145,42 @@
                 </div>
             </a>
         </section>
+        <div id="myModal" class="modal">
+            <div class="modal-content filter">
+                <span class="close">&times;</span>
+                <h1 class='call-to-action'>FILTERS</h1><br>
+                <div class="divider"></div><br>
+                <form onsubmit="event.preventDefault()">
+                    <h2 class='form-headers'>SET PRICE</h2>
+                    <div>
+                        <label for='price'>From</label>
+                        <input type='number' required name='from' id='from'>
+                    </div><br>
+                    <div>
+                        <label for='price'>To</label>
+                        <input type='number' required name='to' id='to'>
+                    </div><br>
+                    <div class="divider"></div><br>
+                    <h2 class='form-headers'>MAKE</h2>
+                    <div>
+                        <label for='price'>Manufacturer</label>
+                        <input type='text' required name='manufacturer' id='manufacturer'>
+                    </div><br>
+                    <div class="divider"></div><br>
+                    <h2 class='form-headers'>CAR STATE</h2>
+                    <div>
+                        <label for='state'>State</label>
+                        <select name='state' required>
+                            <option value=''></option>
+                            <option value='new'>New</option>
+                            <option value='used'>Used</option>
+                        </select>
+                    </div><br>
+                    <div class="divider"></div><br>
+                    <button class="button">FILTER</button>
+                </form> 
+            </div>
+        </div>
 
     </main>
     <footer class='flex-container justify-content-center'>
