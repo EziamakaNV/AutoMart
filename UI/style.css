@@ -311,18 +311,20 @@ nav ul {
         font-size: 1.2em
     }
 
-    #spec-car-ad-cntnr{
+    #spec-car-ad-cntnr {
         max-width: 700px;
     }
-    #spec-car-ad-cntnr button{
-        width:50%;
-        margin-left:25%
+
+    #spec-car-ad-cntnr button {
+        width: 50%;
+        margin-left: 25%
     }
-    .modal-content form{
+
+    .modal-content form {
         width: 100%;
     }
 
-    .modal-content{
+    .modal-content {
         max-width: 500px;
     }
 }
@@ -366,8 +368,8 @@ nav ul {
     }
 }
 
-#spec-car-ad-cntnr{
-    width:90%;
+#spec-car-ad-cntnr {
+    width: 90%;
     margin: 15px auto 15px auto;
     color: #22baae;
     border: 1px solid rgba(0, 47, 52, .2);
@@ -376,11 +378,11 @@ nav ul {
 
 #spec-car-ad-cntnr figure {
     width: 100%;
-    margin:0;
+    margin: 0;
     height: 240px;
 }
 
-.scac-div1{
+.scac-div1 {
     margin-bottom: 12px;
     margin-top: 12px;
 }
@@ -389,7 +391,7 @@ nav ul {
     margin-bottom: 8px;
 }
 
-.scac-span{
+.scac-span {
     float: right;
     padding-right: 80px;
     text-align: left;
@@ -397,51 +399,52 @@ nav ul {
 }
 
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
-  }
-  
-  .modal-content {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
     background-color: #fefefe;
-    margin: 5% auto; 
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; 
-  }
+    width: 80%;
+}
 
-  .modal-content textarea{
-      width: 100%;
-      height: 150px
-  }
-  
-  .close {
+.modal-content textarea {
+    width: 100%;
+    height: 150px
+}
+
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
+}
+
+.close:hover,
+.close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
+}
 
-  .filter input, .filter select{
+.filter input,
+.filter select {
     width: 100%;
     height: 48px;
-  }
+}
 
-  .filter{
-      overflow: auto;
-      max-height: 70vh;
-  }
+.filter {
+    overflow: auto;
+    max-height: 70vh;
+}
