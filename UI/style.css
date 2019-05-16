@@ -463,7 +463,7 @@ nav ul {
 }
 
 #landing-section1{
-    background-image: url('/UI/Images/landing3.jpg');
+    background-image: url('UI/Images/landing3.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     height:100vh;
