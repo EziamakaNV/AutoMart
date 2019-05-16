@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <title>Admin Delete Ad</title>
+    <title>Specific Order</title>
 </head>
 
 <body>
@@ -20,21 +20,24 @@
                     <div class="bar3"></div>
                 </div>
                 <div id="myDropDown" class="dropdown-content">
-                    <a href="admin_profile_page.html">View Ads</a>
+                    <a href="post_ad.html">Create Ads</a>
+                    <a href="my_ads.html">My Ads</a>
+                    <a href='my_orders.html'>My Orders</a>
                     <a href="landing_page.html">Logout</a>
                 </div>
             </div>
-            <a href='admin_profile_page.html' class='anchor-tag logo'>AutoMart - Back Office</a>
+            <a href='profile_page.html' class='anchor-tag logo'>My Order</a>
         </div>
         <nav class='flex-container justify-right'>
             <ul>
-                <li><a href="admin_profile_page.html">View Ads</a></li>
+                <li><a href="post_ad.html">Create Ad</a></li>
+                <li><a href="my_ads.html">My Ads</a></li>
+                <li><a href='my_orders.html'>My Orders</a></li>
                 <li><a href="landing_page.html">Logout</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h2 class="call-to-action">Admin - Jean Grey</h2>
         <section id="spec-car-ad-cntnr">
             <div class='scac-div1'>
                 <figure>
@@ -51,53 +54,57 @@
                 <h3>Details</h3>
                 <div class="scac-div2">
                     <span>Make</span>
-                    <span class ='scac-span'>Toyota</span>
+                    <span class='scac-span'>Toyota</span>
                 </div>
                 <div class="scac-div2">
                     <span>Model</span>
-                    <span class ='scac-span'>Camry</span>
+                    <span class='scac-span'>Camry</span>
                 </div>
                 <div class="scac-div2">
                     <span>Body Type</span>
-                    <span class ='scac-span'>Car</span>
+                    <span class='scac-span'>Car</span>
                 </div>
                 <div class="scac-div2">
                     <span>State</span>
-                    <span class ='scac-span'>Used</span>
-                </div><div class="divider scac-div1"></div>
+                    <span class='scac-span'>Used</span>
+                </div>
+                <div class="divider scac-div1"></div>
                 <div class="scac-div2">
                     <h3>Description</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veniam, ullam laudantium laborum libero ex magnam consequatur deserunt voluptatum, temporibus beatae voluptate assumenda est? Quibusdam dicta blanditiis nihil fugiat unde!</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veniam, ullam laudantium laborum
+                        libero ex magnam consequatur deserunt voluptatum, temporibus beatae voluptate assumenda est?
+                        Quibusdam dicta blanditiis nihil fugiat unde!</p>
                 </div>
             </div>
             <div class="divider scac-div1"></div>
             <div class="scac-div1">
-                <button>DELETE AD</button>
+                <button id='myBtn'>UPDATE OFFER</button>
             </div>
         </section>
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h1 class='call-to-action'>Item Report</h1>
-                <form onsubmit="event.preventDefault()">
-                    <input type="radio" name="badContent" value="offensiveContent"> Offensive Content<br>
-                    <input type="radio" name="fraud" value="fraud"> Female<br>
-                    <input type="radio" name="duplicateAd" value="duplicateAd"> Duplicate Ad<br>
-                    <input type="radio" name="other" value="other"> Other<br>
-                    <br>
-                    <textarea max-length='500' name='Comment' placeholder="Comment"></textarea> 
-                    <button class="button">SEND COMPLAINT</button>
-                  </form> 
+                <h1 class='call-to-action'>UPDATE PURCHASE ORDER</h1>
+                <h2 class='call-to-action'>FOR: XXX XXX</h2>
+                <h2 class='call-to-action'>PRICE: 999999</h2>
+                <h2 class='call-to-action'>INITIAL OFFER: 000000</h2>
+                    <form class='form-structure'>
+                        <h2 class='form-headers'>OFFER</h2>
+                        <div>
+                            <label for='offered_price'>New Price</label>
+                            <input type='number' required name='offered_price' id='offeredPrice'>
+                        </div>
+                        <button class='button'>UPDATE OFFER</button>
+                    </form>
             </div>
         </div>
-
     </main>
     <footer class='flex-container justify-content-center'>
         <div>
             <span>AutoMart C 2019</span>
         </div>
     </footer>
-    <script src='Js/specific_car.js'></script>
+    <script src='Js/my_ad_specific.js'></script>
 </body>
 
 </html>

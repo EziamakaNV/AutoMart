@@ -10,45 +10,56 @@
 </head>
 <body>
     <header class='header flex-container'>
-        <div>
-            <a href='/' class='anchor-tag logo'>AutoMart</a>
-        </div>
-        <nav class='flex-container justify-right'>
-            <a href='log_in.html' class='anchor-tag logo'>LOGIN</a>
-        </nav>
-    </header>
+            <div class='menu-logo-container'>
+                <div class='dropdown'>
+                    <div class='menu-container' onclick='menuBarAnimation(this)'>
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                    <div id="myDropDown" class="dropdown-content">
+                        <a href="/UI/sign_in.html">LOG IN</a>
+                    </div>
+                </div>
+                <a href='/UI/landing_page.html' class='anchor-tag logo'>AutoMart</a>
+            </div>
+            <nav class='flex-container justify-right'>
+                <ul>
+                    <li><a href="/UI/sign_in.html">LOG IN</a></li>
+                </ul>
+            </nav>
+        </header>
     <main>
         <h1 class='call-to-action'>Sign up and begin trading cars!</h1>
         <section id='post-ad-container'>
                 <form class='form-structure' onsubmit="event.preventDefault()">
                         <div class='container'>
-                            First Name:<br>
+                            <label for='first_name'>First Name</label><br>
                             <input type='text' name='first_name' required>
                         </div>
                         <div class='container'>
-                            Last Name:<br>
+                            <label for='last_name'>Last Name</label><br>
                             <input type='text' name='last_name' required>
                         </div>
                         <div class='container'>
-                            Email:<br>
+                            <label for='email'>Email</label><br>
                             <input type='email' name='email' required>
                         </div>
                         <div class='container'>
-                            Address:<br>
+                            <label for='Address'>Address</label><br>
                             <input type='text' name='Address' required>
                         </div>
                         <div class='container'>
-                            Password:<br>
+                            <label for='password'>Password</label><br>
                             <input type='password' name='password' required>
                         </div>
                         <div class="container">
-                            <button type='submit'>Register</button>
+                            <button type='submit' onclick="window.location.assign('profile_page.html')">Register</button>
                         </div>
             
                     </form>
-        </section>
-        
-        
+        </section>    
     </main>
+    <script src="Js/sign_up.js"></script>
 </body>
 </html>
