@@ -10,12 +10,29 @@
 </head>
 <body>
     <header class='header flex-container'>
-        <div>
-            <a href='/' class='anchor-tag logo'>AutoMart</a>
-        </div>
-        <nav class='flex-container justify-right'>
-        </nav>
-    </header>
+            <div class='menu-logo-container'>
+                <div class='dropdown'>
+                    <div class='menu-container' onclick='menuBarAnimation(this)'>
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                    <div id="myDropDown" class="dropdown-content">
+                        <a href="/UI/my_ads.html">My Ads</a>
+                        <a href='my_orders.html'>My Orders</a>
+                        <a href="/UI/landing_page.html">Logout</a>
+                    </div>
+                </div>
+                <a href='profile_page.html' class='anchor-tag logo'>AutoMart</a>
+            </div>
+            <nav class='flex-container justify-right'>
+                <ul>
+                    <li><a href="/UI/my_ads.html">My Ads</a></li>
+                    <li><a href='my_orders.html'>My Orders</a></li>
+                    <li><a href="/UI/landing_page.html">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
     <main>
         <h1 class="call-to-action">POST YOUR CAR AD</h1>
         <section id='post-ad-container'>
@@ -69,5 +86,6 @@
             <span>AutoMart C 2019</span>
         </div>
     </footer>
+    <script src="Js/post_ad.js"></script>
 </body>
 </html>

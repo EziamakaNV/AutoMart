@@ -20,18 +20,20 @@
                     <div class="bar3"></div>
                 </div>
                 <div id="myDropDown" class="dropdown-content">
-                    <a href="#">Create Ads</a>
-                    <a href="#">My Ads</a>
-                    <a href="#">Logout</a>
+                    <a href="post_ad.html">Create Ads</a>
+                    <a href="my_ads.html">My Ads</a>
+                    <a href='my_orders.html'>My Orders</a>
+                    <a href="landing_page.html">Logout</a>
                 </div>
             </div>
-            <a href='/' class='anchor-tag logo'>AutoMart</a>
+            <a href='profile_page.html' class='anchor-tag logo'>AutoMart</a>
         </div>
         <nav class='flex-container justify-right'>
             <ul>
-                <li><a href="#">Create Ad</a></li>
-                <li><a href="#">My Ads</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="post_ad.html">Create Ad</a></li>
+                <li><a href="my_ads.html">My Ads</a></li>
+                <li><a href="landing_page.html">Logout</a></li>
+                <li><a href='my_orders.html'>My Orders</a></li>
             </ul>
         </nav>
     </header>
@@ -52,28 +54,31 @@
                 <h3>Details</h3>
                 <div class="scac-div2">
                     <span>Make</span>
-                    <span class ='scac-span'>Toyota</span>
+                    <span class='scac-span'>Toyota</span>
                 </div>
                 <div class="scac-div2">
                     <span>Model</span>
-                    <span class ='scac-span'>Camry</span>
+                    <span class='scac-span'>Camry</span>
                 </div>
                 <div class="scac-div2">
                     <span>Body Type</span>
-                    <span class ='scac-span'>Car</span>
+                    <span class='scac-span'>Car</span>
                 </div>
                 <div class="scac-div2">
                     <span>State</span>
-                    <span class ='scac-span'>Used</span>
-                </div><div class="divider scac-div1"></div>
+                    <span class='scac-span'>Used</span>
+                </div>
+                <div class="divider scac-div1"></div>
                 <div class="scac-div2">
                     <h3>Description</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veniam, ullam laudantium laborum libero ex magnam consequatur deserunt voluptatum, temporibus beatae voluptate assumenda est? Quibusdam dicta blanditiis nihil fugiat unde!</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veniam, ullam laudantium laborum
+                        libero ex magnam consequatur deserunt voluptatum, temporibus beatae voluptate assumenda est?
+                        Quibusdam dicta blanditiis nihil fugiat unde!</p>
                 </div>
             </div>
             <div class="divider scac-div1"></div>
             <div class="scac-div1">
-                <button>SUBMIT OFFER</button>
+                <button id='myBtn2'>SUBMIT OFFER</button>
             </div>
             <div class="divider scac-div1"></div>
             <div class="scac-div1">
@@ -90,9 +95,25 @@
                     <input type="radio" name="duplicateAd" value="duplicateAd"> Duplicate Ad<br>
                     <input type="radio" name="other" value="other"> Other<br>
                     <br>
-                    <textarea max-length='500' name='Comment' placeholder="Comment"></textarea> 
+                    <textarea max-length='500' name='Comment' placeholder="Comment"></textarea>
                     <button class="button">SEND COMPLAINT</button>
-                  </form> 
+                </form>
+            </div>
+        </div>
+        <div id="myModal2" class="modal">
+            <div class="modal-content filter">
+                <span class="close2">&times;</span>
+                <h1 class='call-to-action'>PURCHASE ORDER</h1>
+                <h2 class='call-to-action'>FOR: XXX XXX</h2>
+                <h2 class='call-to-action'>PRICE: 999999</h2>
+                <form class='form-structure'>
+                    <h2 class='form-headers'>OFFER</h2>
+                    <div>
+                        <label for='offered_price'>Offered Price</label>
+                        <input type='number' required name='offered_price' id='offeredPrice'>
+                    </div>
+                    <button class='button'>PLACE OFFER</button>
+                </form>
             </div>
         </div>
 

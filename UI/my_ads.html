@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1.0">
@@ -8,35 +9,184 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>My Ads</title>
 </head>
+
 <body>
     <header class='header flex-container'>
-        <div>
-            <a href='/' class='anchor-tag logo'>My Ads</a>
+        <div class='menu-logo-container'>
+            <div class='dropdown'>
+                <div class='menu-container' onclick='menuBarAnimation(this)'>
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+                <div id="myDropDown" class="dropdown-content">
+                    <a href="/UI/post_ad.html">Create Ads</a>
+                    <a href='my_orders.html'>My Orders</a>
+                    <a href="/UI/landing_page.html">Logout</a>
+                </div>
+            </div>
+            <a href='landing_page.html' class='anchor-tag logo'>My Ads</a>
         </div>
         <nav class='flex-container justify-right'>
+            <ul>
+                <li><a href="/UI/post_ad.html">Create Ad</a></li>
+                <li><a href='my_orders.html'>My Orders</a></li>
+                <li><a href="/UI/landing_page.html">Logout</a></li>
+            </ul>
         </nav>
     </header>
     <main>
-        <h2 class='call-to-action'>Ads</h2>
-        <section id='ad-container'>
-            <div class="ad" id="">
-                <h3 class='call-to-action' id='title'>Toyota Camry</h3>
-                <h3 class='call-to-action' id='price'>N5000000</h3>
-                <div>
-                    <img  class='ad-img' src='Images/toyota_camry.jpg'>
-                </div>
-                <div class="divider"></div>
-                <button>MARK AS SOLD</button>
-
-                
+        <h3 class='call-to-action'>Your Ads</h3>
+        <section id='pr-1-bnr' class='flex-container'>
+            <div>
+                <button id='myBtn' class="button">FILTER</button>
             </div>
-
         </section>
+        <section id="pr-ad-cntnr">
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+            <a href='/UI/my_ad_specific.html' id=''>
+                <div class="pr-ad" id="">
+                    <figure>
+                        <img class='ad-img' src='Images/toyota_camry.jpg'>
+                    </figure>
+                    <div class="pr-ad-details">
+                        <p class="item-price">N3,000,000</p>
+                        <p class="item-title">Toyota Camry</p>
+                    </div>
+                </div>
+            </a>
+        </section>
+        <div id="myModal" class="modal">
+            <div class="modal-content filter">
+                <span class="close">&times;</span>
+                <h1 class='call-to-action'>FILTERS</h1><br>
+                <div class="divider"></div><br>
+                <form onsubmit="event.preventDefault()">
+                    <h2 class='form-headers'>SET PRICE</h2>
+                    <div>
+                        <label for='price'>From</label>
+                        <input type='number' required name='from' id='from'>
+                    </div><br>
+                    <div>
+                        <label for='price'>To</label>
+                        <input type='number' required name='to' id='to'>
+                    </div><br>
+                    <div class="divider"></div><br>
+                    <h2 class='form-headers'>MAKE</h2>
+                    <div>
+                        <label for='price'>Manufacturer</label>
+                        <input type='text' required name='manufacturer' id='manufacturer'>
+                    </div><br>
+                    <div class="divider"></div><br>
+                    <h2 class='form-headers'>CAR STATE</h2>
+                    <div>
+                        <label for='state'>State</label>
+                        <select name='state' required>
+                            <option value=''></option>
+                            <option value='new'>New</option>
+                            <option value='used'>Used</option>
+                        </select>
+                    </div><br>
+                    <div class="divider"></div><br>
+                    <button class="button">FILTER</button>
+                </form>
+            </div>
+        </div>
+
     </main>
     <footer class='flex-container justify-content-center'>
         <div>
             <span>AutoMart C 2019</span>
         </div>
     </footer>
+    <script src='Js/my_ads.js'></script>
 </body>
+
 </html>

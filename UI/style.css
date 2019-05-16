@@ -32,6 +32,7 @@ main {
 
 .form-structure {
     padding: 10px 10px 10px 10px;
+    margin: auto;
 }
 
 .form-structure input,
@@ -327,6 +328,16 @@ nav ul {
     .modal-content {
         max-width: 500px;
     }
+
+    .list-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center
+    }
+
+    .how-it-works-list{
+        margin: auto
+    }
 }
 
 @media (min-width: 992px) {
@@ -424,7 +435,7 @@ nav ul {
     height: 150px
 }
 
-.close {
+.close, .close2 {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -432,7 +443,9 @@ nav ul {
 }
 
 .close:hover,
-.close:focus {
+.close:focus,
+.close2:hover,
+.close2:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -448,3 +461,27 @@ nav ul {
     overflow: auto;
     max-height: 70vh;
 }
+
+#landing-section1{
+    background-image: url('/UI/Images/landing3.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height:100vh;
+}
+
+#landing-section1 h1{
+    margin-top: 0;
+    color: white;
+    font-size: 30px;
+}
+
+#how-it-works img{
+    width: 100px;
+    margin: auto;
+    display: block
+}
+
+.how-it-works-list {
+    margin-bottom: 25px;
+}
+
