@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("core-js/modules/es6.regexp.replace");
+
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
@@ -27,9 +29,11 @@ class UserController {
     const _req$body = req.body,
           firstName = _req$body.firstName,
           lastName = _req$body.lastName,
-          email = _req$body.email,
           password = _req$body.password,
-          address = _req$body.address; // Use Joi to validate input
+          address = _req$body.address; // Remove empty spaces from the email and set to lowercase
+
+    const email = req.body.email.replace(/\s/g, '').toLowerCase(); // The .replace is from Stack Overflow. It removes empty spaces
+    // Use Joi to validate input
 
     const validationObject = {
       firstName,
@@ -52,7 +56,7 @@ class UserController {
       let emailAlreadyExists = false;
 
       _entities.default.Users.forEach(user => {
-        emailAlreadyExists = user.email === email;
+        if (user.email === email) emailAlreadyExists = true;
       });
 
       if (emailAlreadyExists) {
@@ -111,7 +115,6 @@ class UserController {
               },
               success: true
             });
-            console.log(_entities.default.Users);
           }
         });
       }

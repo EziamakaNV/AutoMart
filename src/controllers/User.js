@@ -16,10 +16,12 @@ class UserController {
     const {
       firstName,
       lastName,
-      email,
       password,
       address,
     } = req.body;
+
+    // Remove empty spaces from the email and set to lowercase
+    const email = req.body.email.replace(/\s/g, '').toLowerCase(); // The .replace is from Stack Overflow. It removes empty spaces
 
     // Use Joi to validate input
     const validationObject = {
@@ -39,7 +41,7 @@ class UserController {
       let emailAlreadyExists = false;
 
       entities.Users.forEach((user) => {
-        emailAlreadyExists = (user.email === email);
+        if (user.email === email) emailAlreadyExists = true;
       });
 
       if (emailAlreadyExists) {
@@ -73,7 +75,6 @@ class UserController {
               data: { token, id: userId, firstName, lastName, email },
               success: true,
             });
-            console.log(entities.Users);
           }
         });
       }

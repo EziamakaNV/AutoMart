@@ -22,5 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v1/auth', userRoute);
 
-// eslint-disable-next-line no-console
-app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+if (process.env.NODE_ENV !== 'test') {
+  // eslint-disable-next-line no-console
+  app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+}
+
+export default app;
