@@ -1,3 +1,10 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 /* eslint-disable linebreak-style */
 const Users = [{
   id: 1,
@@ -6,11 +13,10 @@ const Users = [{
   lastName: 'doe',
   password: 'test',
   address: '123 Testing Avenue, State, Country',
-  isAdmin: false,
+  isAdmin: false
 }];
-
 const entities = {
-  Users,
+  Users
 };
-
-export default entities;
+var _default = entities;
+exports.default = _default;
