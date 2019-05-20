@@ -1,0 +1,50 @@
+{
+  "name": "automart",
+  "version": "1.0.0",
+  "description": "A web app to place ads for cars",
+  "main": "server.js",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@hapi/joi": "^15.0.3",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "core-js": "^2.6.6",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^7.11.0",
+    "swagger-ui-express": "^4.0.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "coveralls": "^3.0.3",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1"
+  },
+  "scripts": {
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha dist/test/test.js",
+    "local_test": "npm run build && npm test",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "build": "npx babel src --out-dir dist",
+    "start": "npm run build && node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EziamakaNV/AutoMart.git"
+  },
+  "author": "Nnaemeka Valentine Eziamaka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EziamakaNV/AutoMart/issues"
+  },
+  "homepage": "https://github.com/EziamakaNV/AutoMart#readme"
+}
