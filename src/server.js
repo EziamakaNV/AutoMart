@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 
 import userRoute from './routes/user';
 
-require('dotenv');
+require('dotenv').config();
 
 const app = express();
 

@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable linebreak-style */
 
 /* eslint-disable eol-last */
-require('dotenv');
+require('dotenv').config();
 
 const app = (0, _express.default)();
 const PORT = process.env.PORT || 5000;

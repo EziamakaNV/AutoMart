@@ -14,6 +14,14 @@ const Users = [{
   password: 'test',
   address: '123 Testing Avenue, State, Country',
   isAdmin: false
+}, {
+  id: 2,
+  firstName: 'Madike',
+  lastName: 'Johnson',
+  email: 'test@tester.com',
+  password: '$2b$10$5wgB0m73ao9vsTcypaLd3uvWOyZh0bRqWksnbT2irWH61KDrfPQHC',
+  address: 'Does it matter lol',
+  isAdmin: false
 }];
 const entities = {
   Users

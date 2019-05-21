@@ -22,6 +22,14 @@ class Validation {
     return _joi.default.validate(validationObject, schema);
   }
 
+  static loginValidation(validationObject) {
+    const schema = {
+      email: _joi.default.string().email().required(),
+      password: _joi.default.string().min(6).max(20).required()
+    };
+    return _joi.default.validate(validationObject, schema);
+  }
+
 }
 
 var _default = Validation;

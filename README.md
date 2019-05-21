@@ -34,10 +34,10 @@ Before running the project, install the following
 - Git
 
 #### To run
-$ git clone https://github.com/EziamakaNV/AutoMArt.git
-$ cd AutoMart
-$ npm install
-$ npm start
+- git clone https://github.com/EziamakaNV/AutoMArt.git
+- cd AutoMart
+- npm install
+- npm start
 
 #### To Test
 $ npm test
@@ -45,7 +45,7 @@ $ npm test
 ### Relevant Links
 
 ### Pivotal Tracker stories
-[https://www.pivotaltracker.com/n/projects/2345861](https://www.pivotaltracker.com/n/projects/2345861)
+ [https://www.pivotaltracker.com/n/projects/2345861](https://www.pivotaltracker.com/n/projects/2345861)
 
 ### Hosted App
 - 

@@ -111,11 +111,94 @@ class UserController {
                 id: userId,
                 firstName,
                 lastName,
-                email
+                email,
+                hashedPassword
               },
               success: true
             });
+            console.log(_entities.default.Users);
           }
+        });
+      }
+    }
+  }
+
+  static signin(req, res) {
+    const password = req.body.password; // Remove empty spaces from the email and set to lowercase
+
+    const email = req.body.email.replace(/\s/g, '').toLowerCase();
+    const validationObject = {
+      email,
+      password
+    };
+
+    const _Validation$loginVali = _Validation.default.loginValidation(validationObject),
+          error = _Validation$loginVali.error;
+
+    if (error) {
+      res.status(400).json({
+        status: 400,
+        error: "Issue with credentials supplied. Problem: ".concat(error)
+      });
+    } else {
+      let emailExists = false;
+      let hashedPassword;
+      let userId;
+      let firstName;
+      let lastName; // Check if the email is on record
+
+      _entities.default.Users.forEach(user => {
+        if (user.email === email) {
+          emailExists = true;
+          hashedPassword = user.password;
+          userId = user.id;
+          firstName = user.firstName;
+          lastName = user.lastName;
+        }
+      });
+
+      if (emailExists) {
+        // Compare passwords
+        _bcrypt.default.compare(password, hashedPassword, (err, same) => {
+          if (err) {
+            res.status(500).json({
+              status: 500,
+              error: 'Internal Server Error',
+              success: false
+            });
+          } else if (same) {
+            // (same-boolean) If the passwords match
+            const token = _jsonwebtoken.default.sign({
+              id: userId
+            }, process.env.JWT_SECRET, {
+              expiresIn: '8760h'
+            });
+
+            res.cookie('jwt', token, {
+              maxAge: 31540000000,
+              httpOnly: true
+            });
+            res.status(200).json({
+              status: 200,
+              data: {
+                token,
+                id: userId,
+                first_name: firstName,
+                last_name: lastName,
+                email
+              }
+            });
+          } else {
+            res.status(401).json({
+              status: 401,
+              error: 'The Username/Paswword is incorrect'
+            });
+          }
+        });
+      } else {
+        res.status(401).json({
+          status: 401,
+          error: 'The Username/Paswword is incorrect'
         });
       }
     }
