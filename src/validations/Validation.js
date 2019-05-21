@@ -12,6 +12,14 @@ class Validation {
     };
     return Joi.validate(validationObject, schema);
   }
+
+  static loginValidation(validationObject) {
+    const schema = {
+      email: Joi.string().email().required(),
+      password: Joi.string().min(6).max(20).required(),
+    };
+    return Joi.validate(validationObject, schema);
+  }
 }
 
 export default Validation;
