@@ -246,3 +246,63 @@ describe('POST /car/', () => {
     });
   });
 });
+
+describe('POST /api/v1/car', () => {
+
+  describe('A request with a valid token in the cookie (Client logged in)', () => {
+    it('The request should be successful when all parameters are supplied correctly', (done) => {
+      chai.request(server)
+        .post('/api/v1/order')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc')
+        .send({
+          carId: 1,
+          amount: 500000,
+        })
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(201);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(201);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('object');
+          done();
+        });
+    });
+
+    it('The request shoud not be successful if any of the parameters are missing from the request body', (done) => {
+      chai.request(server)
+        .post('/api/v1/order')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc')
+        .send({
+          carId: 1,
+        })
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(400);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(400);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error, 'data property').to.be.a('string');
+          done();
+        });
+    });
+  });
+
+  it('The request shouldnt go through if the token in the cookie is missing', (done) => {
+    // Jwt missing in cookie
+    chai.request(server)
+      .post('/api/v1/order')
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(401);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error).to.be.a('string');
+        done();
+      });
+  });
+});

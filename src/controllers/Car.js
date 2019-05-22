@@ -26,9 +26,9 @@ class CarController {
     if (error) {
       res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
     } else {
-      const newCar = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
+      const newCarDetails = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
       // Create new car
-      const createdCar = CarModel.createCar(newCar);
+      const createdCar = CarModel.createCar(newCarDetails);
       res.status(201).json({ status: 201, data: createdCar, sucess: true });
     }
   }

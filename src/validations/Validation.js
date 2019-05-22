@@ -32,6 +32,14 @@ class Validation {
     };
     return Joi.validate(validationObject, schema);
   }
+
+  static newOrderValidation(validationObject) {
+    const schema = {
+      carId: Joi.number().integer().required(),
+      amount: Joi.number().integer().min(1).max(999999999999).required(),
+    };
+    return Joi.validate(validationObject, schema);
+  }
 }
 
 export default Validation;
