@@ -15,6 +15,8 @@ var _user = _interopRequireDefault(require("./routes/user"));
 
 var _car = _interopRequireDefault(require("./routes/car"));
 
+var _order = _interopRequireDefault(require("./routes/order"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable linebreak-style */
@@ -31,6 +33,7 @@ app.use(_bodyParser.default.urlencoded({
 }));
 app.use('/api/v1/auth', _user.default);
 app.use('/api/v1/car', _car.default);
+app.use('/api/v1/order', _order.default);
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

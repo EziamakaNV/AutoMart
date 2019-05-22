@@ -12,7 +12,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable linebreak-style */
 class CarModel {
   constructor() {
-    this.cars = [];
+    this.cars = [{
+      id: 1,
+      owner: 1,
+      email: 'john@test.com',
+      createdOn: 1558523346288,
+      state: 'new',
+      status: 'available',
+      price: 3000000,
+      manufacturer: 'Toyota',
+      model: 'Camry'
+    }];
   }
 
   createCar(car) {
@@ -29,6 +39,10 @@ class CarModel {
     };
     this.cars.push(newCar);
     return newCar;
+  }
+
+  findOne(id) {
+    return this.cars.find(car => car.id === id);
   }
 
 }
