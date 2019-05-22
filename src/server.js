@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser';
 
 import userRoute from './routes/user';
 
+import carRoute from './routes/car';
+
 require('dotenv').config();
 
 const app = express();
@@ -21,6 +23,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v1/auth', userRoute);
+
+app.use('/api/v1/car', carRoute);
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

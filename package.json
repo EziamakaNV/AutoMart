@@ -13,6 +13,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "pg": "^7.11.0",
     "swagger-ui-express": "^4.0.4"
   },
@@ -20,6 +21,7 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
+    "babel-watch": "^7.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.0.3",
@@ -33,6 +35,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha dist/test/test.js",
     "local_test": "npm run build && npm test",
+    "dev-start": "babel-watch src/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "npx babel src --out-dir dist",
     "start": "npm run build && node dist/server.js"

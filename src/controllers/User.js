@@ -66,7 +66,7 @@ class UserController {
               isAdmin: false,
             });
             // Generate jwt
-            const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '8760h' });
+            const token = jwt.sign({ id: userId, email }, process.env.JWT_SECRET, { expiresIn: '8760h' });
             // Set cookie header
             res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
             // Final response
@@ -116,7 +116,7 @@ class UserController {
           if (err) {
             res.status(500).json({ status: 500, error: 'Internal Server Error', success: false });
           } else if (same) { // (same-boolean) If the passwords match
-            const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '8760h' });
+            const token = jwt.sign({ id: userId, email }, process.env.JWT_SECRET, { expiresIn: '8760h' });
             res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
             res.status(200).json({
               status: 200,
