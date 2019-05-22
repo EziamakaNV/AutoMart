@@ -18,7 +18,8 @@ class CarModel {
   createCar(car) {
     const newCar = {
       id: this.cars.length + 1,
-      owner: car.owner,
+      owner: car.ownerId,
+      email: car.ownerEmail,
       createdOn: _moment.default.now(),
       state: car.state,
       status: car.status,

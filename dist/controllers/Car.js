@@ -48,7 +48,8 @@ class CarController {
       });
     } else {
       const newCar = _objectSpread({}, validationObject, {
-        owner: req.user.id
+        ownerId: req.user.id,
+        ownerEmail: req.user.email
       }); // Create new car
 
 

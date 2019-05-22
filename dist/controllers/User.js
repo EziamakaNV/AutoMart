@@ -93,7 +93,8 @@ class UserController {
 
 
             const token = _jsonwebtoken.default.sign({
-              id: userId
+              id: userId,
+              email
             }, process.env.JWT_SECRET, {
               expiresIn: '8760h'
             }); // Set cookie header
@@ -169,7 +170,8 @@ class UserController {
           } else if (same) {
             // (same-boolean) If the passwords match
             const token = _jsonwebtoken.default.sign({
-              id: userId
+              id: userId,
+              email
             }, process.env.JWT_SECRET, {
               expiresIn: '8760h'
             });

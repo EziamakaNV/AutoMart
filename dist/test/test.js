@@ -185,8 +185,6 @@ describe('POST /car/', () => {
         expect(res.body.data, 'data property').to.be.a('object');
         done();
       });
-
-      done();
     });
     it('The request shoud not be successful if any of the parameters are missing from the request body', done => {
       _chai.default.request(_server.default).post('/api/v1/car').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc').send({
@@ -202,11 +200,9 @@ describe('POST /car/', () => {
         expect(res.body, 'response body').to.haveOwnProperty('status');
         expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
-        expect(res.body.data, 'data property').to.be.a('string');
+        expect(res.body.error, 'data property').to.be.a('string');
         done();
       });
-
-      done();
     });
   });
 });
