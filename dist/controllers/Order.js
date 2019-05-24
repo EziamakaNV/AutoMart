@@ -46,22 +46,98 @@ class OrderController {
           error: 'Car/Ad does not exist'
         });
       } else {
-        // Create order model
-        const newOrder = {
-          buyer: carAd.owner,
-          carId: carAd.id,
-          amount: orderDetails.amount
-        };
+        // Ensure one cant place more than one order on a car ad
+        const previousOrderExists = _Order.default.previousOrderExists(carAd.id, req.user.id);
 
-        const createdOrder = _Order.default.createOrder(newOrder);
+        console.log("userId: ".concat(req.user.id));
 
-        res.status(201).json({
-          status: 201,
-          data: _objectSpread({}, createdOrder, {
+        if (previousOrderExists) {
+          res.status(401).json({
+            status: 401,
+            error: 'You already have an order pending for this ad',
+            success: false
+          });
+          console.log(10);
+        } else {
+          // Create order
+          console.log(1);
+          const newOrder = {
+            buyer: req.user.id,
             carId: carAd.id,
-            price: carAd.price,
-            priceOffered: orderDetails.amount
-          })
+            amount: orderDetails.amount
+          };
+
+          const createdOrder = _Order.default.createOrder(newOrder);
+
+          res.status(201).json({
+            status: 201,
+            data: _objectSpread({}, createdOrder, {
+              carId: carAd.id,
+              price: carAd.price,
+              priceOffered: orderDetails.amount
+            })
+          });
+        }
+      }
+    }
+  }
+
+  static updateOrder(req, res) {
+    const orderId = Number(req.params.orderId);
+    const amount = req.body.amount;
+
+    const _Validation$orderUpda = _Validation.default.orderUpdate({
+      orderId,
+      amount
+    }),
+          error = _Validation$orderUpda.error;
+
+    if (error) {
+      res.status(400).json({
+        status: 400,
+        error: "".concat(error),
+        success: false
+      });
+    } else {
+      // Check if the order exists
+      const initialOrder = _Order.default.findOne(orderId);
+
+      if (initialOrder) {
+        // Check if the owner if the order is the same person updating it
+        if (initialOrder.buyer === req.user.id) {
+          // Check if the status of the order is still pending
+          if (initialOrder.status === 'pending') {
+            const updatedOrder = _Order.default.update(orderId, amount);
+
+            res.status(200).json({
+              status: 200,
+              data: {
+                id: updatedOrder.id,
+                carId: updatedOrder.carId,
+                status: updatedOrder.status,
+                oldPriceOffered: initialOrder.amount,
+                newPriceOffered: updatedOrder.amount
+              }
+            });
+          } else {
+            res.status(401).json({
+              status: 401,
+              error: 'This order is no longer pending',
+              success: true
+            });
+          }
+        } else {
+          res.status(401).json({
+            status: 401,
+            error: 'You do not own this order',
+            success: false
+          });
+        }
+      } else {
+        res.status(400).json({
+          status: 400,
+          error: 'Order does not exist',
+          success: false
         });
       }
     }

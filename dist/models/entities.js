@@ -22,6 +22,14 @@ const Users = [{
   password: '$2b$10$5wgB0m73ao9vsTcypaLd3uvWOyZh0bRqWksnbT2irWH61KDrfPQHC',
   address: 'Does it matter lol',
   isAdmin: false
+}, {
+  id: 3,
+  firstName: 'James',
+  lastName: 'Potter',
+  email: 'jp@hogwarts.com',
+  password: '$2b$10$yK5w7gbn8jzgy7QSR4lJU.c6p2ixMooFOJMvK0hyIBAkHRzaElCgS',
+  address: 'Gryffindor, HOgwarts',
+  isAdmin: false
 }];
 const entities = {
   Users

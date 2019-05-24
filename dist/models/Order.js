@@ -12,7 +12,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable linebreak-style */
 class OrderModel {
   constructor() {
-    this.orders = [];
+    this.orders = [{
+      id: 1,
+      buyer: 2,
+      carId: 1,
+      amount: 600000,
+      status: 'pending',
+      createdOn: _moment.default.now()
+    }, {
+      id: 2,
+      buyer: 1,
+      carId: 1,
+      amount: 600000,
+      status: 'pending',
+      createdOn: _moment.default.now()
+    }];
   }
 
   createOrder(order) {
@@ -30,6 +44,21 @@ class OrderModel {
       createdOn: newOrder.createdOn,
       status: newOrder.status
     };
+  }
+
+  findOne(id) {
+    return this.orders.find(order => order.id === id);
+  }
+
+  update(id, amount) {
+    const order = this.findOne(id);
+    const index = this.orders.indexOf(order);
+    this.orders[index].amount = amount;
+    return this.orders[index];
+  }
+
+  previousOrderExists(carId, buyer) {
+    return this.orders.find(order => order.carId === carId && order.buyer === buyer);
   }
 
 }
