@@ -22,6 +22,16 @@ class CarModel {
       price: 3000000,
       manufacturer: 'Toyota',
       model: 'Camry'
+    }, {
+      id: 2,
+      owner: 1,
+      email: 'john@test.com',
+      createdOn: 1558523346299,
+      state: 'new',
+      status: 'available',
+      price: 5000000,
+      manufacturer: 'Toyota',
+      model: 'Camry'
     }];
   }
 

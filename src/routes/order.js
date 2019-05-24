@@ -8,4 +8,6 @@ const router = express.Router();
 
 router.post('/', Authentication.verifyToken, OrderController.createOrder);
 
+router.patch('/:orderId/price', Authentication.verifyToken, OrderController.updateOrder);
+
 export default router;

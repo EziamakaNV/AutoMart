@@ -16,5 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const router = _express.default.Router();
 
 router.post('/', _Authentication.default.verifyToken, _Order.default.createOrder);
+router.patch('/:orderId/price', _Authentication.default.verifyToken, _Order.default.updateOrder);
 var _default = router;
 exports.default = _default;
