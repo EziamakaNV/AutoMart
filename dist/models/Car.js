@@ -21,7 +21,8 @@ class CarModel {
       status: 'available',
       price: 3000000,
       manufacturer: 'Toyota',
-      model: 'Camry'
+      model: 'Camry',
+      bodyType: 'car'
     }, {
       id: 2,
       owner: 1,
@@ -31,7 +32,8 @@ class CarModel {
       status: 'available',
       price: 5000000,
       manufacturer: 'Toyota',
-      model: 'Camry'
+      model: 'Camry',
+      bodyType: 'car'
     }, {
       id: 3,
       owner: 2,
@@ -41,7 +43,8 @@ class CarModel {
       status: 'available',
       price: 8000000,
       manufacturer: 'Toyota',
-      model: 'Avalon'
+      model: 'Avalon',
+      bodyType: 'car'
     }];
   }
 

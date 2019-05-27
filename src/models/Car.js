@@ -13,6 +13,7 @@ class CarModel {
       price: 3000000,
       manufacturer: 'Toyota',
       model: 'Camry',
+      bodyType: 'car',
     }, {
       id: 2,
       owner: 1,
@@ -23,6 +24,7 @@ class CarModel {
       price: 5000000,
       manufacturer: 'Toyota',
       model: 'Camry',
+      bodyType: 'car',
     }, {
       id: 3,
       owner: 2,
@@ -33,6 +35,7 @@ class CarModel {
       price: 8000000,
       manufacturer: 'Toyota',
       model: 'Avalon',
+      bodyType: 'car',
     }];
   }
 

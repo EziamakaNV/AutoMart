@@ -74,6 +74,13 @@ class Validation {
     return _joi.default.validate(validationObject, schema);
   }
 
+  static viewSpecificCar(validationObject) {
+    const schema = {
+      carId: _joi.default.number().integer().required()
+    };
+    return _joi.default.validate(validationObject, schema);
+  }
+
 }
 
 var _default = Validation;
