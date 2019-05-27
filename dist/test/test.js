@@ -152,7 +152,7 @@ describe('POST /api/v1/auth/signin', () => {
     });
   });
 });
-describe('POST api/v1/car/', () => {
+describe('POST /api/v1/car/', () => {
   it('The request shouldnt go through if the token in the cookie is missing', done => {
     // Jwt missing in cookie
     _chai.default.request(_server.default).post('/api/v1/car').end((err, res) => {
@@ -327,6 +327,97 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
   it('The request shouldnt go through if the token in the cookie is missing', done => {
     // Jwt missing in cookie
     _chai.default.request(_server.default).patch('/api/v1/order/1/price').type('form').end((err, res) => {
+      expect(err).to.be.null;
+      expect(res).to.have.status(401);
+      expect(res.body, 'response body').to.be.a('object');
+      expect(res.body, 'response body').to.haveOwnProperty('status');
+      expect(res.body.status, 'status property').to.equal(401);
+      expect(res.body, 'response body').to.haveOwnProperty('error');
+      expect(res.body.error).to.be.a('string');
+      done();
+    });
+  });
+});
+describe('PATCH /api/v1/car/<:car-id>/status', () => {
+  describe('When the token is present', () => {
+    it('When all parameters are correctly supplied the request is successful', done => {
+      _chai.default.request(_server.default).patch('/api/v1/car/3/status').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({
+        status: 'sold'
+      }).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object');
+        done();
+      });
+    });
+    it('Only the owner of the ad can update status of the car ad', done => {
+      // Create a car ad with user two token
+      let carId;
+
+      _chai.default.request(_server.default).post('/api/v1/car').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({
+        state: 'new',
+        status: 'available',
+        price: '2000000',
+        manufacturer: 'Toyota',
+        model: 'Camry',
+        bodyType: 'car'
+      }).end((err, res) => {
+        console.log(res.body.data.id);
+        carId = res.body.data.id;
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(201);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(201);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object'); // Update the status with user three token
+
+        _chai.default.request(_server.default).patch("/api/v1/car/".concat(carId, "/status")).type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU').send({
+          status: 'sold'
+        }).end((err, res) => {
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(401);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error, 'data property').to.be.a('string');
+          done();
+        });
+      });
+    });
+    it('The request shoud not be successful if any of the parameters are missing from the request body', done => {
+      _chai.default.request(_server.default).patch('/api/v1/car/3/status').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'data property').to.be.a('string');
+        done();
+      });
+    });
+    it('The request shoud not be successful if the carid doesnt exist or is invalid', done => {
+      _chai.default.request(_server.default).patch('/api/v1/car/ttyr/status').type('form').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+    });
+  });
+  it('The request shouldnt go through if the token in the cookie is missing', done => {
+    // Jwt missing in cookie
+    _chai.default.request(_server.default).patch('/api/v1/car/1/status').type('form').end((err, res) => {
       expect(err).to.be.null;
       expect(res).to.have.status(401);
       expect(res.body, 'response body').to.be.a('object');

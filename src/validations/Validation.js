@@ -48,6 +48,14 @@ class Validation {
     };
     return Joi.validate(validationObject, schema);
   }
+
+  static carStatusUpdate(validationObject) {
+    const schema = {
+      status: Joi.string().valid('sold').required(),
+      carId: Joi.number().integer().required(),
+    };
+    return Joi.validate(validationObject, schema);
+  }
 }
 
 export default Validation;

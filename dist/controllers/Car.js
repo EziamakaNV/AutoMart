@@ -13,6 +13,8 @@ var _Validation = _interopRequireDefault(require("../validations/Validation"));
 
 var _Car = _interopRequireDefault(require("../models/Car"));
 
+var _Response = _interopRequireDefault(require("../responses/Response"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -60,6 +62,38 @@ class CarController {
         data: createdCar,
         sucess: true
       });
+    }
+  }
+
+  static updateStatus(req, res) {
+    const status = req.body.status;
+    const carId = Number(req.params.carId);
+    const validationObject = {
+      status,
+      carId
+    };
+
+    const _Validation$carStatus = _Validation.default.carStatusUpdate(validationObject),
+          error = _Validation$carStatus.error;
+
+    if (error) {
+      (0, _Response.default)(res, 400, error);
+    } else {
+      // Check if the car id exists
+      const carAd = _Car.default.findOne(carId);
+
+      if (carAd) {
+        // Check if the owner of the ad is the one updating the ad
+        if (carAd.owner === req.user.id) {
+          const updatedCar = _Car.default.updateStatus(carId, 'sold');
+
+          (0, _Response.default)(res, 200, updatedCar);
+        } else {
+          (0, _Response.default)(res, 401, 'You do not own this Ad');
+        }
+      } else {
+        (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
+      }
     }
   }
 
