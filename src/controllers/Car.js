@@ -86,6 +86,24 @@ class CarController {
       }
     }
   }
+
+  static viewSpecificCar(req, res) {
+    const carId = Number(req.params.carId);
+    const validationObject = { carId };
+    const { error } = Validation.viewSpecificCar(validationObject);
+
+    if (error) {
+      response(res, 400, error);
+    } else {
+      // Check if the car exists
+      const carAd = CarModel.findOne(carId);
+      if (carAd) {
+        response(res, 200, carAd);
+      } else {
+        response(res, 400, 'The Car Ad does not exist');
+      }
+    }
+  }
 }
 
 export default CarController;
