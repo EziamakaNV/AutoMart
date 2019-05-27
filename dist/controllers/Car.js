@@ -97,6 +97,38 @@ class CarController {
     }
   }
 
+  static updatePrice(req, res) {
+    const price = req.body.price;
+    const carId = Number(req.params.carId);
+    const validationObject = {
+      price,
+      carId
+    };
+
+    const _Validation$carPriceU = _Validation.default.carPriceUpdate(validationObject),
+          error = _Validation$carPriceU.error;
+
+    if (error) {
+      (0, _Response.default)(res, 400, error);
+    } else {
+      // Check if the car id exists
+      const carAd = _Car.default.findOne(carId);
+
+      if (carAd) {
+        // Check if the owner of the ad is the one updating the ad
+        if (carAd.owner === req.user.id) {
+          const updatedCar = _Car.default.updatePrice(carId, price);
+
+          (0, _Response.default)(res, 200, updatedCar);
+        } else {
+          (0, _Response.default)(res, 401, 'You do not own this Ad');
+        }
+      } else {
+        (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
+      }
+    }
+  }
+
 }
 
 var _default = CarController;

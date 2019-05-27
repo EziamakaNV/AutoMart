@@ -72,6 +72,13 @@ class CarModel {
     return this.cars[index];
   }
 
+  updatePrice(id, price) {
+    const car = this.findOne(id);
+    const index = this.cars.indexOf(car);
+    this.cars[index].price = price;
+    return this.cars[index];
+  }
+
 }
 
 var _default = new CarModel();

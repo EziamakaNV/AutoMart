@@ -17,5 +17,6 @@ const router = _express.default.Router();
 
 router.post('/', _Authentication.default.verifyToken, _Car.default.createCar);
 router.patch('/:carId/status', _Authentication.default.verifyToken, _Car.default.updateStatus);
+router.patch('/:carId/price', _Authentication.default.verifyToken, _Car.default.updatePrice);
 var _default = router;
 exports.default = _default;

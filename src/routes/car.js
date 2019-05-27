@@ -10,4 +10,6 @@ router.post('/', Authentication.verifyToken, CarController.createCar);
 
 router.patch('/:carId/status', Authentication.verifyToken, CarController.updateStatus);
 
+router.patch('/:carId/price', Authentication.verifyToken, CarController.updatePrice);
+
 export default router;

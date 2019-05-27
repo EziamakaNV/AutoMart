@@ -66,6 +66,14 @@ class Validation {
     return _joi.default.validate(validationObject, schema);
   }
 
+  static carPriceUpdate(validationObject) {
+    const schema = {
+      price: _joi.default.number().integer().min(1).max(999999999999).required(),
+      carId: _joi.default.number().integer().required()
+    };
+    return _joi.default.validate(validationObject, schema);
+  }
+
 }
 
 var _default = Validation;
