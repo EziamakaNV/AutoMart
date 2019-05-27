@@ -32,6 +32,16 @@ class CarModel {
       price: 5000000,
       manufacturer: 'Toyota',
       model: 'Camry'
+    }, {
+      id: 3,
+      owner: 2,
+      email: 'test@tester.com',
+      createdOn: 1558523347299,
+      state: 'new',
+      status: 'available',
+      price: 8000000,
+      manufacturer: 'Toyota',
+      model: 'Avalon'
     }];
   }
 
@@ -53,6 +63,13 @@ class CarModel {
 
   findOne(id) {
     return this.cars.find(car => car.id === id);
+  }
+
+  updateStatus(id, status) {
+    const car = this.findOne(id);
+    const index = this.cars.indexOf(car);
+    this.cars[index].status = status;
+    return this.cars[index];
   }
 
 }

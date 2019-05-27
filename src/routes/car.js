@@ -8,4 +8,6 @@ const router = express.Router();
 
 router.post('/', Authentication.verifyToken, CarController.createCar);
 
+router.patch('/:carId/status', Authentication.verifyToken, CarController.updateStatus);
+
 export default router;
