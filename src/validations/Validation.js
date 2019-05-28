@@ -71,6 +71,15 @@ class Validation {
     };
     return Joi.validate(validationObject, schema);
   }
+
+  static viewCars(validationObject) {
+    const schema = {
+      status: Joi.string().valid('available'),
+      minPrice: Joi.number().integer().min(1).max(999999999999),
+      maxPrice: Joi.number().integer().min(1).max(999999999999),
+    };
+    return Joi.validate(validationObject, schema);
+  }
 }
 
 export default Validation;

@@ -81,6 +81,15 @@ class Validation {
     return _joi.default.validate(validationObject, schema);
   }
 
+  static viewCars(validationObject) {
+    const schema = {
+      status: _joi.default.string().valid('available'),
+      minPrice: _joi.default.number().integer().min(1).max(999999999999),
+      maxPrice: _joi.default.number().integer().min(1).max(999999999999)
+    };
+    return _joi.default.validate(validationObject, schema);
+  }
+
 }
 
 var _default = Validation;

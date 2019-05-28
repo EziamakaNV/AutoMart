@@ -104,6 +104,44 @@ class CarController {
       }
     }
   }
+
+  static viewCars(req, res) {
+    // Determine if there is a query object has any properties
+    const queryStatus = req.query.hasOwnProperty('status');
+    const queryMinPrice = req.query.hasOwnProperty('min_price');
+    const queryMaxPrice = req.query.hasOwnProperty('max_price');
+
+    // When all three query properties are present
+    if (queryStatus && queryMinPrice && queryMaxPrice) {
+      // Run validation
+      const { status } = req.query;
+      const minPrice = Number(req.query.min_price);
+      const maxPrice = Number(req.query.max_price);
+      const { error } = Validation.viewCars({ status, minPrice, maxPrice });
+
+      if (error) {
+        response(res, 400, error);
+      } else {
+        const cars = CarModel.findAllAvailableRange(minPrice, maxPrice);
+        response(res, 200, cars);
+      }
+    } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
+      const { status } = req.query;
+      const { error } = Validation.viewCars({ status });
+      if (error) {
+        response(res, 400, error);
+      } else {
+        /* Should only be for admins.
+        Later implement logic to only allows
+        admins to retreive the data */
+        const cars = CarModel.findAllAvailable();
+        response(res, 200, cars);
+      }
+    } else {
+      const cars = CarModel.findAll();
+      response(res, 200, cars);
+    }
+  }
 }
 
 export default CarController;
