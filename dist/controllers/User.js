@@ -117,7 +117,6 @@ class UserController {
               },
               success: true
             });
-            console.log(_entities.default.Users);
           }
         });
       }

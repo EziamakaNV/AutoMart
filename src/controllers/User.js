@@ -75,7 +75,6 @@ class UserController {
               data: { token, id: userId, firstName, lastName, email, hashedPassword },
               success: true,
             });
-            console.log(entities.Users);
           }
         });
       }

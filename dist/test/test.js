@@ -366,7 +366,6 @@ describe('PATCH /api/v1/car/<:car-id>/status', () => {
         model: 'Camry',
         bodyType: 'car'
       }).end((err, res) => {
-        console.log(res.body.data.id);
         carId = res.body.data.id;
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(201);
@@ -457,7 +456,6 @@ describe('PATCH /api/v1/car/<:car-id>/price', () => {
         model: 'Camry',
         bodyType: 'car'
       }).end((err, res) => {
-        console.log(res.body.data.id);
         carId = res.body.data.id;
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(201);
@@ -551,6 +549,73 @@ describe('GET /api/v1/car/<:car-id>', () => {
     it('The request shouldnt go through if the token in the cookie is missing', done => {
       // Jwt missing in cookie
       _chai.default.request(_server.default).get('/api/v1/car/1').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(401);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error).to.be.a('string');
+        done();
+      });
+    });
+  });
+});
+describe('GET /api/v1/car?status=available and GET /api/v1/car?status=available&min_price=xx&max_price=xx ', () => {
+  describe('When the token is present', () => {
+    it('(status only) When all parameters are correctly supplied the request is successful', done => {
+      _chai.default.request(_server.default).get('/api/v1/car?status=available').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+    });
+    it('(status, min & max price) When all parameters are correctly supplied the request is successful', done => {
+      _chai.default.request(_server.default).get('/api/v1/car?status=available&min_price=800000&max_price=5000000').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+    });
+    it('The request shoud not be successful if the value of the status parameter isnt "available" or "sold"', done => {
+      _chai.default.request(_server.default).get('/api/v1/car?status=whatevs').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+    });
+    it('The request shoud not be successful if the values if the min&max price query attributes are not numbers', done => {
+      _chai.default.request(_server.default).get('/api/v1/car?status=available&min_price=a&max_price=5000000').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+    });
+  });
+  describe('When the token is missing', done => {
+    it('The request shouldnt go through if the token in the cookie is missing', done => {
+      // Jwt missing in cookie
+      _chai.default.request(_server.default).get('/api/v1/car?status=available').end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(401);
         expect(res.body, 'response body').to.be.a('object');

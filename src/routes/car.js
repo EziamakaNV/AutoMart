@@ -14,4 +14,6 @@ router.patch('/:carId/price', Authentication.verifyToken, CarController.updatePr
 
 router.get('/:carId', Authentication.verifyToken, CarController.viewSpecificCar);
 
+router.get('/', Authentication.verifyToken, CarController.viewCars);
+
 export default router;

@@ -49,18 +49,14 @@ class OrderController {
         // Ensure one cant place more than one order on a car ad
         const previousOrderExists = _Order.default.previousOrderExists(carAd.id, req.user.id);
 
-        console.log("userId: ".concat(req.user.id));
-
         if (previousOrderExists) {
           res.status(401).json({
             status: 401,
             error: 'You already have an order pending for this ad',
             success: false
           });
-          console.log(10);
         } else {
           // Create order
-          console.log(1);
           const newOrder = {
             buyer: req.user.id,
             carId: carAd.id,
