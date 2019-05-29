@@ -7,6 +7,10 @@ exports.default = void 0;
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
+var _User = _interopRequireDefault(require("../models/User"));
+
+var _Response = _interopRequireDefault(require("../responses/Response"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable linebreak-style */
@@ -24,10 +28,40 @@ class Authentication {
       });
     } else {
       try {
-        const decoded = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Create user object in the request
+        const user = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Create user object in the request
 
-        req.user = decoded;
+        req.user = user;
         next();
+      } catch (error) {
+        res.status(500).json({
+          status: 500,
+          error: "Issue with jwt token. Problem: ".concat(error)
+        });
+      }
+    }
+  }
+
+  static async adminVerifyToken(req, res, next) {
+    const token = req.cookies.jwt; // Check for the token
+
+    if (!token) {
+      res.status(401).json({
+        status: 401,
+        error: 'Missing token',
+        success: false
+      });
+    } else {
+      try {
+        const user = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Check if the user is an admin
+
+        const isUserAdmin = _User.default.isAdmin(user.id);
+
+        if (isUserAdmin) {
+          req.user = user;
+          next();
+        } else {
+          (0, _Response.default)(res, 401, 'You are not an Admin');
+        }
       } catch (error) {
         res.status(500).json({
           status: 500,

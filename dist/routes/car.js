@@ -20,5 +20,6 @@ router.patch('/:carId/status', _Authentication.default.verifyToken, _Car.default
 router.patch('/:carId/price', _Authentication.default.verifyToken, _Car.default.updatePrice);
 router.get('/:carId', _Authentication.default.verifyToken, _Car.default.viewSpecificCar);
 router.get('/', _Authentication.default.verifyToken, _Car.default.viewCars);
+router.delete('/:carId', _Authentication.default.adminVerifyToken, _Car.default.deleteCar);
 var _default = router;
 exports.default = _default;

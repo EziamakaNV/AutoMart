@@ -11,9 +11,9 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
-var _entities = _interopRequireDefault(require("../models/entities"));
-
 var _Validation = _interopRequireDefault(require("../validations/Validation"));
+
+var _User = _interopRequireDefault(require("../models/User"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53,13 +53,9 @@ class UserController {
       });
     } else {
       // Check if the email exists on record
-      let emailAlreadyExists = false;
+      const user = _User.default.findUser(email);
 
-      _entities.default.Users.forEach(user => {
-        if (user.email === email) emailAlreadyExists = true;
-      });
-
-      if (emailAlreadyExists) {
+      if (user) {
         res.status(400).json({
           status: 400,
           error: 'Email already exists',
@@ -78,22 +74,20 @@ class UserController {
               success: false
             });
           } else {
-            // Get user id
-            const userId = _entities.default.Users.length + 1; // Store details
-
-            _entities.default.Users.push({
-              id: userId,
+            const userObject = {
               firstName,
               lastName,
               email,
               password: hashedPassword,
               address,
               isAdmin: false
-            }); // Generate jwt
+            };
+
+            const newUser = _User.default.createUser(userObject); // Generate jwt
 
 
             const token = _jsonwebtoken.default.sign({
-              id: userId,
+              id: newUser.id,
               email
             }, process.env.JWT_SECRET, {
               expiresIn: '8760h'
@@ -109,7 +103,7 @@ class UserController {
               status: 200,
               data: {
                 token,
-                id: userId,
+                id: newUser.id,
                 firstName,
                 lastName,
                 email,
@@ -141,25 +135,11 @@ class UserController {
         error: "Issue with credentials supplied. Problem: ".concat(error)
       });
     } else {
-      let emailExists = false;
-      let hashedPassword;
-      let userId;
-      let firstName;
-      let lastName; // Check if the email is on record
+      const user = _User.default.findUser(email);
 
-      _entities.default.Users.forEach(user => {
-        if (user.email === email) {
-          emailExists = true;
-          hashedPassword = user.password;
-          userId = user.id;
-          firstName = user.firstName;
-          lastName = user.lastName;
-        }
-      });
-
-      if (emailExists) {
+      if (user) {
         // Compare passwords
-        _bcrypt.default.compare(password, hashedPassword, (err, same) => {
+        _bcrypt.default.compare(password, user.password, (err, same) => {
           if (err) {
             res.status(500).json({
               status: 500,
@@ -169,7 +149,7 @@ class UserController {
           } else if (same) {
             // (same-boolean) If the passwords match
             const token = _jsonwebtoken.default.sign({
-              id: userId,
+              id: user.id,
               email
             }, process.env.JWT_SECRET, {
               expiresIn: '8760h'
@@ -183,9 +163,9 @@ class UserController {
               status: 200,
               data: {
                 token,
-                id: userId,
-                first_name: firstName,
-                last_name: lastName,
+                id: user.id,
+                first_name: user.firstName,
+                last_name: user.lastName,
                 email
               }
             });
