@@ -5,6 +5,8 @@ import CarModel from '../models/Car';
 
 import response from '../responses/Response';
 
+import UserModel from '../models/User';
+
 class CarController {
   static createCar(req, res) {
     const {
@@ -131,15 +133,18 @@ class CarController {
       if (error) {
         response(res, 400, error);
       } else {
-        /* Should only be for admins.
-        Later implement logic to only allows
-        admins to retreive the data */
         const cars = CarModel.findAllAvailable();
         response(res, 200, cars);
       }
     } else {
-      const cars = CarModel.findAll();
-      response(res, 200, cars);
+      // Only admins can view this
+      const isAdmin = UserModel.isAdmin(req.user.id);
+      if (isAdmin) {
+        const cars = CarModel.findAll();
+        response(res, 200, cars);
+      } else {
+        response(res, 401, 'You are not an Admin');
+      }
     }
   }
 

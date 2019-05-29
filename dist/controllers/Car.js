@@ -15,6 +15,8 @@ var _Car = _interopRequireDefault(require("../models/Car"));
 
 var _Response = _interopRequireDefault(require("../responses/Response"));
 
+var _User = _interopRequireDefault(require("../models/User"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
@@ -189,17 +191,21 @@ class CarController {
       if (error) {
         (0, _Response.default)(res, 400, error);
       } else {
-        /* Should only be for admins.
-        Later implement logic to only allows
-        admins to retreive the data */
         const cars = _Car.default.findAllAvailable();
 
         (0, _Response.default)(res, 200, cars);
       }
     } else {
-      const cars = _Car.default.findAll();
+      // Only admins can view this
+      const isAdmin = _User.default.isAdmin(req.user.id);
 
-      (0, _Response.default)(res, 200, cars);
+      if (isAdmin) {
+        const cars = _Car.default.findAll();
+
+        (0, _Response.default)(res, 200, cars);
+      } else {
+        (0, _Response.default)(res, 401, 'You are not an Admin');
+      }
     }
   }
 
