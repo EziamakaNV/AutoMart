@@ -80,6 +80,13 @@ class Validation {
     };
     return Joi.validate(validationObject, schema);
   }
+
+  static deleteCar(validationObject) {
+    const schema = {
+      carId: Joi.number().integer().required(),
+    };
+    return Joi.validate(validationObject, schema);
+  }
 }
 
 export default Validation;

@@ -136,6 +136,11 @@ class CarModel {
   findAll() {
     return this.cars;
   }
+
+  deleteCar(car) {
+    const index = this.cars.indexOf(car);
+    return this.cars.splice(index, 1);
+  }
 }
 
 export default new CarModel();

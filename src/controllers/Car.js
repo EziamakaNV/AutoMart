@@ -142,6 +142,24 @@ class CarController {
       response(res, 200, cars);
     }
   }
+
+  static deleteCar(req, res) {
+    const carId = Number(req.params.carId);
+    const { error } = Validation.deleteCar({ carId });
+
+    if (error) {
+      response(res, 400, error);
+    } else {
+      // Check if the Ad exists
+      const carAd = CarModel.findOne(carId);
+      if (carAd) {
+        const deletedCar = CarModel.deleteCar(carAd);
+        response(res, 200, 'Car Ad successfully deleted');
+      } else {
+        response(res, 400, 'The Car Ad Doesnt Exist');
+      }
+    }
+  }
 }
 
 export default CarController;
