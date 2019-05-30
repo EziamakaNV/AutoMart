@@ -80,6 +80,17 @@ class CarModel {
       manufacturer: 'BMW',
       model: 'X3',
       bodyType: 'Jeep',
+    }, {
+      id: 8,
+      owner: 4,
+      email: 'killbill@test.com',
+      createdOn: 1558523349299,
+      state: 'new',
+      status: 'available',
+      price: 898233,
+      manufacturer: 'BMW',
+      model: 'X3',
+      bodyType: 'Jeep',
     }];
   }
 

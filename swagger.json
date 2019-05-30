@@ -1,0 +1,660 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "API Documentation for Auto Mart",
+      "version": "1.0.0",
+      "title": "Auto Mart"
+    },
+    "host": "",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "auth",
+        "description": "Handles Signup and Signin"
+      },
+      {
+        "name": "cars",
+        "description": "Handles the creation, updating and deletion of car Ads"
+      },
+      {
+        "name": "orders",
+        "description": "Handles the creation, updating and deletion of purchase orders"
+      }
+    ],
+    "schemes": [
+      "http", "https"
+    ],
+    "paths": {
+      "/auth/signup": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Create a user account",
+          "description": "",
+          "consumes": [
+            "application/json",
+            "application/xml"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "James"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "JDoe@email.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "secret"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Gryffindor house, Magic Lane"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "example": "4567yjnjfn645"
+                      },
+                      "id":{
+                        "type": "integer",
+                        "example": 1
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "example": "Jean"
+                      },
+                      "lastName": {
+                        "type":"string",
+                        "example": "Dee"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "JeanD@email.com"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Missing Parameter",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/auth/signin": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Login a user",
+          "consumes": [
+            "application/json",
+            "application/xml"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "example@epicmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "notell"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer",
+                    "example": 200
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "example": "4567yjnjfn645"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Missing Parameter",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer",
+                    "example": 400
+                  },
+                  "error": {
+                    "type": "string",
+                    "example": "Missing Parameter"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Incorrect Credentials",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer",
+                    "example": 401
+                  },
+                  "error": {
+                    "type": "string",
+                    "example": "Missing Parameter"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/car": {
+        "get": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "View all cars ads whether sold or unavailable",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation"
+            },
+            "401": {
+              "description": "Unsuccessul due to a missing token or you dont have Admin privileges"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "Creates new car ads",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "example": "used"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "available"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": "300000"
+                  },
+                  "manufacturer": {
+                    "type": "string",
+                    "example": "Toyota"
+                  },
+                  "model": {
+                    "type": "string",
+                    "example": "Camry"
+                  },
+                  "bodyType": {
+                    "type": "string",
+                    "example": "car"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "error": {
+                    "type": "string",
+                    "example": "Missing parameters"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/car/{carId}/status": {
+        "patch": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "Mark a posted car Ad as sold",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "carId",
+              "in": "path",
+              "description": "ID of the car ad",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "sold",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        }
+      },
+      "/car/{carId}/price": {
+        "patch": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "Update the price of a car",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "carId",
+              "in": "path",
+              "description": "ID of the car ad",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "interger",
+                    "example": "10500000",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        }
+      },
+      "/car/{carId}": {
+        "get": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "View a specific car",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "carId",
+              "in": "path",
+              "description": "ID of the car ad",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "Delete a specific car Ad",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "carId",
+              "in": "path",
+              "description": "ID of the car ad",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        }
+      },
+      "/car?status=available": {
+        "get": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "View all unsold cars",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        }
+      },
+      "/car?status=available&min_price={minPrice}&max_price={maxPrice}": {
+        "get": {
+          "tags": [
+            "cars"
+          ],
+          "summary": "Mark a posted car Ad as sold",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "minPrice",
+              "in": "path",
+              "description": "Minimum price of the car",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "name": "maxPrice",
+              "in": "path",
+              "description": "Maximum price of the car",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        }
+      },
+      "/order": {
+        "post": {
+          "tags": [
+            "orders"
+          ],
+          "summary": "Creates new purchase orders",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "carId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "example": 2000000
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/order/{orderId}/price": {
+        "patch": {
+          "tags": [
+            "orders"
+          ],
+          "summary": "Update a purchase order",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "orderId",
+              "in": "path",
+              "description": "ID of the purchase order",
+              "required": true,
+              "type": "integer"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "example": 10000,
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "401":{
+              "description":"Unauthorized"
+            }
+          }
+        }
+      }
+    }
+  }

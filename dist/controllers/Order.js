@@ -99,7 +99,9 @@ class OrderController {
       const initialOrder = _Order.default.findOne(orderId);
 
       if (initialOrder) {
-        // Check if the owner if the order is the same person updating it
+        // Had to assign seprately because of object assignment by reference
+        const initialOrderAmount = initialOrder.amount; // Check if the owner if the order is the same person updating it
+
         if (initialOrder.buyer === req.user.id) {
           // Check if the status of the order is still pending
           if (initialOrder.status === 'pending') {
@@ -111,7 +113,7 @@ class OrderController {
                 id: updatedOrder.id,
                 carId: updatedOrder.carId,
                 status: updatedOrder.status,
-                oldPriceOffered: initialOrder.amount,
+                oldPriceOffered: initialOrderAmount,
                 newPriceOffered: updatedOrder.amount
               }
             });
