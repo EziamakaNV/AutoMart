@@ -40,21 +40,41 @@ Before running the project, install the following
 - npm start
 
 #### To Test
-$ npm test
-
-### Relevant Links
+- npm test
 
 ### Pivotal Tracker stories
- [https://www.pivotaltracker.com/n/projects/2345861](https://www.pivotaltracker.com/n/projects/2345861)
+[https://www.pivotaltracker.com/n/projects/2345861](https://www.pivotaltracker.com/n/projects/2345861)
 
 ### Hosted App
-- 
+[https://automobile-mart.herokuapp.com/api/v1/docs](https://automobile-mart.herokuapp.com/api/v1/docs)
 
 ### UI Template
 [https://eziamakanv.github.io/AutoMart](https://eziamakanv.github.io/AutoMart)
 
 ## API Endpoints
+POST 'https://automobile-mart.herokuapp.com/api/v1/auth/signup' - Create a user account
 
+POST 'https://automobile-mart.herokuapp.com/api/v1/auth/signin' - Login a user
+
+GET 'https://automobile-mart.herokuapp.com/api/v1/car' - View all car ads whether sold or available (Admins only)
+
+POST 'https://automobile-mart.herokuapp.com/api/v1/car' - Create new car ads
+
+PATCH 'https://automobile-mart.herokuapp.com/api/v1/car/{carId}/status' - Update the status of a car ad
+
+PATCH 'https://automobile-mart.herokuapp.com/api/v1/car/{carId}/price' - Update the price of a car ad
+
+GET 'https://automobile-mart.herokuapp.com/api/v1/car/{carId} - View a specific car ad
+
+DELETE 'https://automobile-mart.herokuapp.com/api/v1/car/{carId} - Delete a specific car ad
+
+GET 'https://automobile-mart.herokuapp.com/api/v1/car?status=available - View all unsold cars
+
+GET 'https://automobile-mart.herokuapp.com/api/v1/car?status=available&min_price={minPrice}&max_price={maxPrice} - View unsold cars within a price range
+
+POST 'https://automobile-mart.herokuapp.com/api/v1/order' - Create new purchase orders
+
+PATCH 'https://automobile-mart.herokuapp.com/api/v1/order/{orderId}/price - Update the price of a purchase order
 
 ## Author
 
