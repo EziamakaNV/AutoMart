@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+import cloudinaryModule from 'cloudinary';
+
+import fs from 'fs';
+
 import Validation from '../validations/Validation';
 
 import CarModel from '../models/Car';
@@ -7,33 +11,91 @@ import response from '../responses/Response';
 
 import UserModel from '../models/User';
 
+// Cloudinary
+require('dotenv').config();
+
+const cloudinary = cloudinaryModule.v2;
+
 class CarController {
   static createCar(req, res) {
-    const {
-      state,
-      status,
-      price,
-      manufacturer,
-      model,
-      bodyType,
-    } = req.body;
-    const validationObject = {
-      state,
-      status,
-      price,
-      manufacturer,
-      model,
-      bodyType,
-    };
+    // If the car image is present
+    if (req.files) {
+      // The image is properly added to the form
+      if (req.files.carImage) {
+        const {
+          state,
+          status,
+          price,
+          manufacturer,
+          model,
+          bodyType,
+        } = req.body;
+        const validationObject = {
+          state,
+          status,
+          price,
+          manufacturer,
+          model,
+          bodyType,
+        };
 
-    const { error } = Validation.newCarValidation(validationObject);
-    if (error) {
-      res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
+        const { error } = Validation.newCarValidation(validationObject);
+        if (error) {
+          res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
+        } else {
+        // Upload to cloudinary
+          const imageFileName = req.files.carImage.path;
+          cloudinary.uploader.upload(imageFileName, { resource_type: 'auto' }, (err, file) => {
+            if (err) {
+              response(res, 500, err);
+            } else {
+              const newCarDetails = {
+                ...validationObject,
+                ownerId: req.user.id,
+                ownerEmail: req.user.email,
+                imageUrl: file.url,
+              };
+              // Create new car
+              const createdCar = CarModel.createCar(newCarDetails);
+              response(res, 201, createdCar);
+              // Delete temporary image file
+              fs.unlink(imageFileName, (er) => {
+                if (er) throw err;
+                console.log('Image File Deleted');
+              });
+            }
+          });
+        }
+      } else {
+        response(res, 400, 'Image expected to be named carImage');
+      }
     } else {
-      const newCarDetails = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
-      // Create new car
-      const createdCar = CarModel.createCar(newCarDetails);
-      res.status(201).json({ status: 201, data: createdCar, sucess: true });
+      const {
+        state,
+        status,
+        price,
+        manufacturer,
+        model,
+        bodyType,
+      } = req.body;
+      const validationObject = {
+        state,
+        status,
+        price,
+        manufacturer,
+        model,
+        bodyType,
+      };
+
+      const { error } = Validation.newCarValidation(validationObject);
+      if (error) {
+        res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
+      } else {
+        const newCarDetails = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
+        // Create new car
+        const createdCar = CarModel.createCar(newCarDetails);
+        res.status(201).json({ status: 201, data: createdCar, sucess: true });
+      }
     }
   }
 

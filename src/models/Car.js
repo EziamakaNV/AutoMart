@@ -14,6 +14,7 @@ class CarModel {
       manufacturer: 'Toyota',
       model: 'Camry',
       bodyType: 'car',
+      imageUrl: '',
     }, {
       id: 2,
       owner: 1,
@@ -25,6 +26,7 @@ class CarModel {
       manufacturer: 'Toyota',
       model: 'Camry',
       bodyType: 'car',
+      imageUrl: '',
     }, {
       id: 3,
       owner: 2,
@@ -36,6 +38,7 @@ class CarModel {
       manufacturer: 'Toyota',
       model: 'Avalon',
       bodyType: 'car',
+      imageUrl: '',
     }, {
       id: 4,
       owner: 2,
@@ -47,6 +50,7 @@ class CarModel {
       manufacturer: 'Ford',
       model: 'FortRunner',
       bodyType: 'Jeep',
+      imageUrl: '',
     }, {
       id: 5,
       owner: 2,
@@ -58,6 +62,7 @@ class CarModel {
       manufacturer: 'Lexus',
       model: 'Sport',
       bodyType: 'Jeep',
+      imageUrl: '',
     }, {
       id: 6,
       owner: 2,
@@ -69,6 +74,7 @@ class CarModel {
       manufacturer: 'BMW',
       model: 'X6',
       bodyType: 'Jeep',
+      imageUrl: '',
     }, {
       id: 7,
       owner: 2,
@@ -80,6 +86,7 @@ class CarModel {
       manufacturer: 'BMW',
       model: 'X3',
       bodyType: 'Jeep',
+      imageUrl: '',
     }, {
       id: 8,
       owner: 4,
@@ -91,6 +98,7 @@ class CarModel {
       manufacturer: 'BMW',
       model: 'X3',
       bodyType: 'Jeep',
+      imageUrl: '',
     }];
   }
 
@@ -105,6 +113,7 @@ class CarModel {
       price: car.price,
       manufacturer: car.manufacturer,
       model: car.model,
+      imageUrl: car.imageUrl || '',
     };
     this.cars.push(newCar);
     return newCar;

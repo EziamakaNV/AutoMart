@@ -22,7 +22,8 @@ class CarModel {
       price: 3000000,
       manufacturer: 'Toyota',
       model: 'Camry',
-      bodyType: 'car'
+      bodyType: 'car',
+      imageUrl: ''
     }, {
       id: 2,
       owner: 1,
@@ -33,7 +34,8 @@ class CarModel {
       price: 5000000,
       manufacturer: 'Toyota',
       model: 'Camry',
-      bodyType: 'car'
+      bodyType: 'car',
+      imageUrl: ''
     }, {
       id: 3,
       owner: 2,
@@ -44,7 +46,8 @@ class CarModel {
       price: 8000000,
       manufacturer: 'Toyota',
       model: 'Avalon',
-      bodyType: 'car'
+      bodyType: 'car',
+      imageUrl: ''
     }, {
       id: 4,
       owner: 2,
@@ -55,7 +58,8 @@ class CarModel {
       price: 800000,
       manufacturer: 'Ford',
       model: 'FortRunner',
-      bodyType: 'Jeep'
+      bodyType: 'Jeep',
+      imageUrl: ''
     }, {
       id: 5,
       owner: 2,
@@ -66,7 +70,8 @@ class CarModel {
       price: 80000,
       manufacturer: 'Lexus',
       model: 'Sport',
-      bodyType: 'Jeep'
+      bodyType: 'Jeep',
+      imageUrl: ''
     }, {
       id: 6,
       owner: 2,
@@ -77,7 +82,8 @@ class CarModel {
       price: 898233,
       manufacturer: 'BMW',
       model: 'X6',
-      bodyType: 'Jeep'
+      bodyType: 'Jeep',
+      imageUrl: ''
     }, {
       id: 7,
       owner: 2,
@@ -88,7 +94,8 @@ class CarModel {
       price: 898233,
       manufacturer: 'BMW',
       model: 'X3',
-      bodyType: 'Jeep'
+      bodyType: 'Jeep',
+      imageUrl: ''
     }, {
       id: 8,
       owner: 4,
@@ -99,7 +106,8 @@ class CarModel {
       price: 898233,
       manufacturer: 'BMW',
       model: 'X3',
-      bodyType: 'Jeep'
+      bodyType: 'Jeep',
+      imageUrl: ''
     }];
   }
 
@@ -113,7 +121,8 @@ class CarModel {
       status: car.status,
       price: car.price,
       manufacturer: car.manufacturer,
-      model: car.model
+      model: car.model,
+      imageUrl: car.imageUrl || ''
     };
     this.cars.push(newCar);
     return newCar;

@@ -13,9 +13,17 @@ var _Car = _interopRequireDefault(require("../controllers/Car"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable linebreak-style */
+// Multipart middleware to parse file uploads
+const multipart = require('connect-multiparty');
+
+const multipartMiddleware = multipart({
+  uploadDir: './tempImages'
+}); // Folder to store temp image files n.b delete later
+
 const router = _express.default.Router();
 
-router.post('/', _Authentication.default.verifyToken, _Car.default.createCar);
+router.post('/', _Authentication.default.verifyToken, multipartMiddleware, _Car.default.createCar);
 router.patch('/:carId/status', _Authentication.default.verifyToken, _Car.default.updateStatus);
 router.patch('/:carId/price', _Authentication.default.verifyToken, _Car.default.updatePrice);
 router.get('/:carId', _Authentication.default.verifyToken, _Car.default.viewSpecificCar);
