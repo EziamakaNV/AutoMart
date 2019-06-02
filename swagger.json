@@ -415,7 +415,7 @@
           "tags": [
             "cars"
           ],
-          "summary": "View a specific car",
+          "summary": "View a specific car ad",
           "produces": [
             "application/json"
           ],
@@ -497,7 +497,7 @@
           "tags": [
             "cars"
           ],
-          "summary": "Mark a posted car Ad as sold",
+          "summary": "View unsold cars within a price range",
           "produces": [
             "application/json"
           ],
@@ -614,7 +614,7 @@
           "tags": [
             "orders"
           ],
-          "summary": "Update a purchase order",
+          "summary": "Update the price of a purchase order",
           "produces": [
             "application/json"
           ],
