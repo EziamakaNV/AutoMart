@@ -14,6 +14,8 @@ import carRoute from './routes/car';
 
 import orderRoute from './routes/order';
 
+import userRoute2 from './routes/usingDb/user';
+
 require('dotenv').config();
 
 const app = express();
@@ -33,6 +35,8 @@ app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/car', carRoute);
 
 app.use('/api/v1/order', orderRoute);
+
+app.use('/api/v2/auth', userRoute2);
 
 // Swagger API doc
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
