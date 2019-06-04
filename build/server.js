@@ -21,6 +21,8 @@ var _order = _interopRequireDefault(require("./routes/order"));
 
 var _user2 = _interopRequireDefault(require("./routes/usingDb/user"));
 
+var _car2 = _interopRequireDefault(require("./routes/usingDb/car"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable linebreak-style */
@@ -40,10 +42,15 @@ app.use(_bodyParser.default.urlencoded({
 }));
 app.use('/api/v1/auth', _user.default);
 app.use('/api/v1/car', _car.default);
-app.use('/api/v1/order', _order.default);
-app.use('/api/v2/auth', _user2.default); // Swagger API doc
+app.use('/api/v1/order', _order.default); // Swagger API doc
 
 app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument));
+/*
+  API V2
+*/
+
+app.use('/api/v2/auth', _user2.default);
+app.use('/api/v2/car', _car2.default);
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

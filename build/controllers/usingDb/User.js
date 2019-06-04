@@ -108,36 +108,32 @@ class UserController {
     }
   }
 
-  static signin(req, res) {
-    const password = req.body.password; // Remove empty spaces from the email and set to lowercase
+  static async signin(req, res) {
+    try {
+      const password = req.body.password; // Remove empty spaces from the email and set to lowercase
 
-    const email = req.body.email.replace(/\s/g, '').toLowerCase();
-    const validationObject = {
-      email,
-      password
-    };
+      const email = req.body.email.replace(/\s/g, '').toLowerCase();
+      const validationObject = {
+        email,
+        password
+      };
 
-    const _Validation$loginVali = _Validation.default.loginValidation(validationObject),
-          error = _Validation$loginVali.error;
+      const _Validation$loginVali = _Validation.default.loginValidation(validationObject),
+            error = _Validation$loginVali.error;
 
-    if (error) {
-      res.status(400).json({
-        status: 400,
-        error: "Issue with credentials supplied. Problem: ".concat(error)
-      });
-    } else {
-      const user = _User.default.findUser(email);
+      if (error) {
+        res.status(400).json({
+          status: 400,
+          error: "Issue with credentials supplied. Problem: ".concat(error)
+        });
+      } else {
+        const user = await _User.default.findUser(email);
 
-      if (user) {
-        // Compare passwords
-        _bcrypt.default.compare(password, user.password, (err, same) => {
-          if (err) {
-            res.status(500).json({
-              status: 500,
-              error: 'Internal Server Error',
-              success: false
-            });
-          } else if (same) {
+        if (user) {
+          // Compare passwords
+          const match = await _bcrypt.default.compare(password, user.password);
+
+          if (match) {
             // (same-boolean) If the passwords match
             const token = _jsonwebtoken.default.sign({
               id: user.id,
@@ -163,16 +159,18 @@ class UserController {
           } else {
             res.status(401).json({
               status: 401,
-              error: 'The Username/Paswword is incorrect'
+              error: 'The Email/Paswword is incorrect'
             });
           }
-        });
-      } else {
-        res.status(401).json({
-          status: 401,
-          error: 'The Username/Paswword is incorrect'
-        });
+        } else {
+          res.status(401).json({
+            status: 401,
+            error: 'The Email/Paswword is incorrect'
+          });
+        }
       }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 

@@ -13,13 +13,13 @@ var _cloudinary = _interopRequireDefault(require("cloudinary"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
-var _Validation = _interopRequireDefault(require("../validations/Validation"));
+var _Validation = _interopRequireDefault(require("../../validations/Validation"));
 
-var _Car = _interopRequireDefault(require("../models/Car"));
+var _Car = _interopRequireDefault(require("../../models/usingDb/Car"));
 
-var _Response = _interopRequireDefault(require("../responses/Response"));
+var _Response = _interopRequireDefault(require("../../responses/Response"));
 
-var _User = _interopRequireDefault(require("../models/User"));
+var _User = _interopRequireDefault(require("../../models/usingDb/User"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,18 +33,70 @@ require('dotenv').config();
 const cloudinary = _cloudinary.default.v2;
 
 class CarController {
-  static createCar(req, res) {
-    // If the car image is present
-    if (req.files) {
-      // The image is properly added to the form
-      if (req.files.carImage) {
-        const _req$body = req.body,
-              state = _req$body.state,
-              status = _req$body.status,
-              price = _req$body.price,
-              manufacturer = _req$body.manufacturer,
-              model = _req$body.model,
-              bodyType = _req$body.bodyType;
+  static async createCar(req, res) {
+    try {
+      // If the car image is present
+      if (req.files) {
+        // The image is properly added to the form
+        if (req.files.carImage) {
+          const _req$body = req.body,
+                state = _req$body.state,
+                status = _req$body.status,
+                price = _req$body.price,
+                manufacturer = _req$body.manufacturer,
+                model = _req$body.model,
+                bodyType = _req$body.bodyType;
+          const validationObject = {
+            state,
+            status,
+            price,
+            manufacturer,
+            model,
+            bodyType
+          };
+
+          const _Validation$newCarVal = _Validation.default.newCarValidation(validationObject),
+                error = _Validation$newCarVal.error;
+
+          if (error) {
+            res.status(400).json({
+              status: 400,
+              error: "Issue with parameters supplied. Problem ".concat(error),
+              success: false
+            });
+          } else {
+            // Upload to cloudinary
+            const imageFileName = req.files.carImage.path;
+            const file = await cloudinary.uploader.upload(imageFileName, {
+              resource_type: 'auto'
+            });
+
+            const newCarDetails = _objectSpread({}, validationObject, {
+              ownerId: req.user.id,
+              ownerEmail: req.user.email,
+              imageUrl: file.url
+            }); // Create new car
+
+
+            const createdCar = await _Car.default.createCar(newCarDetails);
+            (0, _Response.default)(res, 201, createdCar); // Delete temporary image file
+
+            _fs.default.unlink(imageFileName, er => {
+              if (er) throw er;
+              console.log('Image File Deleted');
+            });
+          }
+        } else {
+          (0, _Response.default)(res, 400, 'Image expected to be named carImage');
+        }
+      } else {
+        const _req$body2 = req.body,
+              state = _req$body2.state,
+              status = _req$body2.status,
+              price = _req$body2.price,
+              manufacturer = _req$body2.manufacturer,
+              model = _req$body2.model,
+              bodyType = _req$body2.bodyType;
         const validationObject = {
           state,
           status,
@@ -54,8 +106,8 @@ class CarController {
           bodyType
         };
 
-        const _Validation$newCarVal = _Validation.default.newCarValidation(validationObject),
-              error = _Validation$newCarVal.error;
+        const _Validation$newCarVal2 = _Validation.default.newCarValidation(validationObject),
+              error = _Validation$newCarVal2.error;
 
         if (error) {
           res.status(400).json({
@@ -64,76 +116,22 @@ class CarController {
             success: false
           });
         } else {
-          // Upload to cloudinary
-          const imageFileName = req.files.carImage.path;
-          cloudinary.uploader.upload(imageFileName, {
-            resource_type: 'auto'
-          }, (err, file) => {
-            if (err) {
-              (0, _Response.default)(res, 500, err);
-            } else {
-              const newCarDetails = _objectSpread({}, validationObject, {
-                ownerId: req.user.id,
-                ownerEmail: req.user.email,
-                imageUrl: file.url
-              }); // Create new car
+          const newCarDetails = _objectSpread({}, validationObject, {
+            ownerId: req.user.id,
+            ownerEmail: req.user.email
+          }); // Create new car
 
 
-              const createdCar = _Car.default.createCar(newCarDetails);
-
-              (0, _Response.default)(res, 201, createdCar); // Delete temporary image file
-
-              _fs.default.unlink(imageFileName, er => {
-                if (er) throw err;
-                console.log('Image File Deleted');
-              });
-            }
+          const createdCar = await _Car.default.createCar(newCarDetails);
+          res.status(201).json({
+            status: 201,
+            data: createdCar,
+            sucess: true
           });
         }
-      } else {
-        (0, _Response.default)(res, 400, 'Image expected to be named carImage');
       }
-    } else {
-      const _req$body2 = req.body,
-            state = _req$body2.state,
-            status = _req$body2.status,
-            price = _req$body2.price,
-            manufacturer = _req$body2.manufacturer,
-            model = _req$body2.model,
-            bodyType = _req$body2.bodyType;
-      const validationObject = {
-        state,
-        status,
-        price,
-        manufacturer,
-        model,
-        bodyType
-      };
-
-      const _Validation$newCarVal2 = _Validation.default.newCarValidation(validationObject),
-            error = _Validation$newCarVal2.error;
-
-      if (error) {
-        res.status(400).json({
-          status: 400,
-          error: "Issue with parameters supplied. Problem ".concat(error),
-          success: false
-        });
-      } else {
-        const newCarDetails = _objectSpread({}, validationObject, {
-          ownerId: req.user.id,
-          ownerEmail: req.user.email
-        }); // Create new car
-
-
-        const createdCar = _Car.default.createCar(newCarDetails);
-
-        res.status(201).json({
-          status: 201,
-          data: createdCar,
-          sucess: true
-        });
-      }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 

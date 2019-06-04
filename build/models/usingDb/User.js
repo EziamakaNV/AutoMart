@@ -19,7 +19,7 @@ class UserModel {
         if (result.rows.length === 0) {
           resolve(false);
         } else {
-          resolve(true);
+          resolve(result.rows[0]);
         }
       }).catch(err => reject(err));
     });

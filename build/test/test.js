@@ -1005,3 +1005,118 @@ describe('POST /api/v2/auth/signup', () => {
     done();
   });
 });
+describe('POST /api/v2/auth/signin', () => {
+  describe('When all the data povided is in the right format', () => {
+    it('if the user has an account, it should respond with a property status of 200 and a data property with a token', done => {
+      _chai.default.request(_server.default).post('/api/v2/auth/signin').type('form').send({
+        email: 'test@tester.com',
+        password: '123abc'
+      }).end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object');
+        expect(res.body.data, 'data object').to.haveOwnProperty('token');
+        done();
+      });
+    });
+    it('should respond with 401 status and error properties if invalid credentials are submitted', done => {
+      _chai.default.request(_server.default).post('/api/v2/auth/signin').type('form').send({
+        email: 'example@test.com',
+        password: 'nothing'
+      }).end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(401);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+    });
+  });
+  describe('handles invalid input ((POST body properties))', () => {
+    it('should not be able to log in if all parameters are not present', done => {
+      _chai.default.request(_server.default).post('/api/v2/auth/signin').type('form').send({
+        email: 'TDD@epicmail.com'
+      }).end((err, res) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(err).to.be.null;
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.haveOwnProperty('status');
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.haveOwnProperty('error');
+        expect(res.body.error).to.be.a('string');
+        done();
+      });
+    });
+  });
+});
+describe('POST /api/v2/car/', () => {
+  it('The request shouldnt go through if the token in the cookie is missing', done => {
+    // Jwt missing in cookie
+    _chai.default.request(_server.default).post('/api/v2/car').end((err, res) => {
+      expect(err).to.be.null;
+      expect(res).to.have.status(401);
+      expect(res.body, 'response body').to.be.a('object');
+      expect(res.body, 'response body').to.haveOwnProperty('status');
+      expect(res.body.status, 'status property').to.equal(401);
+      expect(res.body, 'response body').to.haveOwnProperty('error');
+      expect(res.body.error).to.be.a('string');
+      done();
+    });
+  });
+  describe('A request with a valid token in the cookie (Client logged in)', () => {
+    let carId;
+    after(done => {
+      _index.default.query('DELETE FROM cars where id = $1', [carId]);
+
+      done();
+    });
+    it('The request should be successful when all parameters are supplied correctly', done => {
+      _chai.default.request(_server.default).post('/api/v2/car').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc').send({
+        state: 'new',
+        status: 'available',
+        price: '2000000',
+        manufacturer: 'Toyota',
+        model: 'Camry',
+        bodyType: 'car'
+      }).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(201);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(201);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object');
+        carId = res.body.data.id;
+        done();
+      });
+    });
+    it('The request shoud not be successful if any of the parameters are missing from the request body', done => {
+      _chai.default.request(_server.default).post('/api/v2/car').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc').send({
+        state: 'new',
+        status: 'available',
+        manufacturer: 'Toyota',
+        model: 'Camry',
+        type: 'car'
+      }).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'data property').to.be.a('string');
+        done();
+      });
+    });
+  });
+});

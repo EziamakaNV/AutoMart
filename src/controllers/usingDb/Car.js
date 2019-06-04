@@ -3,13 +3,13 @@ import cloudinaryModule from 'cloudinary';
 
 import fs from 'fs';
 
-import Validation from '../validations/Validation';
+import Validation from '../../validations/Validation';
 
-import CarModel from '../models/Car';
+import CarModel from '../../models/usingDb/Car';
 
-import response from '../responses/Response';
+import response from '../../responses/Response';
 
-import UserModel from '../models/User';
+import UserModel from '../../models/usingDb/User';
 
 // Cloudinary
 require('dotenv').config();
@@ -17,11 +17,55 @@ require('dotenv').config();
 const cloudinary = cloudinaryModule.v2;
 
 class CarController {
-  static createCar(req, res) {
-    // If the car image is present
-    if (req.files) {
+  static async createCar(req, res) {
+    try {
+      // If the car image is present
+      if (req.files) {
       // The image is properly added to the form
-      if (req.files.carImage) {
+        if (req.files.carImage) {
+          const {
+            state,
+            status,
+            price,
+            manufacturer,
+            model,
+            bodyType,
+          } = req.body;
+          const validationObject = {
+            state,
+            status,
+            price,
+            manufacturer,
+            model,
+            bodyType,
+          };
+
+          const { error } = Validation.newCarValidation(validationObject);
+          if (error) {
+            res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
+          } else {
+            // Upload to cloudinary
+            const imageFileName = req.files.carImage.path;
+            const file = await cloudinary.uploader.upload(imageFileName, { resource_type: 'auto' });
+            const newCarDetails = {
+              ...validationObject,
+              ownerId: req.user.id,
+              ownerEmail: req.user.email,
+              imageUrl: file.url,
+            };
+            // Create new car
+            const createdCar = await CarModel.createCar(newCarDetails);
+            response(res, 201, createdCar);
+            // Delete temporary image file
+            fs.unlink(imageFileName, (er) => {
+              if (er) throw er;
+              console.log('Image File Deleted');
+            });
+          }
+        } else {
+          response(res, 400, 'Image expected to be named carImage');
+        }
+      } else {
         const {
           state,
           status,
@@ -43,59 +87,14 @@ class CarController {
         if (error) {
           res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
         } else {
-        // Upload to cloudinary
-          const imageFileName = req.files.carImage.path;
-          cloudinary.uploader.upload(imageFileName, { resource_type: 'auto' }, (err, file) => {
-            if (err) {
-              response(res, 500, err);
-            } else {
-              const newCarDetails = {
-                ...validationObject,
-                ownerId: req.user.id,
-                ownerEmail: req.user.email,
-                imageUrl: file.url,
-              };
-              // Create new car
-              const createdCar = CarModel.createCar(newCarDetails);
-              response(res, 201, createdCar);
-              // Delete temporary image file
-              fs.unlink(imageFileName, (er) => {
-                if (er) throw err;
-                console.log('Image File Deleted');
-              });
-            }
-          });
+          const newCarDetails = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
+          // Create new car
+          const createdCar = await CarModel.createCar(newCarDetails);
+          res.status(201).json({ status: 201, data: createdCar, sucess: true });
         }
-      } else {
-        response(res, 400, 'Image expected to be named carImage');
       }
-    } else {
-      const {
-        state,
-        status,
-        price,
-        manufacturer,
-        model,
-        bodyType,
-      } = req.body;
-      const validationObject = {
-        state,
-        status,
-        price,
-        manufacturer,
-        model,
-        bodyType,
-      };
-
-      const { error } = Validation.newCarValidation(validationObject);
-      if (error) {
-        res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
-      } else {
-        const newCarDetails = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
-        // Create new car
-        const createdCar = CarModel.createCar(newCarDetails);
-        res.status(201).json({ status: 201, data: createdCar, sucess: true });
-      }
+    } catch (error) {
+      response(res, 500, error);
     }
   }
 
