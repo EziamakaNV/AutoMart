@@ -1301,7 +1301,6 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
           status: 'sold'
         }).end((error, resp) => {
           expect(error).to.be.null;
-          console.log(resp.body, carId);
           expect(resp, 'response object status').to.have.status(401);
           expect(resp.body, 'response body').to.be.a('object');
           expect(resp.body, 'response body').to.haveOwnProperty('status');
@@ -1356,7 +1355,7 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
     });
   });
 });
-describe('PATCH /api/v1/car/<:car-id>/price', () => {
+describe('PATCH /api/v2/car/<:car-id>/price', () => {
   describe('When the token is present', () => {
     it('When all parameters are correctly supplied the request is successful', done => {
       _chai.default.request(_server.default).patch('/api/v2/car/3/price').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({
@@ -1447,6 +1446,49 @@ describe('PATCH /api/v1/car/<:car-id>/price', () => {
       expect(res.body, 'response body').to.haveOwnProperty('error');
       expect(res.body.error).to.be.a('string');
       done();
+    });
+  });
+});
+describe('GET /api/v2/car/<:car-id>', () => {
+  describe('When the token is present', () => {
+    it('When all parameters are correctly supplied the request is successful', done => {
+      _chai.default.request(_server.default).get('/api/v2/car/3').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object');
+        done();
+      });
+    });
+    it('The request shoud not be successful if the carid provided doesnt exist or is invalid', done => {
+      _chai.default.request(_server.default).get('/api/v2/car/ttyr').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+    });
+  });
+  describe('When the token is missing', done => {
+    it('The request shouldnt go through if the token in the cookie is missing', done => {
+      // Jwt missing in cookie
+      _chai.default.request(_server.default).get('/api/v2/car/1').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(401);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error).to.be.a('string');
+        done();
+      });
     });
   });
 });

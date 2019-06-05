@@ -205,26 +205,30 @@ class CarController {
     }
   }
 
-  static viewSpecificCar(req, res) {
-    const carId = Number(req.params.carId);
-    const validationObject = {
-      carId
-    };
+  static async viewSpecificCar(req, res) {
+    try {
+      const carId = Number(req.params.carId);
+      const validationObject = {
+        carId
+      };
 
-    const _Validation$viewSpeci = _Validation.default.viewSpecificCar(validationObject),
-          error = _Validation$viewSpeci.error;
+      const _Validation$viewSpeci = _Validation.default.viewSpecificCar(validationObject),
+            error = _Validation$viewSpeci.error;
 
-    if (error) {
-      (0, _Response.default)(res, 400, error);
-    } else {
-      // Check if the car exists
-      const carAd = _Car.default.findOne(carId);
-
-      if (carAd) {
-        (0, _Response.default)(res, 200, carAd);
+      if (error) {
+        (0, _Response.default)(res, 400, error);
       } else {
-        (0, _Response.default)(res, 400, 'The Car Ad does not exist');
+        // Check if the car exists
+        const carAd = await _Car.default.findOne(carId);
+
+        if (carAd) {
+          (0, _Response.default)(res, 200, carAd);
+        } else {
+          (0, _Response.default)(res, 400, 'The Car Ad does not exist');
+        }
       }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 
