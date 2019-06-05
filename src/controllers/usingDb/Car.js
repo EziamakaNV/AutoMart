@@ -98,29 +98,33 @@ class CarController {
     }
   }
 
-  static updateStatus(req, res) {
-    const { status } = req.body;
-    const carId = Number(req.params.carId);
+  static async updateStatus(req, res) {
+    try {
+      const { status } = req.body;
+      const carId = Number(req.params.carId);
 
-    const validationObject = { status, carId };
-    const { error } = Validation.carStatusUpdate(validationObject);
+      const validationObject = { status, carId };
+      const { error } = Validation.carStatusUpdate(validationObject);
 
-    if (error) {
-      response(res, 400, error);
-    } else {
-      // Check if the car id exists
-      const carAd = CarModel.findOne(carId);
-      if (carAd) {
-        // Check if the owner of the ad is the one updating the ad
-        if (carAd.owner === req.user.id) {
-          const updatedCar = CarModel.updateStatus(carId, 'sold');
-          response(res, 200, updatedCar);
-        } else {
-          response(res, 401, 'You do not own this Ad');
-        }
+      if (error) {
+        response(res, 400, error);
       } else {
-        response(res, 400, 'The Car Ad Doesnt Exist');
+      // Check if the car id exists
+        const carAd = await CarModel.findOne(carId);
+        if (carAd) {
+        // Check if the owner of the ad is the one updating the ad
+          if (carAd.owner === req.user.id) {
+            const updatedCar = await CarModel.updateStatus(carId, 'sold');
+            response(res, 200, updatedCar);
+          } else {
+            response(res, 401, 'You do not own this Ad');
+          }
+        } else {
+          response(res, 400, 'The Car Ad Doesnt Exist');
+        }
       }
+    } catch (error) {
+      response(res, 500, error);
     }
   }
 

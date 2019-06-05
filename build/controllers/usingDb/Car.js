@@ -135,35 +135,38 @@ class CarController {
     }
   }
 
-  static updateStatus(req, res) {
-    const status = req.body.status;
-    const carId = Number(req.params.carId);
-    const validationObject = {
-      status,
-      carId
-    };
+  static async updateStatus(req, res) {
+    try {
+      const status = req.body.status;
+      const carId = Number(req.params.carId);
+      const validationObject = {
+        status,
+        carId
+      };
 
-    const _Validation$carStatus = _Validation.default.carStatusUpdate(validationObject),
-          error = _Validation$carStatus.error;
+      const _Validation$carStatus = _Validation.default.carStatusUpdate(validationObject),
+            error = _Validation$carStatus.error;
 
-    if (error) {
-      (0, _Response.default)(res, 400, error);
-    } else {
-      // Check if the car id exists
-      const carAd = _Car.default.findOne(carId);
-
-      if (carAd) {
-        // Check if the owner of the ad is the one updating the ad
-        if (carAd.owner === req.user.id) {
-          const updatedCar = _Car.default.updateStatus(carId, 'sold');
-
-          (0, _Response.default)(res, 200, updatedCar);
-        } else {
-          (0, _Response.default)(res, 401, 'You do not own this Ad');
-        }
+      if (error) {
+        (0, _Response.default)(res, 400, error);
       } else {
-        (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
+        // Check if the car id exists
+        const carAd = await _Car.default.findOne(carId);
+
+        if (carAd) {
+          // Check if the owner of the ad is the one updating the ad
+          if (carAd.owner === req.user.id) {
+            const updatedCar = await _Car.default.updateStatus(carId, 'sold');
+            (0, _Response.default)(res, 200, updatedCar);
+          } else {
+            (0, _Response.default)(res, 401, 'You do not own this Ad');
+          }
+        } else {
+          (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
+        }
       }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 

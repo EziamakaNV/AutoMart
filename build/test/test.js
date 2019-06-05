@@ -1261,3 +1261,99 @@ describe('PATCH /api/v2/order/<:order-id>/price', () => {
     });
   });
 });
+describe('PATCH /api/v2/car/<:car-id>/status', () => {
+  describe('When the token is present', () => {
+    it('When all parameters are correctly supplied the request is successful', done => {
+      _chai.default.request(_server.default).patch('/api/v2/car/3/status').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({
+        status: 'sold'
+      }).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object');
+        done();
+      });
+    });
+    let carId;
+    it('Only the owner of the ad can update the status of the car ad', done => {
+      // Create a car ad with user two token
+      _chai.default.request(_server.default).post('/api/v2/car').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({
+        state: 'new',
+        status: 'available',
+        price: '2000000',
+        manufacturer: 'Bitch',
+        model: 'One',
+        bodyType: 'biatch'
+      }).end((err, res) => {
+        carId = res.body.data.id;
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(201);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(201);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('object'); // Update the status with user three token
+
+        _chai.default.request(_server.default).patch("/api/v2/car/".concat(carId, "/status")).type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU').send({
+          status: 'sold'
+        }).end((error, resp) => {
+          expect(error).to.be.null;
+          console.log(resp.body, carId);
+          expect(resp, 'response object status').to.have.status(401);
+          expect(resp.body, 'response body').to.be.a('object');
+          expect(resp.body, 'response body').to.haveOwnProperty('status');
+          expect(resp.body.status, 'status property').to.equal(401);
+          expect(resp.body, 'response body').to.haveOwnProperty('error');
+          expect(resp.body.error, 'data property').to.be.a('string');
+          done();
+        });
+      });
+    });
+    after(done => {
+      _index.default.query('DELETE FROM cars WHERE id = $1', [carId]).then(() => {
+        console.log('Gonna delete');
+        done();
+      });
+    });
+    it('The request shoud not be successful if any of the parameters are missing from the request body', done => {
+      _chai.default.request(_server.default).patch('/api/v2/car/3/status').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'data property').to.be.a('string');
+        done();
+      });
+    });
+    it('The request shoud not be successful if the carid doesnt exist or is invalid', done => {
+      _chai.default.request(_server.default).patch('/api/v2/car/ttyr/status').type('form').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({}).end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(400);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(400);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error, 'error property').to.be.a('string');
+        done();
+      });
+    });
+  });
+  it('The request shouldnt go through if the token in the cookie is missing', done => {
+    // Jwt missing in cookie
+    _chai.default.request(_server.default).patch('/api/v2/car/1/status').type('form').end((err, res) => {
+      expect(err).to.be.null;
+      expect(res).to.have.status(401);
+      expect(res.body, 'response body').to.be.a('object');
+      expect(res.body, 'response body').to.haveOwnProperty('status');
+      expect(res.body.status, 'status property').to.equal(401);
+      expect(res.body, 'response body').to.haveOwnProperty('error');
+      expect(res.body.error).to.be.a('string');
+      done();
+    });
+  });
+});

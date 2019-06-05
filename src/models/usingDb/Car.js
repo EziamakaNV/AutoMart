@@ -26,10 +26,11 @@ class CarModel {
   }
 
   static updateStatus(id, status) {
-    const car = this.findOne(id);
-    const index = this.cars.indexOf(car);
-    this.cars[index].status = status;
-    return this.cars[index];
+    return new Promise((resolve, reject) => {
+      const query = 'UPDATE cars SET status = $1 WHERE id = $2 RETURNING *';
+      const values = [status, id];
+      db.query(query, values).then(result => resolve(result.rows[0])).catch(err => reject(err));
+    });
   }
 
   static updatePrice(id, price) {
