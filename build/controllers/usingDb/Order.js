@@ -81,66 +81,69 @@ class OrderController {
     }
   }
 
-  static updateOrder(req, res) {
-    const orderId = Number(req.params.orderId);
-    const amount = req.body.amount;
+  static async updateOrder(req, res) {
+    try {
+      const orderId = Number(req.params.orderId);
+      const amount = req.body.amount;
 
-    const _Validation$orderUpda = _Validation.default.orderUpdate({
-      orderId,
-      amount
-    }),
-          error = _Validation$orderUpda.error;
+      const _Validation$orderUpda = _Validation.default.orderUpdate({
+        orderId,
+        amount
+      }),
+            error = _Validation$orderUpda.error;
 
-    if (error) {
-      res.status(400).json({
-        status: 400,
-        error: "".concat(error),
-        success: false
-      });
-    } else {
-      // Check if the order exists
-      const initialOrder = _Order.default.findOne(orderId);
+      if (error) {
+        res.status(400).json({
+          status: 400,
+          error: "".concat(error),
+          success: false
+        });
+      } else {
+        // Check if the order exists
+        const initialOrder = await _Order.default.findOne(orderId);
 
-      if (initialOrder) {
-        // Had to assign seprately because of object assignment by reference
-        const initialOrderAmount = initialOrder.amount; // Check if the owner if the order is the same person updating it
+        if (initialOrder) {
+          // Had to assign seprately because of object assignment by reference
+          const initialOrderAmount = initialOrder.amount; // Check if the owner if the order is the same person updating it
 
-        if (initialOrder.buyer === req.user.id) {
-          // Check if the status of the order is still pending
-          if (initialOrder.status === 'pending') {
-            const updatedOrder = _Order.default.update(orderId, amount);
-
-            res.status(200).json({
-              status: 200,
-              data: {
-                id: updatedOrder.id,
-                carId: updatedOrder.carId,
-                status: updatedOrder.status,
-                oldPriceOffered: initialOrderAmount,
-                newPriceOffered: updatedOrder.amount
-              }
-            });
+          if (initialOrder.buyer === req.user.id) {
+            // Check if the status of the order is still pending
+            if (initialOrder.status === 'pending') {
+              const updatedOrder = await _Order.default.update(orderId, amount);
+              res.status(200).json({
+                status: 200,
+                data: {
+                  id: updatedOrder.id,
+                  carId: updatedOrder.car_id,
+                  status: updatedOrder.status,
+                  oldPriceOffered: initialOrderAmount,
+                  newPriceOffered: updatedOrder.amount
+                }
+              });
+            } else {
+              res.status(401).json({
+                status: 401,
+                error: 'This order is no longer pending',
+                success: true
+              });
+            }
           } else {
             res.status(401).json({
               status: 401,
-              error: 'This order is no longer pending',
-              success: true
+              error: 'You do not own this order',
+              success: false
             });
           }
         } else {
-          res.status(401).json({
-            status: 401,
-            error: 'You do not own this order',
+          res.status(400).json({
+            status: 400,
+            error: 'Order does not exist',
             success: false
           });
         }
-      } else {
-        res.status(400).json({
-          status: 400,
-          error: 'Order does not exist',
-          success: false
-        });
       }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 

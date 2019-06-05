@@ -13,14 +13,25 @@ class OrderModel {
   }
 
   static findOne(id) {
-    return this.orders.find(order => order.id === id);
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM orders WHERE id = $1';
+      const values = [id];
+      db.query(query, values).then((result) => {
+        if (result.rows.length === 0) {
+          resolve(false);
+        } else {
+          resolve(result.rows[0]);
+        }
+      }).catch(err => reject(err));
+    });
   }
 
   static update(id, amount) {
-    const order = this.findOne(id);
-    const index = this.orders.indexOf(order);
-    this.orders[index].amount = amount;
-    return this.orders[index];
+    return new Promise((resolve, reject) => {
+      const query = 'UPDATE orders SET amount = $1 WHERE id = $2 RETURNING *';
+      const values = [amount, id];
+      db.query(query, values).then(result => resolve(result.rows[0])).catch(err => reject(err));
+    });
   }
 
   static previousOrderExists(carId, buyer) {
