@@ -12,7 +12,17 @@ class CarModel {
   }
 
   static findOne(id) {
-    return this.cars.find(car => car.id === id);
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM cars WHERE id = $1';
+      const values = [id];
+      db.query(query, values).then((result) => {
+        if (result.rows.length === 0) {
+          resolve(false);
+        } else {
+          resolve(result.rows[0]);
+        }
+      }).catch(err => reject(err));
+    });
   }
 
   static updateStatus(id, status) {

@@ -23,6 +23,8 @@ var _user2 = _interopRequireDefault(require("./routes/usingDb/user"));
 
 var _car2 = _interopRequireDefault(require("./routes/usingDb/car"));
 
+var _order2 = _interopRequireDefault(require("./routes/usingDb/order"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable linebreak-style */
@@ -51,6 +53,7 @@ app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.defau
 
 app.use('/api/v2/auth', _user2.default);
 app.use('/api/v2/car', _car2.default);
+app.use('/api/v2/order', _order2.default);
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

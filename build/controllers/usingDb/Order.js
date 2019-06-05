@@ -9,11 +9,13 @@ require("core-js/modules/es6.symbol");
 
 require("core-js/modules/web.dom.iterable");
 
-var _Validation = _interopRequireDefault(require("../validations/Validation"));
+var _Validation = _interopRequireDefault(require("../../validations/Validation"));
 
-var _Order = _interopRequireDefault(require("../models/Order"));
+var _Order = _interopRequireDefault(require("../../models/usingDb/Order"));
 
-var _Car = _interopRequireDefault(require("../models/Car"));
+var _Car = _interopRequireDefault(require("../../models/usingDb/Car"));
+
+var _Response = _interopRequireDefault(require("../../responses/Response"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,59 +24,60 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 class OrderController {
-  static createOrder(req, res) {
-    const orderDetails = {
-      carId: req.body.carId,
-      amount: req.body.amount
-    };
+  static async createOrder(req, res) {
+    try {
+      const orderDetails = {
+        carId: req.body.carId,
+        amount: req.body.amount
+      };
 
-    const _Validation$newOrderV = _Validation.default.newOrderValidation(orderDetails),
-          error = _Validation$newOrderV.error;
+      const _Validation$newOrderV = _Validation.default.newOrderValidation(orderDetails),
+            error = _Validation$newOrderV.error;
 
-    if (error) {
-      res.status(400).json({
-        status: 400,
-        error: "Issue with parameters supplies. Problem: ".concat(error)
-      });
-    } else {
-      // Get car details
-      const carAd = _Car.default.findOne(orderDetails.carId);
-
-      if (!carAd) {
-        res.status(404).json({
-          status: 404,
-          error: 'Car/Ad does not exist'
+      if (error) {
+        res.status(400).json({
+          status: 400,
+          error: "Issue with parameters supplies. Problem: ".concat(error)
         });
       } else {
-        // Ensure one cant place more than one order on a car ad
-        const previousOrderExists = _Order.default.previousOrderExists(carAd.id, req.user.id);
+        // Get car details
+        const carAd = await _Car.default.findOne(orderDetails.carId);
 
-        if (previousOrderExists) {
-          res.status(401).json({
-            status: 401,
-            error: 'You already have an order pending for this ad',
-            success: false
+        if (!carAd) {
+          res.status(404).json({
+            status: 404,
+            error: 'Car/Ad does not exist'
           });
         } else {
-          // Create order
-          const newOrder = {
-            buyer: req.user.id,
-            carId: carAd.id,
-            amount: orderDetails.amount
-          };
+          // Ensure one cant place more than one order on a car ad
+          const previousOrderExists = await _Order.default.previousOrderExists(carAd.id, req.user.id);
 
-          const createdOrder = _Order.default.createOrder(newOrder);
-
-          res.status(201).json({
-            status: 201,
-            data: _objectSpread({}, createdOrder, {
+          if (previousOrderExists) {
+            res.status(401).json({
+              status: 401,
+              error: 'You already have an order pending for this ad',
+              success: false
+            });
+          } else {
+            // Create order
+            const newOrder = {
+              buyer: req.user.id,
               carId: carAd.id,
-              price: carAd.price,
-              priceOffered: orderDetails.amount
-            })
-          });
+              amount: orderDetails.amount
+            };
+            const createdOrder = await _Order.default.createOrder(newOrder);
+            res.status(201).json({
+              status: 201,
+              data: _objectSpread({}, createdOrder, {
+                price: carAd.price,
+                priceOffered: orderDetails.amount
+              })
+            });
+          }
         }
       }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 

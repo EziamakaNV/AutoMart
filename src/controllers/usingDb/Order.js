@@ -1,50 +1,54 @@
 /* eslint-disable linebreak-style */
-import Validation from '../validations/Validation';
+import Validation from '../../validations/Validation';
 
-import OrderModel from '../models/Order';
+import OrderModel from '../../models/usingDb/Order';
 
-import CarModel from '../models/Car';
+import CarModel from '../../models/usingDb/Car';
+import response from '../../responses/Response';
 
 class OrderController {
-  static createOrder(req, res) {
-    const orderDetails = {
-      carId: req.body.carId,
-      amount: req.body.amount,
-    };
-
-    const { error } = Validation.newOrderValidation(orderDetails);
-
-    if (error) {
-      res.status(400).json({ status: 400, error: `Issue with parameters supplies. Problem: ${error}` });
-    } else {
-      // Get car details
-      const carAd = CarModel.findOne(orderDetails.carId);
-      if (!carAd) {
-        res.status(404).json({ status: 404, error: 'Car/Ad does not exist' });
+  static async createOrder(req, res) {
+    try {
+      const orderDetails = {
+        carId: req.body.carId,
+        amount: req.body.amount,
+      };
+  
+      const { error } = Validation.newOrderValidation(orderDetails);
+  
+      if (error) {
+        res.status(400).json({ status: 400, error: `Issue with parameters supplies. Problem: ${error}` });
       } else {
-        // Ensure one cant place more than one order on a car ad
-        const previousOrderExists = OrderModel.previousOrderExists(carAd.id, req.user.id);
-        if (previousOrderExists) {
-          res.status(401).json({ status: 401, error: 'You already have an order pending for this ad', success: false });
+        // Get car details
+        const carAd = await CarModel.findOne(orderDetails.carId);
+        if (!carAd) {
+          res.status(404).json({ status: 404, error: 'Car/Ad does not exist' });
         } else {
-          // Create order
-          const newOrder = {
-            buyer: req.user.id,
-            carId: carAd.id,
-            amount: orderDetails.amount,
-          };
-          const createdOrder = OrderModel.createOrder(newOrder);
-          res.status(201).json({
-            status: 201,
-            data: {
-              ...createdOrder,
+          // Ensure one cant place more than one order on a car ad
+          const previousOrderExists = await OrderModel.previousOrderExists(carAd.id, req.user.id);
+          if (previousOrderExists) {
+            res.status(401).json({ status: 401, error: 'You already have an order pending for this ad', success: false });
+          } else {
+            // Create order
+            const newOrder = {
+              buyer: req.user.id,
               carId: carAd.id,
-              price: carAd.price,
-              priceOffered: orderDetails.amount,
-            },
-          });
+              amount: orderDetails.amount,
+            };
+            const createdOrder = await OrderModel.createOrder(newOrder);
+            res.status(201).json({
+              status: 201,
+              data: {
+                ...createdOrder,
+                price: carAd.price,
+                priceOffered: orderDetails.amount,
+              },
+            });
+          }
         }
       }
+    } catch (error) {
+      response(res, 500, error)
     }
   }
 

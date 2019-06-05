@@ -18,6 +18,8 @@ import userRoute2 from './routes/usingDb/user';
 
 import carRoute2 from './routes/usingDb/car';
 
+import orderRoute2 from './routes/usingDb/order';
+
 require('dotenv').config();
 
 const app = express();
@@ -48,6 +50,8 @@ app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v2/auth', userRoute2);
 
 app.use('/api/v2/car', carRoute2);
+
+app.use('/api/v2/order', orderRoute2);
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console
