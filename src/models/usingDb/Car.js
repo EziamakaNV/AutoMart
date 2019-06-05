@@ -34,10 +34,11 @@ class CarModel {
   }
 
   static updatePrice(id, price) {
-    const car = this.findOne(id);
-    const index = this.cars.indexOf(car);
-    this.cars[index].price = price;
-    return this.cars[index];
+    return new Promise((resolve, reject) => {
+      const query = 'UPDATE cars SET price = $1 WHERE id = $2 RETURNING *';
+      const values = [price, id];
+      db.query(query, values).then(result => resolve(result.rows[0])).catch(err => reject(err));
+    });
   }
 
   static findAllAvailableRange(minPrice, maxPrice) {
