@@ -19,6 +19,12 @@ var _car = _interopRequireDefault(require("./routes/car"));
 
 var _order = _interopRequireDefault(require("./routes/order"));
 
+var _user2 = _interopRequireDefault(require("./routes/usingDb/user"));
+
+var _car2 = _interopRequireDefault(require("./routes/usingDb/car"));
+
+var _order2 = _interopRequireDefault(require("./routes/usingDb/order"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable linebreak-style */
@@ -29,6 +35,8 @@ require('dotenv').config();
 const app = (0, _express.default)();
 
 const swaggerDocument = require('../swagger.json');
+
+const swaggerDocumentV2 = require('../swagger_v2.json');
 
 const PORT = process.env.PORT || 5000;
 app.use((0, _cookieParser.default)());
@@ -41,6 +49,14 @@ app.use('/api/v1/car', _car.default);
 app.use('/api/v1/order', _order.default); // Swagger API doc
 
 app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument));
+/*
+  API V2
+*/
+
+app.use('/api/v2/auth', _user2.default);
+app.use('/api/v2/car', _car2.default);
+app.use('/api/v2/order', _order2.default);
+app.use('/api/v2/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocumentV2));
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

@@ -6,7 +6,7 @@
       "title": "Auto Mart"
     },
     "host": "",
-    "basePath": "/api/v1",
+    "basePath": "/api/v2",
     "tags": [
       {
         "name": "auth",

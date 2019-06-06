@@ -14,11 +14,19 @@ import carRoute from './routes/car';
 
 import orderRoute from './routes/order';
 
+import userRoute2 from './routes/usingDb/user';
+
+import carRoute2 from './routes/usingDb/car';
+
+import orderRoute2 from './routes/usingDb/order';
+
 require('dotenv').config();
 
 const app = express();
 
 const swaggerDocument = require('../swagger.json');
+
+const swaggerDocumentV2 = require('../swagger_v2.json');
 
 const PORT = process.env.PORT || 5000;
 
@@ -36,6 +44,18 @@ app.use('/api/v1/order', orderRoute);
 
 // Swagger API doc
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+/*
+  API V2
+*/
+
+app.use('/api/v2/auth', userRoute2);
+
+app.use('/api/v2/car', carRoute2);
+
+app.use('/api/v2/order', orderRoute2);
+
+app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console
