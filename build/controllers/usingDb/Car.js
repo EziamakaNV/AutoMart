@@ -232,82 +232,86 @@ class CarController {
     }
   }
 
-  static viewCars(req, res) {
-    // Determine if there is a query object has any properties
-    const queryStatus = req.query.hasOwnProperty('status');
-    const queryMinPrice = req.query.hasOwnProperty('min_price');
-    const queryMaxPrice = req.query.hasOwnProperty('max_price'); // When all three query properties are present
+  static async viewCars(req, res) {
+    try {
+      // Determine if there is a query object has any properties
+      const queryStatus = req.query.hasOwnProperty('status');
+      const queryMinPrice = req.query.hasOwnProperty('min_price');
+      const queryMaxPrice = req.query.hasOwnProperty('max_price'); // When all three query properties are present
 
-    if (queryStatus && queryMinPrice && queryMaxPrice) {
-      // Run validation
-      const status = req.query.status;
-      const minPrice = Number(req.query.min_price);
-      const maxPrice = Number(req.query.max_price);
+      if (queryStatus && queryMinPrice && queryMaxPrice) {
+        // Run validation
+        const status = req.query.status;
+        const minPrice = Number(req.query.min_price);
+        const maxPrice = Number(req.query.max_price);
 
-      const _Validation$viewCars = _Validation.default.viewCars({
-        status,
-        minPrice,
-        maxPrice
-      }),
-            error = _Validation$viewCars.error;
+        const _Validation$viewCars = _Validation.default.viewCars({
+          status,
+          minPrice,
+          maxPrice
+        }),
+              error = _Validation$viewCars.error;
 
-      if (error) {
-        (0, _Response.default)(res, 400, error);
+        if (error) {
+          (0, _Response.default)(res, 400, error);
+        } else {
+          const cars = await _Car.default.findAllAvailableRange(minPrice, maxPrice);
+          (0, _Response.default)(res, 200, cars);
+        }
+      } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
+        const status = req.query.status;
+
+        const _Validation$viewCars2 = _Validation.default.viewCars({
+          status
+        }),
+              error = _Validation$viewCars2.error;
+
+        if (error) {
+          (0, _Response.default)(res, 400, error);
+        } else {
+          const cars = await _Car.default.findAllAvailable();
+          (0, _Response.default)(res, 200, cars);
+        }
       } else {
-        const cars = _Car.default.findAllAvailableRange(minPrice, maxPrice);
+        // Only admins can view this
+        const isAdmin = await _User.default.isAdmin(req.user.id);
 
-        (0, _Response.default)(res, 200, cars);
+        if (isAdmin) {
+          const cars = await _Car.default.findAll();
+          (0, _Response.default)(res, 200, cars);
+        } else {
+          (0, _Response.default)(res, 401, 'You are not an Admin');
+        }
       }
-    } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
-      const status = req.query.status;
-
-      const _Validation$viewCars2 = _Validation.default.viewCars({
-        status
-      }),
-            error = _Validation$viewCars2.error;
-
-      if (error) {
-        (0, _Response.default)(res, 400, error);
-      } else {
-        const cars = _Car.default.findAllAvailable();
-
-        (0, _Response.default)(res, 200, cars);
-      }
-    } else {
-      // Only admins can view this
-      const isAdmin = _User.default.isAdmin(req.user.id);
-
-      if (isAdmin) {
-        const cars = _Car.default.findAll();
-
-        (0, _Response.default)(res, 200, cars);
-      } else {
-        (0, _Response.default)(res, 401, 'You are not an Admin');
-      }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 
-  static deleteCar(req, res) {
-    const carId = Number(req.params.carId);
+  static async deleteCar(req, res) {
+    try {
+      const carId = Number(req.params.carId);
 
-    const _Validation$deleteCar = _Validation.default.deleteCar({
-      carId
-    }),
-          error = _Validation$deleteCar.error;
+      const _Validation$deleteCar = _Validation.default.deleteCar({
+        carId
+      }),
+            error = _Validation$deleteCar.error;
 
-    if (error) {
-      (0, _Response.default)(res, 400, error);
-    } else {
-      // Check if the Ad exists
-      const carAd = _Car.default.findOne(carId);
-
-      if (carAd) {
-        const deletedCar = _Car.default.deleteCar(carAd);
-
-        (0, _Response.default)(res, 200, 'Car Ad successfully deleted');
+      if (error) {
+        (0, _Response.default)(res, 400, error);
       } else {
-        (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
+        // Check if the Ad exists
+        const carAd = await _Car.default.findOne(carId);
+
+        if (carAd) {
+          await _Car.default.deleteCar(carAd);
+          (0, _Response.default)(res, 200, 'Car Ad successfully deleted');
+        } else {
+          (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
+        }
       }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
     }
   }
 

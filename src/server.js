@@ -26,6 +26,8 @@ const app = express();
 
 const swaggerDocument = require('../swagger.json');
 
+const swaggerDocumentV2 = require('../swagger_v2.json');
+
 const PORT = process.env.PORT || 5000;
 
 app.use(cookieParser());
@@ -52,6 +54,8 @@ app.use('/api/v2/auth', userRoute2);
 app.use('/api/v2/car', carRoute2);
 
 app.use('/api/v2/order', orderRoute2);
+
+app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

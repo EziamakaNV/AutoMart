@@ -36,6 +36,8 @@ const app = (0, _express.default)();
 
 const swaggerDocument = require('../swagger.json');
 
+const swaggerDocumentV2 = require('../swagger_v2.json');
+
 const PORT = process.env.PORT || 5000;
 app.use((0, _cookieParser.default)());
 app.use(_bodyParser.default.json());
@@ -54,6 +56,7 @@ app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.defau
 app.use('/api/v2/auth', _user2.default);
 app.use('/api/v2/car', _car2.default);
 app.use('/api/v2/order', _order2.default);
+app.use('/api/v2/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocumentV2));
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

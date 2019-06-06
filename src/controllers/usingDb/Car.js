@@ -180,62 +180,70 @@ class CarController {
     }
   }
 
-  static viewCars(req, res) {
-    // Determine if there is a query object has any properties
-    const queryStatus = req.query.hasOwnProperty('status');
-    const queryMinPrice = req.query.hasOwnProperty('min_price');
-    const queryMaxPrice = req.query.hasOwnProperty('max_price');
+  static async viewCars(req, res) {
+    try {
+      // Determine if there is a query object has any properties
+      const queryStatus = req.query.hasOwnProperty('status');
+      const queryMinPrice = req.query.hasOwnProperty('min_price');
+      const queryMaxPrice = req.query.hasOwnProperty('max_price');
 
-    // When all three query properties are present
-    if (queryStatus && queryMinPrice && queryMaxPrice) {
+      // When all three query properties are present
+      if (queryStatus && queryMinPrice && queryMaxPrice) {
       // Run validation
-      const { status } = req.query;
-      const minPrice = Number(req.query.min_price);
-      const maxPrice = Number(req.query.max_price);
-      const { error } = Validation.viewCars({ status, minPrice, maxPrice });
+        const { status } = req.query;
+        const minPrice = Number(req.query.min_price);
+        const maxPrice = Number(req.query.max_price);
+        const { error } = Validation.viewCars({ status, minPrice, maxPrice });
 
-      if (error) {
-        response(res, 400, error);
+        if (error) {
+          response(res, 400, error);
+        } else {
+          const cars = await CarModel.findAllAvailableRange(minPrice, maxPrice);
+          response(res, 200, cars);
+        }
+      } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
+        const { status } = req.query;
+        const { error } = Validation.viewCars({ status });
+        if (error) {
+          response(res, 400, error);
+        } else {
+          const cars = await CarModel.findAllAvailable();
+          response(res, 200, cars);
+        }
       } else {
-        const cars = CarModel.findAllAvailableRange(minPrice, maxPrice);
-        response(res, 200, cars);
-      }
-    } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
-      const { status } = req.query;
-      const { error } = Validation.viewCars({ status });
-      if (error) {
-        response(res, 400, error);
-      } else {
-        const cars = CarModel.findAllAvailable();
-        response(res, 200, cars);
-      }
-    } else {
       // Only admins can view this
-      const isAdmin = UserModel.isAdmin(req.user.id);
-      if (isAdmin) {
-        const cars = CarModel.findAll();
-        response(res, 200, cars);
-      } else {
-        response(res, 401, 'You are not an Admin');
+        const isAdmin = await UserModel.isAdmin(req.user.id);
+        if (isAdmin) {
+          const cars = await CarModel.findAll();
+          response(res, 200, cars);
+        } else {
+          response(res, 401, 'You are not an Admin');
+        }
       }
+    } catch (error) {
+      response(res, 500, error);
     }
   }
 
-  static deleteCar(req, res) {
-    const carId = Number(req.params.carId);
-    const { error } = Validation.deleteCar({ carId });
+  static async deleteCar(req, res) {
+    try {
+      const carId = Number(req.params.carId);
+      const { error } = Validation.deleteCar({ carId });
 
-    if (error) {
-      response(res, 400, error);
-    } else {
-      // Check if the Ad exists
-      const carAd = CarModel.findOne(carId);
-      if (carAd) {
-        const deletedCar = CarModel.deleteCar(carAd);
-        response(res, 200, 'Car Ad successfully deleted');
+      if (error) {
+        response(res, 400, error);
       } else {
-        response(res, 400, 'The Car Ad Doesnt Exist');
+      // Check if the Ad exists
+        const carAd = await CarModel.findOne(carId);
+        if (carAd) {
+          await CarModel.deleteCar(carAd);
+          response(res, 200, 'Car Ad successfully deleted');
+        } else {
+          response(res, 400, 'The Car Ad Doesnt Exist');
+        }
       }
+    } catch (error) {
+      response(res, 500, error);
     }
   }
 }

@@ -42,28 +42,34 @@ class CarModel {
   }
 
   static findAllAvailableRange(minPrice, maxPrice) {
-    const cars = [];
-    this.cars.forEach((car) => {
-      if ((car.status === 'available') && (car.price >= minPrice && car.price <= maxPrice)) cars.push(car);
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM cars WHERE (status = $1) AND (price >= $2 AND price <= $3)';
+      const values = ['available', minPrice, maxPrice];
+      db.query(query, values).then(result => resolve(result.rows)).catch(err => reject(err));
     });
-    return cars;
   }
 
   static findAllAvailable() {
-    const cars = [];
-    this.cars.forEach((car) => {
-      if ((car.status === 'available')) cars.push(car);
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM cars WHERE status = $1';
+      const values = ['available'];
+      db.query(query, values).then(result => resolve(result.rows)).catch(err => reject(err));
     });
-    return cars;
   }
 
   static findAll() {
-    return this.cars;
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM cars';
+      db.query(query).then(result => resolve(result.rows)).catch(err => reject(err));
+    });
   }
 
   static deleteCar(car) {
-    const index = this.cars.indexOf(car);
-    return this.cars.splice(index, 1);
+    return new Promise((resolve, reject) => {
+      const query = 'DELETE FROM cars WHERE id = $1 RETURNING *';
+      const values = [car.id];
+      db.query(query, values).then(result => resolve(result.rows[0])).catch(err => reject(err));
+    });
   }
 }
 

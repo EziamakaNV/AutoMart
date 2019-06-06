@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import express from 'express';
 
-import Authentication from '../../middleware/Authentication';
+import Authentication from '../../middleware/usingDb/Authentication';
 
 import CarController from '../../controllers/usingDb/Car';
 
