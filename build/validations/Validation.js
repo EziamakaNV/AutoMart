@@ -97,6 +97,15 @@ class Validation {
     return _joi.default.validate(validationObject, schema);
   }
 
+  static newFlagValidation(validationObject) {
+    const schema = {
+      carId: _joi.default.number().integer().required(),
+      reason: _joi.default.string().valid('offensive content', 'fraud', 'duplicate ad', 'other').required(),
+      description: _joi.default.string().required()
+    };
+    return _joi.default.validate(validationObject, schema);
+  }
+
 }
 
 var _default = Validation;
