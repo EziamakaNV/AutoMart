@@ -84,7 +84,7 @@ class CarController {
               (0, _Response.default)(res, 201, createdCar); // Delete temporary image file
 
               _fs.default.unlink(imageFileName, er => {
-                if (er) throw err;
+                if (er) throw er;
                 console.log('Image File Deleted');
               });
             }

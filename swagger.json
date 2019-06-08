@@ -19,6 +19,10 @@
       {
         "name": "orders",
         "description": "Handles the creation, updating and deletion of purchase orders"
+      },
+      {
+        "name": "flags",
+        "description": "Handles the creation of flags"
       }
     ],
     "schemes": [
@@ -652,6 +656,89 @@
             },
             "401":{
               "description":"Unauthorized"
+            }
+          }
+        }
+      },
+      "/flag": {
+        "post": {
+          "tags": [
+            "flags"
+          ],
+          "summary": "Creates new flags for ads",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "carId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "example": "fraud"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Fraudulent Ad"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "integer"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }

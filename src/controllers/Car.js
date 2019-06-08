@@ -60,7 +60,7 @@ class CarController {
               response(res, 201, createdCar);
               // Delete temporary image file
               fs.unlink(imageFileName, (er) => {
-                if (er) throw err;
+                if (er) throw er;
                 console.log('Image File Deleted');
               });
             }
