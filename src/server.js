@@ -24,6 +24,8 @@ import orderRoute2 from './routes/usingDb/order';
 
 import flagRoute2 from './routes/usingDb/flag';
 
+import viewsRoute from './routes/views';
+
 require('dotenv').config();
 
 const app = express();
@@ -39,6 +41,12 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
+
+app.use(express.static('build/UI-Js'));
+
+app.use(express.static('src/UI-Js'));
 
 app.use('/api/v1/auth', userRoute);
 
@@ -64,6 +72,8 @@ app.use('/api/v2/order', orderRoute2);
 app.use('/api/v2/flag', flagRoute2);
 
 // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
+
+app.use('/', viewsRoute);
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console
