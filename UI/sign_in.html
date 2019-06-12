@@ -20,15 +20,15 @@
                     <div class="bar3"></div>
                 </div>
                 <div id="myDropDown" class="dropdown-content">
-                    <a href="/UI/sign_up.html">REGISTER</a>
+                    <a href="/register">REGISTER</a>
                 </div>
             </div>
-            <a href="landing_page.html" class="previousIcon anchor-tag logo">←</a>
-            <a href='/UI/landing_page.html' class='anchor-tag logo'>AutoMart</a>
+            <a href="/" class="previousIcon anchor-tag logo">←</a>
+            <a href='/' class='anchor-tag logo'>AutoMart</a>
         </div>
         <nav class='flex-container justify-right'>
             <ul>
-                <li><a href="/UI/sign_up.html">REGISTER</a></li>
+                <li><a href="/register">REGISTER</a></li>
             </ul>
         </nav>
     </header>
@@ -36,20 +36,26 @@
         <h1 class='call-to-action'>Sign in and begin trading cars!</h1>
         <section id='post-ad-container'>
             <form class='form-structure' onsubmit="event.preventDefault()">
+                <p class = 'error-message-div'></p>
                 <div class='container'>
                     <label for='email'>Email</label><br>
-                    <input type='email' name='email'>
+                    <input type='email' name='email' id = 'email' required>
                 </div>
                 <div class='container'>
                     <label for='password'>Password</label>
-                    <input type='password' name='password'>
+                    <input type='password' name='password' id = 'password' required>
                 </div>
                 <div class="container">
-                    <button onclick="window.location.assign('/UI/profile_page.html')">LOGIN</button>
+                    <button onclick="submitForm()">LOGIN</button>
                 </div>
             </form>
         </section>
     </main>
+    <div id="myModal" class="modal">
+        <div class="modal-content filter loader">
+            
+        </div>
+    </div>
     <script src="Js/sign_in.js"></script>
 </body>
 

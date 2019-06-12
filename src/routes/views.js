@@ -15,4 +15,8 @@ router.get('/register', (req, res) => {
   res.sendFile('UI/sign_up.html', options);
 });
 
+router.get('/login', (req, res) => {
+  res.sendFile('UI/sign_in.html', options);
+});
+
 export default router;

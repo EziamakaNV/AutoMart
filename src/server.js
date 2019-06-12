@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-app.use(express.static('build/UI-Js'));
+// app.use(express.static('build/UI-Js'));
 
 app.use(express.static('src/UI-Js'));
 
