@@ -39,5 +39,12 @@ router.get('/profile', _Authentication.default.verifyToken, (req, res) => {
 router.get('/car/:id', _Authentication.default.verifyToken, (req, res) => {
   sendFile(res, 'UI/specific_car.html', option);
 });
+router.get('/logout', _Authentication.default.verifyToken, (req, res) => {
+  res.clearCookie('jwt', {
+    httpOnly: true
+  });
+  res.clearCookie('user');
+  res.redirect('/');
+});
 var _default = router;
 exports.default = _default;
