@@ -87,6 +87,12 @@ class UserController {
           res.cookie('jwt', token, {
             maxAge: 31540000000,
             httpOnly: true
+          });
+          res.cookie('user', JSON.stringify({
+            firstName,
+            lastName
+          }), {
+            maxAge: 31540000000
           }); // Final response
 
           res.status(200).json({
@@ -145,6 +151,15 @@ class UserController {
             res.cookie('jwt', token, {
               maxAge: 31540000000,
               httpOnly: true
+            }); // httpOnly not set because
+            // I want to be able to read the cookie
+            // on the client side with Js
+
+            res.cookie('user', JSON.stringify({
+              firstName: user.firstName,
+              lastName: user.lastName
+            }), {
+              maxAge: 31540000000
             });
             res.status(200).json({
               status: 200,

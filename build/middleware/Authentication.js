@@ -23,7 +23,7 @@ class Authentication {
     if (!token) {
       res.status(401).json({
         status: 401,
-        error: 'Missing token',
+        error: 'Unauthorized. Missing token',
         success: false
       });
     } else {

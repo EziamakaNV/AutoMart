@@ -50,8 +50,6 @@ app.use(_bodyParser.default.urlencoded({
   extended: true
 }));
 app.use(_express.default.static('public'));
-app.use(_express.default.static('build/UI-Js'));
-app.use(_express.default.static('src/UI-Js'));
 app.use('/api/v1/auth', _user.default);
 app.use('/api/v1/car', _car.default);
 app.use('/api/v1/order', _order.default);
@@ -67,7 +65,11 @@ app.use('/api/v2/car', _car2.default);
 app.use('/api/v2/order', _order2.default);
 app.use('/api/v2/flag', _flag2.default); // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
-app.use('/', _views.default);
+app.use('/', _views.default); // Not Found Handler
+
+app.use((req, res) => {
+  res.status(404).send('Not Found!');
+});
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console
