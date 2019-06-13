@@ -28,10 +28,17 @@ class Authentication {
       });
     } else {
       try {
-        const user = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Create user object in the request
+        const user = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Check if the user is still in the DB
 
-        req.user = user;
-        next();
+        const userExists = _User.default.findUser(user.email);
+
+        if (userExists) {
+          // Create user object in the request
+          req.user = user;
+          next();
+        } else {
+          (0, _Response.default)(res, 401, 'Malicious token request. You dont exist on the DB!');
+        }
       } catch (error) {
         res.status(500).json({
           status: 500,

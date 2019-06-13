@@ -82,3 +82,75 @@ window.addEventListener('DOMContentLoaded', async () => {
     errorMessage.textContent = 'Error retreiving car details';
   }
 });
+
+const placeOffer = async () => {
+  try {
+    loader.style.display = 'block';
+    const body = { carId: Number(carId), amount: Number(document.querySelector('#offeredPrice').value) };
+    const response = await fetch('/api/v1/order', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const responseBody = await response.json();
+    if (response.status === 201) {
+      loader.style.display = 'none';
+      modal2.style.display = 'none';
+      errorMessage.textContent = 'Purchase order created successfully';
+      errorMessage.style.backgroundColor = 'white';
+      errorMessage.style.color = 'green';
+      errorMessage.style.display = 'block';
+    } else {
+      loader.style.display = 'none';
+      modal2.style.display = 'none';
+      errorMessage.textContent = responseBody.error;
+      errorMessage.style.display = 'block';
+    }
+  } catch (error) {
+    loader.style.display = 'none';
+    modal2.style.display = 'none';
+    errorMessage.textContent = error;
+    errorMessage.style.display = 'block';
+  }
+};
+
+const sendComplaint = async () => {
+  try {
+    loader.style.display = 'block';
+    const body = {
+      carId: Number(carId),
+      reason: document.querySelector('#flagReason').value,
+      description: document.querySelector('#flagDescription').value,
+    };
+    const response = await fetch('/api/v1/flag', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const responseBody = await response.json();
+    if (response.status === 201) {
+      loader.style.display = 'none';
+      modal.style.display = 'none';
+      errorMessage.textContent = 'Flag successful';
+      errorMessage.style.backgroundColor = 'white';
+      errorMessage.style.color = 'green';
+      errorMessage.style.display = 'block';
+    } else {
+      loader.style.display = 'none';
+      modal.style.display = 'none';
+      errorMessage.textContent = responseBody.error;
+      errorMessage.style.display = 'block';
+    }
+  } catch (error) {
+    loader.style.display = 'none';
+    modal.style.display = 'none';
+    errorMessage.textContent = error;
+    errorMessage.style.display = 'block';
+  }
+};

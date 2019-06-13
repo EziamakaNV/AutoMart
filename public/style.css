@@ -498,8 +498,7 @@ nav ul {
 
 .error-message-div {
     display: none;
-    background-color: red;
-    color: black;
+    color: red;
     text-align: center;
     padding: 5px;
 }

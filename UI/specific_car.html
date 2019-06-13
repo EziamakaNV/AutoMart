@@ -20,6 +20,7 @@
                     <div class="bar3"></div>
                 </div>
                 <div id="myDropDown" class="dropdown-content">
+                    <a href="/profile">Profile</a>
                     <a href="/profile/createAds">Create Ads</a>
                     <a href="/profile/myAds">My Ads</a>
                     <a href='/profile/myOrders'>My Orders</a>
@@ -89,14 +90,18 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h1 class='call-to-action'>Item Report</h1>
-                <form onsubmit="event.preventDefault()">
-                    <input type="radio" name="badContent" value="offensiveContent"> Offensive Content<br>
-                    <input type="radio" name="fraud" value="fraud"> Fraud<br>
-                    <input type="radio" name="duplicateAd" value="duplicateAd"> Duplicate Ad<br>
-                    <input type="radio" name="other" value="other"> Other<br>
+                <form onsubmit="event.preventDefault()" class = 'form-structure'>
+                    <select name='flagReasons' id='flagReason' required>
+                        <option value=''>Pick A Reason</option>
+                        <option value='offensive content'>Offensive Content</option>
+                        <option value='fraud'>Fraud</option>
+                        <option value='duplicate ad'>Duplicate Ad</option>
+                        <option value='other'>Other</option>
+                    </select>
                     <br>
-                    <textarea max-length='500' name='Comment' placeholder="Comment"></textarea>
-                    <button class="button">SEND COMPLAINT</button>
+                    <br>
+                    <textarea max-length='500' name='Comment' placeholder="Comment" id = 'flagDescription'></textarea>
+                    <button class="button" onclick='sendComplaint()'>SEND COMPLAINT</button>
                 </form>
             </div>
         </div>
@@ -106,13 +111,13 @@
                 <h1 class='call-to-action'>PURCHASE ORDER</h1>
                 <h2 class='call-to-action' id = 'po-description'>FOR: XXX XXX</h2>
                 <h2 class='call-to-action' id = 'po-price'>PRICE: 999999</h2>
-                <form class='form-structure'>
+                <form class='form-structure' onsubmit="event.preventDefault()">
                     <h2 class='form-headers'>OFFER</h2>
                     <div>
                         <label for='offered_price'>Offered Price</label>
                         <input type='number' required name='offered_price' id='offeredPrice'>
                     </div>
-                    <button class='button' onclick='placeoffer()'>PLACE OFFER</button>
+                    <button class='button' onclick='placeOffer()'>PLACE OFFER</button>
                 </form>
             </div>
         </div>
