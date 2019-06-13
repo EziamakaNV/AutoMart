@@ -36,5 +36,8 @@ router.get('/login', (req, res) => {
 router.get('/profile', _Authentication.default.verifyToken, (req, res) => {
   sendFile(res, 'UI/profile_page.html', option);
 });
+router.get('/car/:id', _Authentication.default.verifyToken, (req, res) => {
+  sendFile(res, 'UI/specific_car.html', option);
+});
 var _default = router;
 exports.default = _default;
