@@ -12,7 +12,7 @@ class Authentication {
     const token = req.cookies.jwt;
     // Check for the token
     if (!token) {
-      res.status(401).json({ status: 401, error: 'Missing token', success: false });
+      res.status(401).json({ status: 401, error: 'Unauthorized. Missing token', success: false });
     } else {
       try {
         const user = await jwt.verify(token, process.env.JWT_SECRET);

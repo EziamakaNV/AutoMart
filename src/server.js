@@ -44,10 +44,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-// app.use(express.static('build/UI-Js'));
-
-app.use(express.static('src/UI-Js'));
-
 app.use('/api/v1/auth', userRoute);
 
 app.use('/api/v1/car', carRoute);
@@ -74,6 +70,9 @@ app.use('/api/v2/flag', flagRoute2);
 // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
 app.use('/', viewsRoute);
+
+// Not Found Handler
+app.use((req, res) => { res.status(404).send('Not Found!'); });
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console

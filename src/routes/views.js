@@ -5,18 +5,28 @@ import Authentication from '../middleware/Authentication';
 
 const router = express.Router();
 
-const options = { root: process.cwd() };
+const option = { root: process.cwd() };
+
+const sendFile = (res, path, options) => {
+  return res.sendFile(path, options);
+};
 
 router.get('/', (req, res) => {
-  res.sendFile('UI/landing_page.html', options);
+  sendFile(res, 'UI/landing_page.html', option);
 });
 
 router.get('/register', (req, res) => {
-  res.sendFile('UI/sign_up.html', options);
+  sendFile(res, 'UI/sign_up.html', option);
 });
 
 router.get('/login', (req, res) => {
-  res.sendFile('UI/sign_in.html', options);
+  sendFile(res, 'UI/sign_in.html', option);
+});
+
+// NB Dont forget to change the auth middleware
+// When switching to database mode
+router.get('/profile', Authentication.verifyToken, (req, res) => {
+  sendFile(res, 'UI/profile_page.html', option);
 });
 
 export default router;

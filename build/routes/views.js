@@ -14,14 +14,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable linebreak-style */
 const router = _express.default.Router();
 
-const options = {
+const option = {
   root: process.cwd()
 };
+
+const sendFile = (res, path, options) => {
+  return res.sendFile(path, options);
+};
+
 router.get('/', (req, res) => {
-  res.sendFile('UI/landing_page.html', options);
+  sendFile(res, 'UI/landing_page.html', option);
 });
 router.get('/register', (req, res) => {
-  res.sendFile('UI/sign_up.html', options);
+  sendFile(res, 'UI/sign_up.html', option);
+});
+router.get('/login', (req, res) => {
+  sendFile(res, 'UI/sign_in.html', option);
+}); // NB Dont forget to change the auth middleware
+// When switching to database mode
+
+router.get('/profile', _Authentication.default.verifyToken, (req, res) => {
+  sendFile(res, 'UI/profile_page.html', option);
 });
 var _default = router;
 exports.default = _default;
