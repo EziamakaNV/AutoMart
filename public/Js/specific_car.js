@@ -76,6 +76,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       errorMessage.style.display = 'none';
     } else {
       errorMessage.textContent = responseBody.error;
+      loader.style.display = 'none';
     }
   } catch (error) {
     errorMessage.textContent = 'Error retreiving car details';
