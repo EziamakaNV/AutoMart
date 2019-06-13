@@ -29,4 +29,8 @@ router.get('/profile', Authentication.verifyToken, (req, res) => {
   sendFile(res, 'UI/profile_page.html', option);
 });
 
+router.get('/car/:id', Authentication.verifyToken, (req, res) => {
+  sendFile(res, 'UI/specific_car.html', option);
+});
+
 export default router;
