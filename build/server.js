@@ -45,8 +45,8 @@ const app = (0, _express.default)();
 const swaggerDocument = require('../swagger.json'); // const swaggerDocumentV2 = require('../swagger_v2.json');
 
 
-const PORT = process.env.PORT || 5000;
-const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io'];
+const PORT = process.env.PORT || 8000;
+const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'http://localhost:5500'];
 const corsOptions = {
   credentials: true,
   origin: (_origin, callback) => {
@@ -63,7 +63,7 @@ const corsOptions = {
     return callback(null, true);
   }
 };
-app.use((0, _cors.default)());
+app.use((0, _cors.default)(corsOptions));
 app.use((0, _cookieParser.default)());
 app.use(_bodyParser.default.json());
 app.use(_bodyParser.default.urlencoded({

@@ -36,16 +36,13 @@ const swaggerDocument = require('../swagger.json');
 
 // const swaggerDocumentV2 = require('../swagger_v2.json');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
-const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io'];
+const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', process.env.SECRET_ORIGIN];
 
 const corsOptions = {
   credentials: true,
   origin: (origin, callback) => { // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
-    // allow requests with no origin
-    // (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not '
                 + 'allow access from the specified Origin.';
@@ -55,7 +52,7 @@ const corsOptions = {
   },
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
