@@ -41,13 +41,13 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
 const corsOptions = {
   credentials: true,
-  origin: (origin, callback) => { // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
+  origin: (origin, callback) => {
     console.log(origin);
-    if (allowedOrigins.indexOf(origin) === -1 || !origin) {
-      const msg = 'The CORS policy for this site does not '+ 'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
     }
-    return callback(null, true);
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };

@@ -45,20 +45,18 @@ const app = (0, _express.default)();
 const swaggerDocument = require('../swagger.json'); // const swaggerDocumentV2 = require('../swagger_v2.json');
 
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
 const corsOptions = {
   credentials: true,
   origin: (_origin, callback) => {
-    // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
     console.log(_origin);
 
-    if (allowedOrigins.indexOf(_origin) === -1 || !_origin) {
-      const msg = 'The CORS policy for this site does not ' + 'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (allowedOrigins.indexOf(_origin) !== -1 || !_origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-
-    return callback(null, true);
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 };
@@ -83,7 +81,7 @@ app.use('/api/v2/car', (0, _cors.default)(corsOptions), _car2.default);
 app.use('/api/v2/order', (0, _cors.default)(corsOptions), _order2.default);
 app.use('/api/v2/flag', (0, _cors.default)(corsOptions), _flag2.default); // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
-app.use('/', (0, _cors.default)(corsOptions), _views.default); // Not Found Handler
+app.use('/', _views.default); // Not Found Handler
 
 app.use((req, res) => {
   res.status(404).send('Not Found!');
