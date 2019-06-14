@@ -46,46 +46,44 @@ const swaggerDocument = require('../swagger.json'); // const swaggerDocumentV2 =
 
 
 const PORT = process.env.PORT || 8000;
-const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'http://localhost:5500'];
+const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
 const corsOptions = {
   credentials: true,
   origin: (_origin, callback) => {
     // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
-    // allow requests with no origin
-    // (like mobile apps or curl requests)
-    if (!_origin) return callback(null, true);
+    console.log(_origin);
 
-    if (allowedOrigins.indexOf(_origin) === -1) {
+    if (allowedOrigins.indexOf(_origin) === -1 || !_origin) {
       const msg = 'The CORS policy for this site does not ' + 'allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
 
     return callback(null, true);
-  }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 };
-app.use((0, _cors.default)(corsOptions));
 app.use((0, _cookieParser.default)());
 app.use(_bodyParser.default.json());
 app.use(_bodyParser.default.urlencoded({
   extended: true
 }));
 app.use(_express.default.static('public'));
-app.use('/api/v1/auth', _user.default);
-app.use('/api/v1/car', _car.default);
-app.use('/api/v1/order', _order.default);
-app.use('/api/v1/flag', _flag.default); // Swagger API doc
+app.use('/api/v1/auth', (0, _cors.default)(corsOptions), _user.default);
+app.use('/api/v1/car', (0, _cors.default)(corsOptions), _car.default);
+app.use('/api/v1/order', (0, _cors.default)(corsOptions), _order.default);
+app.use('/api/v1/flag', (0, _cors.default)(corsOptions), _flag.default); // Swagger API doc
 
 app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument));
 /*
   API V2
 */
 
-app.use('/api/v2/auth', _user2.default);
-app.use('/api/v2/car', _car2.default);
-app.use('/api/v2/order', _order2.default);
-app.use('/api/v2/flag', _flag2.default); // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
+app.use('/api/v2/auth', (0, _cors.default)(corsOptions), _user2.default);
+app.use('/api/v2/car', (0, _cors.default)(corsOptions), _car2.default);
+app.use('/api/v2/order', (0, _cors.default)(corsOptions), _order2.default);
+app.use('/api/v2/flag', (0, _cors.default)(corsOptions), _flag2.default); // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
-app.use('/', _views.default); // Not Found Handler
+app.use('/', (0, _cors.default)(corsOptions), _views.default); // Not Found Handler
 
 app.use((req, res) => {
   res.status(404).send('Not Found!');
