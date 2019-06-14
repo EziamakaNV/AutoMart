@@ -52,7 +52,7 @@ const corsOptions = {
   },
 };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
@@ -62,13 +62,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-app.use('/api/v1/auth', userRoute);
+app.use('/api/v1/auth', cors(corsOptions), userRoute);
 
-app.use('/api/v1/car', carRoute);
+app.use('/api/v1/car', cors(corsOptions), carRoute);
 
-app.use('/api/v1/order', orderRoute);
+app.use('/api/v1/order', cors(corsOptions), orderRoute);
 
-app.use('/api/v1/flag', flagRoute);
+app.use('/api/v1/flag', cors(corsOptions), flagRoute);
 
 // Swagger API doc
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -77,13 +77,13 @@ app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   API V2
 */
 
-app.use('/api/v2/auth', userRoute2);
+app.use('/api/v2/auth', cors(corsOptions), userRoute2);
 
-app.use('/api/v2/car', carRoute2);
+app.use('/api/v2/car', cors(corsOptions), carRoute2);
 
-app.use('/api/v2/order', orderRoute2);
+app.use('/api/v2/order', cors(corsOptions), orderRoute2);
 
-app.use('/api/v2/flag', flagRoute2);
+app.use('/api/v2/flag', cors(corsOptions), flagRoute2);
 
 // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 
