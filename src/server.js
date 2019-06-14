@@ -43,7 +43,7 @@ const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'h
 const corsOptions = {
   credentials: true,
   origin: (origin, callback) => { // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
-    if (allowedOrigins.indexOf(origin) === -1) {
+    if (allowedOrigins.indexOf(origin) === -1 || !origin) {
       const msg = 'The CORS policy for this site does not '
                 + 'allow access from the specified Origin.';
       return callback(new Error(msg), false);
