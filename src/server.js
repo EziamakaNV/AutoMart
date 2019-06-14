@@ -38,7 +38,7 @@ const swaggerDocument = require('../swagger.json');
 
 const PORT = process.env.PORT || 8000;
 
-const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', process.env.SECRET_ORIGIN];
+const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
 
 const corsOptions = {
   credentials: true,
