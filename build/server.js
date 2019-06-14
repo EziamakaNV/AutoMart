@@ -63,7 +63,7 @@ const corsOptions = {
     return callback(null, true);
   }
 };
-app.use((0, _cors.default)(corsOptions));
+app.use((0, _cors.default)());
 app.use((0, _cookieParser.default)());
 app.use(_bodyParser.default.json());
 app.use(_bodyParser.default.urlencoded({
