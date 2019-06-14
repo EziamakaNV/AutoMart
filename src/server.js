@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser';
 
 import swaggerUi from 'swagger-ui-express';
 
+import cors from 'cors';
+
 import userRoute from './routes/user';
 
 import carRoute from './routes/car';
@@ -35,6 +37,25 @@ const swaggerDocument = require('../swagger.json');
 // const swaggerDocumentV2 = require('../swagger_v2.json');
 
 const PORT = process.env.PORT || 5000;
+
+const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io'];
+
+const corsOptions = {
+  credentials: true,
+  origin: (origin, callback) => { // Reference: https://medium.com/@alexishevia/using-cors-in-express-cac7e29b005b
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not '
+                + 'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
