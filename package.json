@@ -36,7 +36,7 @@
     "nyc": "^14.1.1"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha build/test/test.js --timeout 5000000",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha build/test/auth.js build/test/flag.js build/test/order.js build/test/car.js --timeout 5000000",
     "local_test": "npm run build && npm test",
     "dev-start": "babel-watch src/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

@@ -2,7 +2,7 @@ import express from 'express';
 
 import OrderController from '../../controllers/usingDb/Order';
 
-import Authentication from '../../middleware/Authentication';
+import Authentication from '../../middleware/usingDb/Authentication';
 
 const router = express.Router();
 
