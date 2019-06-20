@@ -2,7 +2,7 @@ import express from 'express';
 
 import FlagController from '../../controllers/usingDb/Flag';
 
-import Authentication from '../../middleware/Authentication';
+import Authentication from '../../middleware/usingDb/Authentication';
 
 const router = express.Router();
 

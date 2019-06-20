@@ -15,21 +15,13 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 
 var _cors = _interopRequireDefault(require("cors"));
 
-var _user = _interopRequireDefault(require("./routes/user"));
+var _user = _interopRequireDefault(require("./routes/usingDb/user"));
 
-var _car = _interopRequireDefault(require("./routes/car"));
+var _car = _interopRequireDefault(require("./routes/usingDb/car"));
 
-var _order = _interopRequireDefault(require("./routes/order"));
+var _order = _interopRequireDefault(require("./routes/usingDb/order"));
 
-var _flag = _interopRequireDefault(require("./routes/flag"));
-
-var _user2 = _interopRequireDefault(require("./routes/usingDb/user"));
-
-var _car2 = _interopRequireDefault(require("./routes/usingDb/car"));
-
-var _order2 = _interopRequireDefault(require("./routes/usingDb/order"));
-
-var _flag2 = _interopRequireDefault(require("./routes/usingDb/flag"));
+var _flag = _interopRequireDefault(require("./routes/usingDb/flag"));
 
 var _views = _interopRequireDefault(require("./routes/views"));
 
@@ -42,8 +34,7 @@ require('dotenv').config();
 
 const app = (0, _express.default)();
 
-const swaggerDocument = require('../swagger.json'); // const swaggerDocumentV2 = require('../swagger_v2.json');
-
+const swaggerDocumentV2 = require('../swagger_v2.json');
 
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
@@ -66,21 +57,15 @@ app.use(_bodyParser.default.urlencoded({
   extended: true
 }));
 app.use(_express.default.static('public'));
-app.use('/api/v1/auth', (0, _cors.default)(corsOptions), _user.default);
-app.use('/api/v1/car', (0, _cors.default)(corsOptions), _car.default);
-app.use('/api/v1/order', (0, _cors.default)(corsOptions), _order.default);
-app.use('/api/v1/flag', (0, _cors.default)(corsOptions), _flag.default); // Swagger API doc
-
-app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocument));
 /*
   API V2
 */
 
-app.use('/api/v2/auth', (0, _cors.default)(corsOptions), _user2.default);
-app.use('/api/v2/car', (0, _cors.default)(corsOptions), _car2.default);
-app.use('/api/v2/order', (0, _cors.default)(corsOptions), _order2.default);
-app.use('/api/v2/flag', (0, _cors.default)(corsOptions), _flag2.default); // app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
-
+app.use('/api/v2/auth', (0, _cors.default)(corsOptions), _user.default);
+app.use('/api/v2/car', (0, _cors.default)(corsOptions), _car.default);
+app.use('/api/v2/order', (0, _cors.default)(corsOptions), _order.default);
+app.use('/api/v2/flag', (0, _cors.default)(corsOptions), _flag.default);
+app.use('/api/v2/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocumentV2));
 app.use('/', _views.default); // Not Found Handler
 
 app.use((req, res) => {
