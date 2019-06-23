@@ -18,6 +18,8 @@ router.patch('/:carId/status', Authentication.verifyToken, CarController.updateS
 
 router.patch('/:carId/price', Authentication.verifyToken, CarController.updatePrice);
 
+router.get('/myCar', Authentication.verifyToken, CarController.viewMyCars);
+
 router.get('/:carId', Authentication.verifyToken, CarController.viewSpecificCar);
 
 router.get('/', Authentication.verifyToken, CarController.viewCars);

@@ -486,3 +486,34 @@ describe('GET /api/v2/car', () => {
     });
   });
 });
+describe('GET /api/v2/car/myCar', () => {
+  describe('When the token is present', () => {
+    it('When all parameters are correctly supplied the request is successful', done => {
+      _chai.default.request(_server.default).get('/api/v2/car/myCar').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTE0NDIyMiwiZXhwIjoxNTkwNjgwMjIyfQ.Ck2c3jUUCQez0Lp4WFf1iLDkkTUSuHhtIcgTQ7vMwsA').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res, 'response object status').to.have.status(200);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(200);
+        expect(res.body, 'response body').to.haveOwnProperty('data');
+        expect(res.body.data, 'data property').to.be.a('array');
+        done();
+      });
+    });
+  });
+  describe('When there are issues with the token', done => {
+    it('The request shouldnt go through if the token in the cookie is missing', done => {
+      // Jwt missing in cookie
+      _chai.default.request(_server.default).get('/api/v2/car/myCar').end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(401);
+        expect(res.body, 'response body').to.be.a('object');
+        expect(res.body, 'response body').to.haveOwnProperty('status');
+        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body, 'response body').to.haveOwnProperty('error');
+        expect(res.body.error).to.be.a('string');
+        done();
+      });
+    });
+  });
+});
