@@ -90,6 +90,21 @@ class CarModel {
     });
   }
 
+  static findMyCars(userId) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM cars WHERE owner = $1';
+      const values = [userId];
+
+      _index.default.query(query, values).then(result => {
+        if (result.rows.length === 0) {
+          resolve(false);
+        } else {
+          resolve(result.rows);
+        }
+      }).catch(err => reject(err));
+    });
+  }
+
 }
 
 var _default = CarModel;

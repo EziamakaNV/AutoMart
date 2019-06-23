@@ -315,6 +315,20 @@ class CarController {
     }
   }
 
+  static async viewMyCars(req, res) {
+    try {
+      const myCars = await _Car.default.findMyCars(req.user.id);
+
+      if (myCars) {
+        (0, _Response.default)(res, 200, myCars);
+      } else {
+        (0, _Response.default)(res, 404, 'No Ads found for the user');
+      }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
+    }
+  }
+
 }
 
 var _default = CarController;
