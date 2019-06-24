@@ -45,7 +45,7 @@ app.use('/api/v2/car', cors(corsOptions), carRoute2);
 app.use('/api/v2/order', cors(corsOptions), orderRoute2);
 app.use('/api/v2/flag', cors(corsOptions), flagRoute2);
 app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
-app.use('/', viewsRoute);
+app.use('/', cors(corsOptions), viewsRoute);
 // Not Found Handler
 app.use((req, res) => { res.status(404).send('Not Found!'); });
 
