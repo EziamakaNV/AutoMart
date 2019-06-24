@@ -61,6 +61,36 @@ class OrderModel {
     });
   }
 
+  static findMyOrders(buyer) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT cars.id, cars.price, cars.manufacturer, cars.model, cars.image_url, orders.id AS order_id FROM cars INNER JOIN orders ON cars.id = orders.car_id WHERE orders.buyer = $1';
+      const values = [buyer];
+
+      _index.default.query(query, values).then(result => {
+        if (result.rows.length === 0) {
+          resolve(false);
+        } else {
+          resolve(result.rows);
+        }
+      }).catch(err => reject(err));
+    });
+  }
+
+  static getOrder(buyer, orderId) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT cars.state, orders.status AS order_status, cars.price, orders.amount AS amount_offered, cars.manufacturer, cars.model, cars.body_type, cars.image_url FROM cars INNER JOIN orders ON cars.id = orders.car_id WHERE (orders.buyer = $1 AND orders.id = $2)';
+      const values = [buyer, orderId];
+
+      _index.default.query(query, values).then(result => {
+        if (result.rows.length === 0) {
+          resolve(false);
+        } else {
+          resolve(result.rows[0]);
+        }
+      }).catch(err => reject(err));
+    });
+  }
+
 }
 
 var _default = OrderModel;

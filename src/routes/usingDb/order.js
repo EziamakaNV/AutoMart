@@ -10,4 +10,8 @@ router.post('/', Authentication.verifyToken, OrderController.createOrder);
 
 router.patch('/:orderId/price', Authentication.verifyToken, OrderController.updateOrder);
 
+router.get('/myOrder/:orderId', Authentication.verifyToken, OrderController.getParticularOrder);
+
+router.get('/myOrder', Authentication.verifyToken, OrderController.getMyOrders);
+
 export default router;

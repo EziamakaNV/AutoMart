@@ -147,6 +147,45 @@ class OrderController {
     }
   }
 
+  static async getMyOrders(req, res) {
+    try {
+      const myOrders = await _Order.default.findMyOrders(req.user.id);
+
+      if (myOrders) {
+        (0, _Response.default)(res, 200, myOrders);
+      } else {
+        (0, _Response.default)(res, 404, 'No Orders found for the user');
+      }
+    } catch (error) {
+      (0, _Response.default)(res, 500, error);
+    }
+  }
+
+  static async getParticularOrder(req, res) {
+    const orderId = req.params.orderId;
+
+    const _Validation$getPartic = _Validation.default.getParticualrOrder({
+      orderId
+    }),
+          error = _Validation$getPartic.error;
+
+    if (error) {
+      (0, _Response.default)(res, 400, error);
+    } else {
+      try {
+        const order = await _Order.default.getOrder(req.user.id, orderId);
+
+        if (order) {
+          (0, _Response.default)(res, 200, order);
+        } else {
+          (0, _Response.default)(res, 404, 'Order not found');
+        }
+      } catch (err) {
+        (0, _Response.default)(res, 500, err);
+      }
+    }
+  }
+
 }
 
 var _default = OrderController;

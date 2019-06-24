@@ -23,7 +23,7 @@ describe('POST /api/v2/order', () => {
         .type('json')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU')
         .send({
-          carId: 1,
+          carId: 2,
           amount: 500000,
         })
         .end((err, res) => {
@@ -197,5 +197,81 @@ describe('PATCH /api/v2/order/<:order-id>/price', () => {
         expect(res.body.error).to.be.a('string');
         done();
       });
+  });
+});
+
+describe('GET /api/v2/order/myOrder', () => {
+  describe('When the token is present', () => {
+    it('When all parameters are correctly supplied the request is successful', (done) => {
+      chai.request(server)
+        .get('/api/v2/order/myOrder')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTE0NDIyMiwiZXhwIjoxNTkwNjgwMjIyfQ.Ck2c3jUUCQez0Lp4WFf1iLDkkTUSuHhtIcgTQ7vMwsA')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('array');
+          done();
+        });
+    });
+  });
+
+  describe('When there are issues with the token', (done) => {
+    it('The request shouldnt go through if the token in the cookie is missing', (done) => {
+      // Jwt missing in cookie
+      chai.request(server)
+        .get('/api/v2/order/myOrder')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(401);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error).to.be.a('string');
+          done();
+        });
+    });
+  });
+});
+
+describe('GET /api/v2/order/myOrder/:orderId', () => {
+  describe('When the token is present', () => {
+    it('When all parameters are correctly supplied the request is successful', (done) => {
+      chai.request(server)
+        .get('/api/v2/order/myOrder/152')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTE0NDIyMiwiZXhwIjoxNTkwNjgwMjIyfQ.Ck2c3jUUCQez0Lp4WFf1iLDkkTUSuHhtIcgTQ7vMwsA')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res, 'response object status').to.have.status(200);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(200);
+          expect(res.body, 'response body').to.haveOwnProperty('data');
+          expect(res.body.data, 'data property').to.be.a('object');
+          done();
+        });
+    });
+  });
+
+  describe('When there are issues with the token', (done) => {
+    it('The request shouldnt go through if the token in the cookie is missing', (done) => {
+      // Jwt missing in cookie
+      chai.request(server)
+        .get('/api/v2/order/myOrder/152')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(401);
+          expect(res.body, 'response body').to.be.a('object');
+          expect(res.body, 'response body').to.haveOwnProperty('status');
+          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body, 'response body').to.haveOwnProperty('error');
+          expect(res.body.error).to.be.a('string');
+          done();
+        });
+    });
   });
 });

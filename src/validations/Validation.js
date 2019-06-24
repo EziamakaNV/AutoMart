@@ -96,6 +96,13 @@ class Validation {
     };
     return Joi.validate(validationObject, schema);
   }
+
+  static getParticualrOrder(validationObject) {
+    const schema = {
+      orderId: Joi.number().integer().required(),
+    };
+    return Joi.validate(validationObject, schema);
+  }
 }
 
 export default Validation;
