@@ -34,7 +34,7 @@ Before running the project, install the following
 - Git
 
 #### To run
-- git clone https://github.com/EziamakaNV/AutoMArt.git
+- git clone https://github.com/EziamakaNV/AutoMart.git
 - cd AutoMart
 - npm install
 - npm start
@@ -45,11 +45,14 @@ Before running the project, install the following
 ### Pivotal Tracker stories
 [https://www.pivotaltracker.com/n/projects/2345861](https://www.pivotaltracker.com/n/projects/2345861)
 
-### Hosted App
-[https://automobile-mart.herokuapp.com/api/v2/docs](https://automobile-mart.herokuapp.com/api/v2/docs)
-
 ### UI Template
 [https://eziamakanv.github.io/AutoMart](https://eziamakanv.github.io/AutoMart)
+
+### Hosted App API Doc
+[https://automobile-mart.herokuapp.com/api/v2/docs](https://automobile-mart.herokuapp.com/api/v2/docs)
+
+### Hosted FrontEnd App
+[https://eziamakanv.github.io/AutoMartFrontEnd](https://eziamakanv.github.io/AutoMartFrontEnd)
 
 ## API Endpoints
 POST 'https://automobile-mart.herokuapp.com/api/v2/auth/signup' - Create a user account
