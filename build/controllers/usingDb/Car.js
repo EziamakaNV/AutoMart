@@ -159,7 +159,9 @@ class CarController {
             const updatedCar = await _Car.default.updateStatus(car_id, 'sold');
             (0, _Response.default)(res, 200, _objectSpread({
               email: req.user.email
-            }, updatedCar));
+            }, updatedCar, {
+              token: req.token
+            }));
           } else {
             (0, _Response.default)(res, 401, 'You do not own this Ad');
           }
@@ -196,7 +198,9 @@ class CarController {
             const updatedCar = await _Car.default.updatePrice(car_id, price);
             (0, _Response.default)(res, 200, _objectSpread({
               email: req.user.email
-            }, updatedCar));
+            }, updatedCar, {
+              token: req.token
+            }));
           } else {
             (0, _Response.default)(res, 401, 'You do not own this Ad');
           }
@@ -226,7 +230,9 @@ class CarController {
         const carAd = await _Car.default.findOne(car_id);
 
         if (carAd) {
-          (0, _Response.default)(res, 200, carAd);
+          (0, _Response.default)(res, 200, _objectSpread({}, carAd, {
+            token: req.token
+          }));
         } else {
           (0, _Response.default)(res, 400, 'The Car Ad does not exist');
         }
@@ -274,13 +280,18 @@ class CarController {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailable();
-          (0, _Response.default)(res, 200, cars);
+          (0, _Response.default)(res, 200, [{
+            token: req.token
+          }, ...cars]);
         }
       } else {
         // Only admins can view this
         const is_admin = await _User.default.is_admin(req.user.id);
 
         if (is_admin) {
+          const cars = await _Car.default.findAll();
+          (0, _Response.default)(res, 200, cars);
+        } else if (req.token) {
           const cars = await _Car.default.findAll();
           (0, _Response.default)(res, 200, cars);
         } else {
@@ -324,7 +335,9 @@ class CarController {
       const myCars = await _Car.default.findMyCars(req.user.id);
 
       if (myCars) {
-        (0, _Response.default)(res, 200, myCars);
+        (0, _Response.default)(res, 200, [...myCars, {
+          token: req.token
+        }]);
       } else {
         (0, _Response.default)(res, 404, 'No Ads found for the user');
       }

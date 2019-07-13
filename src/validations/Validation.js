@@ -36,7 +36,7 @@ class Validation {
   static newOrderValidation(validationObject) {
     const schema = {
       car_id: Joi.number().integer().required(),
-      price: Joi.number().integer().min(1).max(999999999999).required(),
+      amount: Joi.number().integer().min(1).max(999999999999).required(),
     };
     return Joi.validate(validationObject, schema);
   }

@@ -13,11 +13,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class Validation {
   static signUpValidation(validationObject) {
     const schema = {
-      first_name: _joi.default.string().min(3).max(15).required(),
-      last_name: _joi.default.string().min(3).max(15).required(),
+      first_name: _joi.default.string().required(),
+      last_name: _joi.default.string().required(),
       email: _joi.default.string().email().required(),
-      password: _joi.default.string().min(6).max(20).required(),
-      address: _joi.default.string().min(15).max(50).required()
+      password: _joi.default.string().required(),
+      address: _joi.default.string().required()
     };
     return _joi.default.validate(validationObject, schema);
   }
@@ -25,7 +25,7 @@ class Validation {
   static loginValidation(validationObject) {
     const schema = {
       email: _joi.default.string().email().required(),
-      password: _joi.default.string().min(6).max(20).required()
+      password: _joi.default.string().required()
     };
     return _joi.default.validate(validationObject, schema);
   }
@@ -45,7 +45,7 @@ class Validation {
   static newOrderValidation(validationObject) {
     const schema = {
       car_id: _joi.default.number().integer().required(),
-      price: _joi.default.number().integer().min(1).max(999999999999).required()
+      amount: _joi.default.number().integer().min(1).max(999999999999).required()
     };
     return _joi.default.validate(validationObject, schema);
   }

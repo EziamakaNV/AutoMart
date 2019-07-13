@@ -18,7 +18,7 @@ require('dotenv').config();
 
 class Authentication {
   static async verifyToken(req, res, next) {
-    const token = req.cookies.jwt; // Check for the token
+    const token = req.cookies.jwt || req.body.token; // Check for the token
 
     if (!token) {
       res.status(401).json({
@@ -31,6 +31,7 @@ class Authentication {
         const user = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Create user object in the request
 
         req.user = user;
+        req.token = token;
         next(); // Check if the user is still in the DB
         // const userExists = await UserModel.findUser(user.email);
         // if (userExists) {
@@ -50,7 +51,7 @@ class Authentication {
   }
 
   static async adminVerifyToken(req, res, next) {
-    const token = req.cookies.jwt; // Check for the token
+    const token = req.cookies.jwt || req.body.token; // Check for the token
 
     if (!token) {
       res.status(401).json({
@@ -66,6 +67,7 @@ class Authentication {
 
         if (isUserAdmin) {
           req.user = user;
+          req.token = token;
           next();
         } else {
           (0, _Response.default)(res, 401, 'You are not an Admin');

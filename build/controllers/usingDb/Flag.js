@@ -70,7 +70,9 @@ class FlagController {
             const createdFlag = await _Flag.default.createFlag(newFlag);
             res.status(201).json({
               status: 201,
-              data: _objectSpread({}, createdFlag)
+              data: _objectSpread({}, createdFlag, {
+                token: req.token
+              })
             });
           }
         }

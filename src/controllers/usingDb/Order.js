@@ -11,7 +11,7 @@ class OrderController {
     try {
       const orderDetails = {
         car_id: req.body.car_id,
-        price: req.body.price,
+        amount: req.body.amount,
       };
   
       const { error } = Validation.newOrderValidation(orderDetails);
@@ -33,7 +33,7 @@ class OrderController {
             const newOrder = {
               buyer: req.user.id,
               car_id: carAd.id,
-              amount: orderDetails.price,
+              amount: orderDetails.amount,
             };
             const createdOrder = await OrderModel.createOrder(newOrder);
             res.status(201).json({
@@ -49,7 +49,7 @@ class OrderController {
         }
       }
     } catch (error) {
-      response(res, 500, error)
+      response(res, 500, error);
     }
   }
 
@@ -101,7 +101,7 @@ class OrderController {
     try {
       const myOrders = await OrderModel.findMyOrders(req.user.id);
       if (myOrders) {
-        response(res, 200, { token: req.token, myOrders });
+        response(res, 200, [{ token: req.token }, ...myOrders]);
       } else {
         response(res, 404, 'No Orders found for the user');
       }
