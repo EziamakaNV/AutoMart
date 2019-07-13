@@ -405,6 +405,7 @@ describe('DELETE /api/v1/car/<:car-id>', () => {
     it('The request shouldnt go through if the id encoded in the token does not have Admin privileges', done => {
       // Jwt missing in cookie
       _chai.default.request(_server.default).delete('/api/v1/car/1').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').end((err, res) => {
+        console.log(res.body.error);
         expect(err).to.be.null;
         expect(res).to.have.status(401);
         expect(res.body, 'response body').to.be.a('object');
