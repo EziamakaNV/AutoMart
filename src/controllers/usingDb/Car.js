@@ -214,9 +214,6 @@ class CarController {
         if (is_admin) {
           const cars = await CarModel.findAll();
           response(res, 200, cars);
-        } else if (req.token) {
-          const cars = await CarModel.findAll();
-          response(res, 200, cars);
         } else {
           response(res, 400, 'You are not an Admin');
         }
