@@ -4,11 +4,11 @@ import Joi from '@hapi/joi';
 class Validation {
   static signUpValidation(validationObject) {
     const schema = {
-      first_name: Joi.string().min(3).max(15).required(),
-      last_name: Joi.string().min(3).max(15).required(),
+      first_name: Joi.string().required(),
+      last_name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(20).required(),
-      address: Joi.string().min(15).max(50).required(),
+      password: Joi.string().required(),
+      address: Joi.string().required(),
     };
     return Joi.validate(validationObject, schema);
   }
@@ -16,7 +16,7 @@ class Validation {
   static loginValidation(validationObject) {
     const schema = {
       email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(20).required(),
+      password: Joi.string().required(),
     };
     return Joi.validate(validationObject, schema);
   }

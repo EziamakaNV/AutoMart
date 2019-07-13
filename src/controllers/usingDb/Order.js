@@ -42,6 +42,7 @@ class OrderController {
                 ...createdOrder,
                 price: carAd.price,
                 price_offered: orderDetails.price,
+                token: req.token,
               },
             });
           }
@@ -78,6 +79,7 @@ class OrderController {
                   status: updatedOrder.status,
                   old_price_offered: initialOrderAmount,
                   new_price_offered: updatedOrder.amount,
+                  token: req.token,
                 },
               });
             } else {
@@ -99,7 +101,7 @@ class OrderController {
     try {
       const myOrders = await OrderModel.findMyOrders(req.user.id);
       if (myOrders) {
-        response(res, 200, myOrders);
+        response(res, 200, { token: req.token, myOrders });
       } else {
         response(res, 404, 'No Orders found for the user');
       }
@@ -117,7 +119,7 @@ class OrderController {
       try {
         const order = await OrderModel.getOrder(req.user.id, orderId);
         if (order) {
-          response(res, 200, order);
+          response(res, 200, { token: req.token, ...order });
         } else {
           response(res, 404, 'Order not found');
         }
