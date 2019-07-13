@@ -9,7 +9,7 @@ require('dotenv').config();
 
 class Authentication {
   static async verifyToken(req, res, next) {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.body.token;
     // Check for the token
     if (!token) {
       res.status(401).json({ status: 401, error: 'Missing token', success: false });
@@ -36,7 +36,7 @@ class Authentication {
   }
 
   static async adminVerifyToken(req, res, next) {
-    const token = req.cookies.jwt;
+    const token = req.cookies.jwt || req.body.token;
     // Check for the token
     if (!token) {
       res.status(401).json({ status: 401, error: 'Missing token', success: false });
