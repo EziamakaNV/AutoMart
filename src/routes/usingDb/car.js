@@ -24,6 +24,6 @@ router.get('/:car_id', Authentication.verifyToken, CarController.viewSpecificCar
 
 router.get('/', Authentication.verifyToken, CarController.viewCars);
 
-router.delete('/:car_id', Authentication.verifyToken, CarController.deleteCar);
+router.delete('/:car_id', Authentication.adminVerifyToken, CarController.deleteCar);
 
 export default router;
