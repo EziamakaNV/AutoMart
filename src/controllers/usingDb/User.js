@@ -17,8 +17,8 @@ class UserController {
   static async signup(req, res) {
     try {
       const {
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         password,
         address,
       } = req.body;
@@ -28,8 +28,8 @@ class UserController {
   
       // Use Joi to validate input
       const validationObject = {
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         email,
         password,
         address,
@@ -48,17 +48,17 @@ class UserController {
           // Hash password
           const saltRounds = 10;
           const hashedPassword = await bcrypt.hash(password, saltRounds);
-          const userObject = { firstName, lastName, email, password: hashedPassword, address, isAdmin: false };
+          const userObject = { first_name, last_name, email, password: hashedPassword, address, is_admin: false };
           const newUser = await UserModel.createUser(userObject);
           // Generate jwt
           const token = jwt.sign({ id: newUser.id, email }, process.env.JWT_SECRET, { expiresIn: '8760h' });
           // Set cookie header
           res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
-          res.cookie('user', JSON.stringify({ firstName, lastName }), { maxAge: 31540000000 });
+          res.cookie('user', JSON.stringify({ first_name, last_name }), { maxAge: 31540000000 });
           // Final response
           res.status(200).json({
             status: 200,
-            data: { token, id: newUser.id, firstName, lastName, email, hashedPassword },
+            data: { token, id: newUser.id, first_name, last_name, email, hashedPassword },
             success: true,
           });
         }
@@ -90,10 +90,10 @@ class UserController {
             // httpOnly not set because
             // I want to be able to read the cookie
             // on the client side with Js
-            res.cookie('user', JSON.stringify({ firstName: user.firstName, lastName: user.lastName }), { maxAge: 31540000000 });
+            res.cookie('user', JSON.stringify({ first_name: user.first_name, last_name: user.last_name }), { maxAge: 31540000000 });
             res.status(200).json({
               status: 200,
-              data: { token, id: user.id, first_name: user.firstName, last_name: user.lastName, email } });
+              data: { token, id: user.id, first_name: user.first_name, last_name: user.last_name, email } });
           } else {
             res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
           }

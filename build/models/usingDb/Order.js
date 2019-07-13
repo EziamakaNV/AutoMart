@@ -16,7 +16,7 @@ class OrderModel {
   static createOrder(order) {
     return new Promise((resolve, reject) => {
       const query = 'INSERT INTO orders(buyer, car_id, amount, status, created_on) VALUES($1, $2, $3, $4, $5) RETURNING *';
-      const values = [order.buyer, order.carId, order.amount, 'pending', (0, _moment.default)(new Date())];
+      const values = [order.buyer, order.car_id, order.amount, 'pending', (0, _moment.default)(new Date())];
 
       _index.default.query(query, values).then(result => resolve(result.rows[0])).catch(err => reject(err));
     });
@@ -46,10 +46,10 @@ class OrderModel {
     });
   }
 
-  static previousOrderExists(carId, buyer) {
+  static previousOrderExists(car_id, buyer) {
     return new Promise((resolve, reject) => {
       const query = 'SELECT * FROM orders WHERE car_id = $1 AND buyer = $2';
-      const values = [carId, buyer];
+      const values = [car_id, buyer];
 
       _index.default.query(query, values).then(result => {
         if (result.rows.length === 0) {

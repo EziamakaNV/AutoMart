@@ -27,8 +27,8 @@ class OrderController {
   static async createOrder(req, res) {
     try {
       const orderDetails = {
-        carId: req.body.carId,
-        amount: req.body.amount
+        car_id: req.body.car_id,
+        price: req.body.price
       };
 
       const _Validation$newOrderV = _Validation.default.newOrderValidation(orderDetails),
@@ -41,7 +41,7 @@ class OrderController {
         });
       } else {
         // Get car details
-        const carAd = await _Car.default.findOne(orderDetails.carId);
+        const carAd = await _Car.default.findOne(orderDetails.car_id);
 
         if (!carAd) {
           res.status(404).json({
@@ -62,15 +62,15 @@ class OrderController {
             // Create order
             const newOrder = {
               buyer: req.user.id,
-              carId: carAd.id,
-              amount: orderDetails.amount
+              car_id: carAd.id,
+              amount: orderDetails.price
             };
             const createdOrder = await _Order.default.createOrder(newOrder);
             res.status(201).json({
               status: 201,
               data: _objectSpread({}, createdOrder, {
                 price: carAd.price,
-                priceOffered: orderDetails.amount
+                price_offered: orderDetails.price
               })
             });
           }
@@ -84,11 +84,11 @@ class OrderController {
   static async updateOrder(req, res) {
     try {
       const orderId = Number(req.params.orderId);
-      const amount = req.body.amount;
+      const price = req.body.price;
 
       const _Validation$orderUpda = _Validation.default.orderUpdate({
         orderId,
-        amount
+        price
       }),
             error = _Validation$orderUpda.error;
 
@@ -109,15 +109,15 @@ class OrderController {
           if (initialOrder.buyer === req.user.id) {
             // Check if the status of the order is still pending
             if (initialOrder.status === 'pending') {
-              const updatedOrder = await _Order.default.update(orderId, amount);
+              const updatedOrder = await _Order.default.update(orderId, price);
               res.status(200).json({
                 status: 200,
                 data: {
                   id: updatedOrder.id,
-                  carId: updatedOrder.car_id,
+                  car_id: updatedOrder.car_id,
                   status: updatedOrder.status,
-                  oldPriceOffered: initialOrderAmount,
-                  newPriceOffered: updatedOrder.amount
+                  old_price_offered: initialOrderAmount,
+                  new_price_offered: updatedOrder.amount
                 }
               });
             } else {

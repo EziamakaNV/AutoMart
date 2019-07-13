@@ -10,11 +10,11 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-describe('POST /api/v2/car/', () => {
+describe('POST /api/v1/car/', () => {
   it('The request shouldnt go through if the token in the cookie is missing', (done) => {
     // Jwt missing in cookie
     chai.request(server)
-      .post('/api/v2/car')
+      .post('/api/v1/car')
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(401);
@@ -28,15 +28,15 @@ describe('POST /api/v2/car/', () => {
   });
 
   describe('A request with a valid token in the cookie (Client logged in)', () => {
-    let carId;
+    let car_id;
 
     after((done) => {
-      db.query('DELETE FROM cars where id = $1', [carId]).then(() => { done(); });
+      db.query('DELETE FROM cars where id = $1', [car_id]).then(() => { done(); });
     });
 
     it('The request should be successful when all parameters are supplied correctly', (done) => {
       chai.request(server)
-        .post('/api/v2/car')
+        .post('/api/v1/car')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc')
         .send({
           state: 'new',
@@ -44,7 +44,7 @@ describe('POST /api/v2/car/', () => {
           price: '2000000',
           manufacturer: 'Toyota',
           model: 'Camry',
-          bodyType: 'car',
+          body_type: 'car',
         })
         .end((err, res) => {
           expect(err).to.be.null;
@@ -54,14 +54,14 @@ describe('POST /api/v2/car/', () => {
           expect(res.body.status, 'status property').to.equal(201);
           expect(res.body, 'response body').to.haveOwnProperty('data');
           expect(res.body.data, 'data property').to.be.a('object');
-          carId = res.body.data.id;
+          car_id = res.body.data.id;
           done();
         });
     });
 
     it('The request shoud not be successful if any of the parameters are missing from the request body', (done) => {
       chai.request(server)
-        .post('/api/v2/car')
+        .post('/api/v1/car')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc')
         .send({
           state: 'new',
@@ -84,11 +84,11 @@ describe('POST /api/v2/car/', () => {
   });
 });
 
-describe('PATCH /api/v2/car/<:car-id>/status', () => {
+describe('PATCH /api/v1/car/<:car-id>/status', () => {
   describe('When the token is present', () => {
     it('When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .patch('/api/v2/car/3/status')
+        .patch('/api/v1/car/3/status')
         .type('json')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -106,11 +106,11 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
         });
     });
 
-    let carId;
+    let car_id;
     it('Only the owner of the ad can update the status of the car ad', (done) => {
       // Create a car ad with user two token
       chai.request(server)
-        .post('/api/v2/car')
+        .post('/api/v1/car')
         .type('json')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -119,10 +119,10 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
           price: '2000000',
           manufacturer: 'Bitch',
           model: 'One',
-          bodyType: 'biatch',
+          body_type: 'biatch',
         })
         .end((err, res) => {
-          carId = res.body.data.id;
+          car_id = res.body.data.id;
           expect(err).to.be.null;
           expect(res, 'response object status').to.have.status(201);
           expect(res.body, 'response body').to.be.a('object');
@@ -132,7 +132,7 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
           expect(res.body.data, 'data property').to.be.a('object');
           // Update the status with user three token
           chai.request(server)
-            .patch(`/api/v2/car/${carId}/status`)
+            .patch(`/api/v1/car/${car_id}/status`)
             .type('json')
             .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU')
             .send({
@@ -152,31 +152,12 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
     });
 
     after((done) => {
-      db.query('DELETE FROM cars WHERE id = $1', [carId]).then(() => { done(); });
+      db.query('DELETE FROM cars WHERE id = $1', [car_id]).then(() => { done(); });
     });
 
-    it('The request shoud not be successful if any of the parameters are missing from the request body', (done) => {
+    it('The request shoud not be successful if the car_id doesnt exist or is invalid', (done) => {
       chai.request(server)
-        .patch('/api/v2/car/3/status')
-        .type('json')
-        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
-        .send({
-        })
-        .end((err, res) => {
-          expect(err).to.be.null;
-          expect(res, 'response object status').to.have.status(400);
-          expect(res.body, 'response body').to.be.a('object');
-          expect(res.body, 'response body').to.haveOwnProperty('status');
-          expect(res.body.status, 'status property').to.equal(400);
-          expect(res.body, 'response body').to.haveOwnProperty('error');
-          expect(res.body.error, 'data property').to.be.a('string');
-          done();
-        });
-    });
-
-    it('The request shoud not be successful if the carid doesnt exist or is invalid', (done) => {
-      chai.request(server)
-        .patch('/api/v2/car/ttyr/status')
+        .patch('/api/v1/car/ttyr/status')
         .type('form')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -197,7 +178,7 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
   it('The request shouldnt go through if the token in the cookie is missing', (done) => {
     // Jwt missing in cookie
     chai.request(server)
-      .patch('/api/v2/car/1/status')
+      .patch('/api/v1/car/1/status')
       .type('form')
       .end((err, res) => {
         expect(err).to.be.null;
@@ -212,11 +193,11 @@ describe('PATCH /api/v2/car/<:car-id>/status', () => {
   });
 });
 
-describe('PATCH /api/v2/car/<:car-id>/price', () => {
+describe('PATCH /api/v1/car/<:car-id>/price', () => {
   describe('When the token is present', () => {
     it('When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .patch('/api/v2/car/3/price')
+        .patch('/api/v1/car/3/price')
         .type('json')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -234,11 +215,11 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
         });
     });
 
-    let carId;
+    let car_id;
     it('Only the owner of the ad can update the price of the car ad', (done) => {
       // Create a car ad with user two token
       chai.request(server)
-        .post('/api/v2/car')
+        .post('/api/v1/car')
         .type('json')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -247,10 +228,10 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
           price: '2000000',
           manufacturer: 'Toyota',
           model: 'Camry',
-          bodyType: 'car',
+          body_type: 'car',
         })
         .end((err, res) => {
-          carId = res.body.data.id;
+          car_id = res.body.data.id;
           expect(err).to.be.null;
           expect(res, 'response object status').to.have.status(201);
           expect(res.body, 'response body').to.be.a('object');
@@ -260,7 +241,7 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
           expect(res.body.data, 'data property').to.be.a('object');
           // Update the price with user three token
           chai.request(server)
-            .patch(`/api/v2/car/${carId}/price`)
+            .patch(`/api/v1/car/${car_id}/price`)
             .type('json')
             .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU')
             .send({
@@ -280,12 +261,12 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
     });
 
     after((done) => {
-      db.query('DELETE from cars WHERE id = $1', [carId]).then(() => { done(); });
+      db.query('DELETE from cars WHERE id = $1', [car_id]).then(() => { done(); });
     });
 
     it('The request shoud not be successful if any of the parameters are missing from the request body', (done) => {
       chai.request(server)
-        .patch('/api/v2/car/3/price')
+        .patch('/api/v1/car/3/price')
         .type('json')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -302,9 +283,9 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
         });
     });
 
-    it('The request shoud not be successful if the carid doesnt exist or is invalid', (done) => {
+    it('The request shoud not be successful if the car_id doesnt exist or is invalid', (done) => {
       chai.request(server)
-        .patch('/api/v2/car/ttyr/price')
+        .patch('/api/v1/car/ttyr/price')
         .type('form')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
@@ -325,7 +306,7 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
   it('The request shouldnt go through if the token in the cookie is missing', (done) => {
     // Jwt missing in cookie
     chai.request(server)
-      .patch('/api/v2/car/1/price')
+      .patch('/api/v1/car/1/price')
       .type('form')
       .end((err, res) => {
         expect(err).to.be.null;
@@ -340,11 +321,11 @@ describe('PATCH /api/v2/car/<:car-id>/price', () => {
   });
 });
 
-describe('GET /api/v2/car/<:car-id>', () => {
+describe('GET /api/v1/car/<:car-id>', () => {
   describe('When the token is present', () => {
     it('When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .get('/api/v2/car/3')
+        .get('/api/v1/car/3')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -358,9 +339,9 @@ describe('GET /api/v2/car/<:car-id>', () => {
         });
     });
 
-    it('The request shoud not be successful if the carid provided doesnt exist or is invalid', (done) => {
+    it('The request shoud not be successful if the car_id provided doesnt exist or is invalid', (done) => {
       chai.request(server)
-        .get('/api/v2/car/ttyr')
+        .get('/api/v1/car/ttyr')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
         })
@@ -381,7 +362,7 @@ describe('GET /api/v2/car/<:car-id>', () => {
     it('The request shouldnt go through if the token in the cookie is missing', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .get('/api/v2/car/1')
+        .get('/api/v1/car/1')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(401);
@@ -396,11 +377,11 @@ describe('GET /api/v2/car/<:car-id>', () => {
   });
 });
 
-describe('GET /api/v2/car?status=available and GET /api/v2/car?status=available&min_price=xx&max_price=xx ', () => {
+describe('GET /api/v1/car?status=available and GET /api/v1/car?status=available&min_price=xx&max_price=xx ', () => {
   describe('When the token is present', () => {
     it('(status only) When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .get('/api/v2/car?status=available')
+        .get('/api/v1/car?status=available')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -416,7 +397,7 @@ describe('GET /api/v2/car?status=available and GET /api/v2/car?status=available&
 
     it('(status, min & max price) When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .get('/api/v2/car?status=available&min_price=800000&max_price=5000000')
+        .get('/api/v1/car?status=available&min_price=800000&max_price=5000000')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -432,7 +413,7 @@ describe('GET /api/v2/car?status=available and GET /api/v2/car?status=available&
 
     it('The request shoud not be successful if the value of the status parameter isnt "available" or "sold"', (done) => {
       chai.request(server)
-        .get('/api/v2/car?status=whatevs')
+        .get('/api/v1/car?status=whatevs')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
         })
@@ -450,7 +431,7 @@ describe('GET /api/v2/car?status=available and GET /api/v2/car?status=available&
 
     it('The request shoud not be successful if the values if the min&max price query attributes are not numbers', (done) => {
       chai.request(server)
-        .get('/api/v2/car?status=available&min_price=a&max_price=5000000')
+        .get('/api/v1/car?status=available&min_price=a&max_price=5000000')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .send({
         })
@@ -471,7 +452,7 @@ describe('GET /api/v2/car?status=available and GET /api/v2/car?status=available&
     it('The request shouldnt go through if the token in the cookie is missing', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .get('/api/v2/car?status=available')
+        .get('/api/v1/car?status=available')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(401);
@@ -486,11 +467,11 @@ describe('GET /api/v2/car?status=available and GET /api/v2/car?status=available&
   });
 });
 
-describe('DELETE /api/v2/car/<:car-id>', () => {
+describe('DELETE /api/v1/car/<:car-id>', () => {
   describe('When the token(Admin) is present', () => {
     it('When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .delete('/api/v2/car/3')
+        .delete('/api/v1/car/3')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTEzMDQ3MSwiZXhwIjoxNTkwNjY2NDcxfQ.DKnHchuP_MjSVxXRHKJWHRHnK-BI882X_OC5b6JSiT4')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -510,9 +491,9 @@ describe('DELETE /api/v2/car/<:car-id>', () => {
       db.query(query, values).then(() => { done(); });
     });
 
-    it('The request shoud not be successful if the carid provided doesnt exist or is invalid', (done) => {
+    it('The request shoud not be successful if the car_id provided doesnt exist or is invalid', (done) => {
       chai.request(server)
-        .delete('/api/v2/car/ttyr')
+        .delete('/api/v1/car/ttyr')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTEzMDQ3MSwiZXhwIjoxNTkwNjY2NDcxfQ.DKnHchuP_MjSVxXRHKJWHRHnK-BI882X_OC5b6JSiT4')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -531,7 +512,7 @@ describe('DELETE /api/v2/car/<:car-id>', () => {
     it('The request shouldnt go through if the id encoded in the token does not have Admin privileges', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .delete('/api/v2/car/1')
+        .delete('/api/v1/car/1')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -548,7 +529,7 @@ describe('DELETE /api/v2/car/<:car-id>', () => {
     it('The request shouldnt go through if the token in the cookie is missing', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .delete('/api/v2/car/1')
+        .delete('/api/v1/car/1')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(401);
@@ -563,11 +544,11 @@ describe('DELETE /api/v2/car/<:car-id>', () => {
   });
 });
 
-describe('GET /api/v2/car', () => {
+describe('GET /api/v1/car', () => {
   describe('When the token(Admin) is present', () => {
     it('When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .get('/api/v2/car')
+        .get('/api/v1/car')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTE0NDIyMiwiZXhwIjoxNTkwNjgwMjIyfQ.Ck2c3jUUCQez0Lp4WFf1iLDkkTUSuHhtIcgTQ7vMwsA')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -586,7 +567,7 @@ describe('GET /api/v2/car', () => {
     it('The request shouldnt go through if the id encoded in the token does not have Admin privileges', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .get('/api/v2/car')
+        .get('/api/v1/car')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -603,7 +584,7 @@ describe('GET /api/v2/car', () => {
     it('The request shouldnt go through if the token in the cookie is missing', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .get('/api/v2/car')
+        .get('/api/v1/car')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(401);
@@ -618,11 +599,11 @@ describe('GET /api/v2/car', () => {
   });
 });
 
-describe('GET /api/v2/car/myCar', () => {
+describe('GET /api/v1/car/myCar', () => {
   describe('When the token is present', () => {
     it('When all parameters are correctly supplied the request is successful', (done) => {
       chai.request(server)
-        .get('/api/v2/car/myCar')
+        .get('/api/v1/car/myCar')
         .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU1OTE0NDIyMiwiZXhwIjoxNTkwNjgwMjIyfQ.Ck2c3jUUCQez0Lp4WFf1iLDkkTUSuHhtIcgTQ7vMwsA')
         .end((err, res) => {
           expect(err).to.be.null;
@@ -641,7 +622,7 @@ describe('GET /api/v2/car/myCar', () => {
     it('The request shouldnt go through if the token in the cookie is missing', (done) => {
       // Jwt missing in cookie
       chai.request(server)
-        .get('/api/v2/car/myCar')
+        .get('/api/v1/car/myCar')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(401);

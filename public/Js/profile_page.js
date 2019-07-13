@@ -151,5 +151,5 @@ const getNameFromCookie = (cname) => {
 window.addEventListener('DOMContentLoaded', () => {
   const userJSON = getNameFromCookie('user');
   const user = JSON.parse(userJSON);
-  document.querySelector('#client-name').textContent = `Welcome ${user.firstName} ${user.lastName}`;
+  document.querySelector('#client-name').textContent = `Welcome ${user.first_name} ${user.last_name}`;
 });

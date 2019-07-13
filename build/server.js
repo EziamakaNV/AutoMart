@@ -37,7 +37,7 @@ const app = (0, _express.default)();
 const swaggerDocumentV2 = require('../swagger_v2.json');
 
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
+const allowedOrigins = ['https://adc-autograder.herokuapp.com', 'https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
 const corsOptions = {
   credentials: true,
   origin: (_origin, callback) => {
@@ -58,15 +58,15 @@ app.use(_bodyParser.default.urlencoded({
 }));
 app.use(_express.default.static('public'));
 /*
-  API V2
+  API V1
 */
 
-app.use('/api/v2/auth', (0, _cors.default)(corsOptions), _user.default);
-app.use('/api/v2/car', (0, _cors.default)(corsOptions), _car.default);
-app.use('/api/v2/order', (0, _cors.default)(corsOptions), _order.default);
-app.use('/api/v2/flag', (0, _cors.default)(corsOptions), _flag.default);
-app.use('/api/v2/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocumentV2));
-app.use('/', _views.default); // Not Found Handler
+app.use('/api/v1/auth', (0, _cors.default)(corsOptions), _user.default);
+app.use('/api/v1/car', (0, _cors.default)(corsOptions), _car.default);
+app.use('/api/v1/order', (0, _cors.default)(corsOptions), _order.default);
+app.use('/api/v1/flag', (0, _cors.default)(corsOptions), _flag.default);
+app.use('/api/v1/docs', _swaggerUiExpress.default.serve, _swaggerUiExpress.default.setup(swaggerDocumentV2));
+app.use('/', (0, _cors.default)(corsOptions), _views.default); // Not Found Handler
 
 app.use((req, res) => {
   res.status(404).send('Not Found!');

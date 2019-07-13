@@ -7,8 +7,8 @@ const menuBarAnimation = (menu) => {
 const submitForm = async () => {
   const modal = document.querySelector('#myModal');
   modal.style.display = 'block';
-  const firstName = document.querySelector('#firstName').value;
-  const lastName = document.querySelector('#lastName').value;
+  const first_name = document.querySelector('#first_name').value;
+  const last_name = document.querySelector('#last_name').value;
   const email = document.querySelector('#email').value;
   const address = document.querySelector('#address').value;
   const password = document.querySelector('#password').value;
@@ -20,8 +20,8 @@ const submitForm = async () => {
       a user session (to send cookies, the credentials init option must be set).
       */
     const body = {
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
       address,
       password,

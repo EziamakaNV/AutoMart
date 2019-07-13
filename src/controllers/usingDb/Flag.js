@@ -11,7 +11,7 @@ class FlagController {
   static async createFlag(req, res) {
     try {
       const flagDetails = {
-        carId: req.body.carId,
+        car_id: req.body.car_id,
         reason: req.body.reason,
         description: req.body.description,
       };
@@ -22,7 +22,7 @@ class FlagController {
         res.status(400).json({ status: 400, error: `Issue with parameters supplies. Problem: ${error}` });
       } else {
         // Get car details
-        const carAd = await CarModel.findOne(flagDetails.carId);
+        const carAd = await CarModel.findOne(flagDetails.car_id);
         if (!carAd) {
           res.status(404).json({ status: 404, error: 'Car/Ad does not exist' });
         } else {
@@ -34,7 +34,7 @@ class FlagController {
             // Create flag
             const newFlag = {
               owner: req.user.id,
-              carId: carAd.id,
+              car_id: carAd.id,
               reason: flagDetails.reason,
               description: flagDetails.description,
             };

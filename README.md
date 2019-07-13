@@ -49,35 +49,35 @@ Before running the project, install the following
 [https://eziamakanv.github.io/AutoMart](https://eziamakanv.github.io/AutoMart)
 
 ### Hosted App API Doc
-[https://automobile-mart.herokuapp.com/api/v2/docs](https://automobile-mart.herokuapp.com/api/v2/docs)
+[https://automobile-mart.herokuapp.com/api/v1/docs](https://automobile-mart.herokuapp.com/api/v1/docs)
 
 ### Hosted FrontEnd App
 [https://eziamakanv.github.io/AutoMartFrontEnd](https://eziamakanv.github.io/AutoMartFrontEnd)
 
 ## API Endpoints
-POST 'https://automobile-mart.herokuapp.com/api/v2/auth/signup' - Create a user account
+POST 'https://automobile-mart.herokuapp.com/api/v1/auth/signup' - Create a user account
 
-POST 'https://automobile-mart.herokuapp.com/api/v2/auth/signin' - Login a user
+POST 'https://automobile-mart.herokuapp.com/api/v1/auth/signin' - Login a user
 
-GET 'https://automobile-mart.herokuapp.com/api/v2/car' - View all car ads whether sold or available (Admins only)
+GET 'https://automobile-mart.herokuapp.com/api/v1/car' - View all car ads whether sold or available (Admins only)
 
-POST 'https://automobile-mart.herokuapp.com/api/v2/car' - Create new car ads
+POST 'https://automobile-mart.herokuapp.com/api/v1/car' - Create new car ads
 
-PATCH 'https://automobile-mart.herokuapp.com/api/v2/car/{carId}/status' - Update the status of a car ad
+PATCH 'https://automobile-mart.herokuapp.com/api/v1/car/{car_id}/status' - Update the status of a car ad
 
-PATCH 'https://automobile-mart.herokuapp.com/api/v2/car/{carId}/price' - Update the price of a car ad
+PATCH 'https://automobile-mart.herokuapp.com/api/v1/car/{car_id}/price' - Update the price of a car ad
 
-GET 'https://automobile-mart.herokuapp.com/api/v2/car/{carId} - View a specific car ad
+GET 'https://automobile-mart.herokuapp.com/api/v1/car/{car_id} - View a specific car ad
 
-DELETE 'https://automobile-mart.herokuapp.com/api/v2/car/{carId} - Delete a specific car ad
+DELETE 'https://automobile-mart.herokuapp.com/api/v1/car/{car_id} - Delete a specific car ad
 
-GET 'https://automobile-mart.herokuapp.com/api/v2/car?status=available - View all unsold cars
+GET 'https://automobile-mart.herokuapp.com/api/v1/car?status=available - View all unsold cars
 
-GET 'https://automobile-mart.herokuapp.com/api/v2/car?status=available&min_price={minPrice}&max_price={maxPrice} - View unsold cars within a price range
+GET 'https://automobile-mart.herokuapp.com/api/v1/car?status=available&min_price={minPrice}&max_price={maxPrice} - View unsold cars within a price range
 
-POST 'https://automobile-mart.herokuapp.com/api/v2/order' - Create new purchase orders
+POST 'https://automobile-mart.herokuapp.com/api/v1/order' - Create new purchase orders
 
-PATCH 'https://automobile-mart.herokuapp.com/api/v2/order/{orderId}/price - Update the price of a purchase order
+PATCH 'https://automobile-mart.herokuapp.com/api/v1/order/{orderId}/price - Update the price of a purchase order
 
 ## Author
 

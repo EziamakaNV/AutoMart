@@ -48,14 +48,14 @@ const errorMessage = document.querySelector('.error-message-div');
 
 const loader = document.querySelector('#loaderModal');
 
-// Get carId from the url
-const carId = window.location.pathname.substring(5);
+// Get car_id from the url
+const car_id = window.location.pathname.substring(5);
 
 window.addEventListener('DOMContentLoaded', async () => {
   errorMessage.style.display = 'block';
   try {
     loader.style.display = 'block';
-    const response = await fetch(`/api/v1/car/${carId}`, {
+    const response = await fetch(`/api/v1/car/${car_id}`, {
       credentials: 'include',
       method: 'GET',
     });
@@ -66,7 +66,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       document.querySelector('#itemPrice').textContent = `Price: N ${car.price}`;
       document.querySelector('#manufacturer').textContent = car.manufacturer;
       document.querySelector('#model').textContent = car.model;
-      document.querySelector('#bodyType').textContent = car.bodyType;
+      document.querySelector('#body_type').textContent = car.body_type;
       document.querySelector('#state').textContent = car.state;
       document.querySelector('#itemDescription').textContent = `Up for sale! - ${car.manufacturer} ${car.model}`;
       document.querySelector('#description').textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos veniam, ullam laudantium laborum libero ex magnam consequatur deserunt voluptatum, temporibus beatae voluptate assumenda est? Quibusdam dicta blanditiis nihil fugiat unde';
@@ -86,7 +86,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 const placeOffer = async () => {
   try {
     loader.style.display = 'block';
-    const body = { carId: Number(carId), amount: Number(document.querySelector('#offeredPrice').value) };
+    const body = { car_id: Number(car_id), amount: Number(document.querySelector('#offeredPrice').value) };
     const response = await fetch('/api/v1/order', {
       credentials: 'include',
       method: 'POST',
@@ -121,7 +121,7 @@ const sendComplaint = async () => {
   try {
     loader.style.display = 'block';
     const body = {
-      carId: Number(carId),
+      car_id: Number(car_id),
       reason: document.querySelector('#flagReason').value,
       description: document.querySelector('#flagDescription').value,
     };

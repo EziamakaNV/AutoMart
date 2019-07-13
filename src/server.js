@@ -17,7 +17,7 @@ const app = express();
 const swaggerDocumentV2 = require('../swagger_v2.json');
 
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = ['https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
+const allowedOrigins = ['https://adc-autograder.herokuapp.com', 'https://github.com', 'https://eziamakanv.github.io', 'https://automobile-mart.herokuapp.com', process.env.SECRET_ORIGIN];
 const corsOptions = {
   credentials: true,
   origin: (origin, callback) => {
@@ -38,13 +38,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 /*
-  API V2
+  API V1
 */
-app.use('/api/v2/auth', cors(corsOptions), userRoute2);
-app.use('/api/v2/car', cors(corsOptions), carRoute2);
-app.use('/api/v2/order', cors(corsOptions), orderRoute2);
-app.use('/api/v2/flag', cors(corsOptions), flagRoute2);
-app.use('/api/v2/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
+app.use('/api/v1/auth', cors(corsOptions), userRoute2);
+app.use('/api/v1/car', cors(corsOptions), carRoute2);
+app.use('/api/v1/order', cors(corsOptions), orderRoute2);
+app.use('/api/v1/flag', cors(corsOptions), flagRoute2);
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentV2));
 app.use('/', cors(corsOptions), viewsRoute);
 // Not Found Handler
 app.use((req, res) => { res.status(404).send('Not Found!'); });
