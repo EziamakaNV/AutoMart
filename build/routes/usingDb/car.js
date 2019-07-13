@@ -29,6 +29,6 @@ router.patch('/:car_id/price', _Authentication.default.verifyToken, _Car.default
 router.get('/myCar', _Authentication.default.verifyToken, _Car.default.viewMyCars);
 router.get('/:car_id', _Authentication.default.verifyToken, _Car.default.viewSpecificCar);
 router.get('/', _Authentication.default.verifyToken, _Car.default.viewCars);
-router.delete('/:car_id', _Authentication.default.adminVerifyToken, _Car.default.deleteCar);
+router.delete('/:car_id', _Authentication.default.verifyToken, _Car.default.deleteCar);
 var _default = router;
 exports.default = _default;
