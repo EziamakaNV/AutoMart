@@ -10,8 +10,8 @@ class OrderController {
   static async createOrder(req, res) {
     try {
       const orderDetails = {
-        carId: req.body.carId,
-        amount: req.body.amount,
+        car_id: req.body.car_id,
+        price: req.body.price,
       };
   
       const { error } = Validation.newOrderValidation(orderDetails);
@@ -20,7 +20,7 @@ class OrderController {
         res.status(400).json({ status: 400, error: `Issue with parameters supplies. Problem: ${error}` });
       } else {
         // Get car details
-        const carAd = await CarModel.findOne(orderDetails.carId);
+        const carAd = await CarModel.findOne(orderDetails.car_id);
         if (!carAd) {
           res.status(404).json({ status: 404, error: 'Car/Ad does not exist' });
         } else {
@@ -32,8 +32,8 @@ class OrderController {
             // Create order
             const newOrder = {
               buyer: req.user.id,
-              carId: carAd.id,
-              amount: orderDetails.amount,
+              car_id: carAd.id,
+              amount: orderDetails.price,
             };
             const createdOrder = await OrderModel.createOrder(newOrder);
             res.status(201).json({
@@ -41,7 +41,7 @@ class OrderController {
               data: {
                 ...createdOrder,
                 price: carAd.price,
-                priceOffered: orderDetails.amount,
+                price_offered: orderDetails.price,
               },
             });
           }
@@ -55,8 +55,8 @@ class OrderController {
   static async updateOrder(req, res) {
     try {
       const orderId = Number(req.params.orderId);
-      const { amount } = req.body;
-      const { error } = Validation.orderUpdate({ orderId, amount });
+      const { price } = req.body;
+      const { error } = Validation.orderUpdate({ orderId, price });
       if (error) {
         res.status(400).json({ status: 400, error: `${error}`, success: false });
       } else {
@@ -69,15 +69,15 @@ class OrderController {
           if (initialOrder.buyer === req.user.id) {
           // Check if the status of the order is still pending
             if (initialOrder.status === 'pending') {
-              const updatedOrder = await OrderModel.update(orderId, amount);
+              const updatedOrder = await OrderModel.update(orderId, price);
               res.status(200).json({
                 status: 200,
                 data: {
                   id: updatedOrder.id,
-                  carId: updatedOrder.car_id,
+                  car_id: updatedOrder.car_id,
                   status: updatedOrder.status,
-                  oldPriceOffered: initialOrderAmount,
-                  newPriceOffered: updatedOrder.amount,
+                  old_price_offered: initialOrderAmount,
+                  new_price_offered: updatedOrder.amount,
                 },
               });
             } else {

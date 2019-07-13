@@ -19,12 +19,12 @@ const expect = _chai.default.expect;
 
 _chai.default.use(_chaiHttp.default);
 
-describe('POST /api/v2/auth/signup', () => {
+describe('POST /api/v1/auth/signup', () => {
   describe('When all values in the POST body are the right format', () => {
     it('Should return an object with properties "status" and "data" on success', done => {
-      _chai.default.request(_server.default).post('/api/v2/auth/signup').type('form').send({
-        firstName: 'James',
-        lastName: 'Potter',
+      _chai.default.request(_server.default).post('/api/v1/auth/signup').type('form').send({
+        first_name: 'James',
+        last_name: 'Potter',
         email: 'JamesP@hogwarts.com',
         password: 'expeliamus',
         address: 'lower bunk, room 23, Gryfindor House, Hogwarts'
@@ -41,9 +41,9 @@ describe('POST /api/v2/auth/signup', () => {
       });
     });
     it('Should return an error if the email already exists', done => {
-      _chai.default.request(_server.default).post('/api/v2/auth/signup').type('form').send({
-        firstName: 'James',
-        lastName: 'Potter',
+      _chai.default.request(_server.default).post('/api/v1/auth/signup').type('form').send({
+        first_name: 'James',
+        last_name: 'Potter',
         email: 'john@test.com',
         password: 'expeliamus',
         address: 'lower bunk, room 23, Gryfindor House, Hogwarts'
@@ -60,9 +60,9 @@ describe('POST /api/v2/auth/signup', () => {
     });
     it('Should return an error if the length of any of the paremeters is less than 3', done => {
       // Mocha done callback for asynchronous tests
-      _chai.default.request(_server.default).post('/api/v2/auth/signup').type('form').send({
-        firstName: 'John',
-        lastName: 'Doe',
+      _chai.default.request(_server.default).post('/api/v1/auth/signup').type('form').send({
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'Me@test.com',
         password: 'secret',
         address: 'nowhere'
@@ -81,9 +81,9 @@ describe('POST /api/v2/auth/signup', () => {
     });
     describe('When the POST body parameters are not in the right format', () => {
       it('should not be able to post if all the parameters are not present', done => {
-        _chai.default.request(_server.default).post('/api/v2/auth/signup').type('form').send({
-          firstName: 'John',
-          lastName: 'Doe',
+        _chai.default.request(_server.default).post('/api/v1/auth/signup').type('form').send({
+          first_name: 'John',
+          last_name: 'Doe',
           email: 'for@loop.com'
         }).end((err, res) => {
           // eslint-disable-next-line no-unused-expressions
@@ -105,10 +105,10 @@ describe('POST /api/v2/auth/signup', () => {
     });
   });
 });
-describe('POST /api/v2/auth/signin', () => {
+describe('POST /api/v1/auth/signin', () => {
   describe('When all the data povided is in the right format', () => {
     it('if the user has an account, it should respond with a property status of 200 and a data property with a token', done => {
-      _chai.default.request(_server.default).post('/api/v2/auth/signin').type('form').send({
+      _chai.default.request(_server.default).post('/api/v1/auth/signin').type('form').send({
         email: 'test@tester.com',
         password: '123abc'
       }).end((err, res) => {
@@ -125,7 +125,7 @@ describe('POST /api/v2/auth/signin', () => {
       });
     });
     it('should respond with 401 status and error properties if invalid credentials are submitted', done => {
-      _chai.default.request(_server.default).post('/api/v2/auth/signin').type('form').send({
+      _chai.default.request(_server.default).post('/api/v1/auth/signin').type('form').send({
         email: 'example@test.com',
         password: 'nothing'
       }).end((err, res) => {
@@ -143,7 +143,7 @@ describe('POST /api/v2/auth/signin', () => {
   });
   describe('handles invalid input ((POST body properties))', () => {
     it('should not be able to log in if all parameters are not present', done => {
-      _chai.default.request(_server.default).post('/api/v2/auth/signin').type('form').send({
+      _chai.default.request(_server.default).post('/api/v1/auth/signin').type('form').send({
         email: 'TDD@epicmail.com'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions

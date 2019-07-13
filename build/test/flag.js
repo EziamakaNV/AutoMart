@@ -19,12 +19,12 @@ const expect = _chai.default.expect;
 
 _chai.default.use(_chaiHttp.default);
 
-describe('POST /api/v2/flag', () => {
+describe('POST /api/v1/flag', () => {
   describe('A request with a valid token in the cookie (Client logged in)', () => {
     let flagId;
     it('The request should be successful when all parameters are supplied correctly', done => {
-      _chai.default.request(_server.default).post('/api/v2/flag').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU').send({
-        carId: 1,
+      _chai.default.request(_server.default).post('/api/v1/flag').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU').send({
+        car_id: 1,
         reason: 'fraud',
         description: 'The ad is fake'
       }).end((err, res) => {
@@ -45,8 +45,8 @@ describe('POST /api/v2/flag', () => {
       });
     });
     it('The request shoud not be successful if any of the parameters are missing from the request body', done => {
-      _chai.default.request(_server.default).post('/api/v2/flag').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc').send({
-        carId: 1,
+      _chai.default.request(_server.default).post('/api/v1/flag').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTU4NDMwNzUwLCJleHAiOjE1ODk5NjY3NTB9.AKuYgp8_C5AdMAmm5EGe1_y_rCl9jctdl4m1yskK-uc').send({
+        car_id: 1,
         reason: 'fraud'
       }).end((err, res) => {
         expect(err).to.be.null;
@@ -62,7 +62,7 @@ describe('POST /api/v2/flag', () => {
   });
   it('The request shouldnt go through if the token in the cookie is missing', done => {
     // Jwt missing in cookie
-    _chai.default.request(_server.default).post('/api/v2/flag').end((err, res) => {
+    _chai.default.request(_server.default).post('/api/v1/flag').end((err, res) => {
       expect(err).to.be.null;
       expect(res).to.have.status(401);
       expect(res.body, 'response body').to.be.a('object');

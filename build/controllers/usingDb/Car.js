@@ -45,14 +45,14 @@ class CarController {
                 price = _req$body.price,
                 manufacturer = _req$body.manufacturer,
                 model = _req$body.model,
-                bodyType = _req$body.bodyType;
+                body_type = _req$body.body_type;
           const validationObject = {
             state,
             status,
             price,
             manufacturer,
             model,
-            bodyType
+            body_type
           };
 
           const _Validation$newCarVal = _Validation.default.newCarValidation(validationObject),
@@ -96,14 +96,14 @@ class CarController {
               price = _req$body2.price,
               manufacturer = _req$body2.manufacturer,
               model = _req$body2.model,
-              bodyType = _req$body2.bodyType;
+              body_type = _req$body2.body_type;
         const validationObject = {
           state,
           status,
           price,
           manufacturer,
           model,
-          bodyType
+          body_type
         };
 
         const _Validation$newCarVal2 = _Validation.default.newCarValidation(validationObject),
@@ -125,7 +125,9 @@ class CarController {
           const createdCar = await _Car.default.createCar(newCarDetails);
           res.status(201).json({
             status: 201,
-            data: createdCar,
+            data: _objectSpread({
+              email: req.user.email
+            }, createdCar),
             sucess: true
           });
         }
@@ -137,11 +139,9 @@ class CarController {
 
   static async updateStatus(req, res) {
     try {
-      const status = req.body.status;
-      const carId = Number(req.params.carId);
+      const car_id = Number(req.params.car_id);
       const validationObject = {
-        status,
-        carId
+        car_id
       };
 
       const _Validation$carStatus = _Validation.default.carStatusUpdate(validationObject),
@@ -151,13 +151,15 @@ class CarController {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the car id exists
-        const carAd = await _Car.default.findOne(carId);
+        const carAd = await _Car.default.findOne(car_id);
 
         if (carAd) {
           // Check if the owner of the ad is the one updating the ad
           if (carAd.owner === req.user.id) {
-            const updatedCar = await _Car.default.updateStatus(carId, 'sold');
-            (0, _Response.default)(res, 200, updatedCar);
+            const updatedCar = await _Car.default.updateStatus(car_id, 'sold');
+            (0, _Response.default)(res, 200, _objectSpread({
+              email: req.user.email
+            }, updatedCar));
           } else {
             (0, _Response.default)(res, 401, 'You do not own this Ad');
           }
@@ -173,10 +175,10 @@ class CarController {
   static async updatePrice(req, res) {
     try {
       const price = req.body.price;
-      const carId = Number(req.params.carId);
+      const car_id = Number(req.params.car_id);
       const validationObject = {
         price,
-        carId
+        car_id
       };
 
       const _Validation$carPriceU = _Validation.default.carPriceUpdate(validationObject),
@@ -186,13 +188,15 @@ class CarController {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the car id exists
-        const carAd = await _Car.default.findOne(carId);
+        const carAd = await _Car.default.findOne(car_id);
 
         if (carAd) {
           // Check if the owner of the ad is the one updating the ad
           if (carAd.owner === req.user.id) {
-            const updatedCar = await _Car.default.updatePrice(carId, price);
-            (0, _Response.default)(res, 200, updatedCar);
+            const updatedCar = await _Car.default.updatePrice(car_id, price);
+            (0, _Response.default)(res, 200, _objectSpread({
+              email: req.user.email
+            }, updatedCar));
           } else {
             (0, _Response.default)(res, 401, 'You do not own this Ad');
           }
@@ -207,9 +211,9 @@ class CarController {
 
   static async viewSpecificCar(req, res) {
     try {
-      const carId = Number(req.params.carId);
+      const car_id = Number(req.params.car_id);
       const validationObject = {
-        carId
+        car_id
       };
 
       const _Validation$viewSpeci = _Validation.default.viewSpecificCar(validationObject),
@@ -219,7 +223,7 @@ class CarController {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the car exists
-        const carAd = await _Car.default.findOne(carId);
+        const carAd = await _Car.default.findOne(car_id);
 
         if (carAd) {
           (0, _Response.default)(res, 200, carAd);
@@ -274,9 +278,9 @@ class CarController {
         }
       } else {
         // Only admins can view this
-        const isAdmin = await _User.default.isAdmin(req.user.id);
+        const is_admin = await _User.default.is_admin(req.user.id);
 
-        if (isAdmin) {
+        if (is_admin) {
           const cars = await _Car.default.findAll();
           (0, _Response.default)(res, 200, cars);
         } else {
@@ -290,10 +294,10 @@ class CarController {
 
   static async deleteCar(req, res) {
     try {
-      const carId = Number(req.params.carId);
+      const car_id = Number(req.params.car_id);
 
       const _Validation$deleteCar = _Validation.default.deleteCar({
-        carId
+        car_id
       }),
             error = _Validation$deleteCar.error;
 
@@ -301,7 +305,7 @@ class CarController {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the Ad exists
-        const carAd = await _Car.default.findOne(carId);
+        const carAd = await _Car.default.findOne(car_id);
 
         if (carAd) {
           await _Car.default.deleteCar(carAd);

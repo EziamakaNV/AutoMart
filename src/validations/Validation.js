@@ -4,8 +4,8 @@ import Joi from '@hapi/joi';
 class Validation {
   static signUpValidation(validationObject) {
     const schema = {
-      firstName: Joi.string().min(3).max(15).required(),
-      lastName: Joi.string().min(3).max(15).required(),
+      first_name: Joi.string().min(3).max(15).required(),
+      last_name: Joi.string().min(3).max(15).required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(6).max(20).required(),
       address: Joi.string().min(15).max(50).required(),
@@ -28,15 +28,15 @@ class Validation {
       price: Joi.number().integer().min(1).max(999999999999).required(),
       manufacturer: Joi.string().min(3).max(50).required(),
       model: Joi.string().min(3).max(50).required(),
-      bodyType: Joi.string().min(3).max(15).required(),
+      body_type: Joi.string().min(3).max(15).required(),
     };
     return Joi.validate(validationObject, schema);
   }
 
   static newOrderValidation(validationObject) {
     const schema = {
-      carId: Joi.number().integer().required(),
-      amount: Joi.number().integer().min(1).max(999999999999).required(),
+      car_id: Joi.number().integer().required(),
+      price: Joi.number().integer().min(1).max(999999999999).required(),
     };
     return Joi.validate(validationObject, schema);
   }
@@ -44,15 +44,15 @@ class Validation {
   static orderUpdate(validationObject) {
     const schema = {
       orderId: Joi.number().integer().required(),
-      amount: Joi.number().integer().min(1).max(999999999999).required(),
+      price: Joi.number().integer().min(1).max(999999999999).required(),
     };
     return Joi.validate(validationObject, schema);
   }
 
   static carStatusUpdate(validationObject) {
     const schema = {
-      status: Joi.string().valid('sold').required(),
-      carId: Joi.number().integer().required(),
+      status: Joi.string().valid('sold'),
+      car_id: Joi.number().integer().required(),
     };
     return Joi.validate(validationObject, schema);
   }
@@ -60,14 +60,14 @@ class Validation {
   static carPriceUpdate(validationObject) {
     const schema = {
       price: Joi.number().integer().min(1).max(999999999999).required(),
-      carId: Joi.number().integer().required(),
+      car_id: Joi.number().integer().required(),
     };
     return Joi.validate(validationObject, schema);
   }
 
   static viewSpecificCar(validationObject) {
     const schema = {
-      carId: Joi.number().integer().required(),
+      car_id: Joi.number().integer().required(),
     };
     return Joi.validate(validationObject, schema);
   }
@@ -83,14 +83,14 @@ class Validation {
 
   static deleteCar(validationObject) {
     const schema = {
-      carId: Joi.number().integer().required(),
+      car_id: Joi.number().integer().required(),
     };
     return Joi.validate(validationObject, schema);
   }
 
   static newFlagValidation(validationObject) {
     const schema = {
-      carId: Joi.number().integer().required(),
+      car_id: Joi.number().integer().required(),
       reason: Joi.string().valid('offensive content', 'fraud', 'duplicate ad', 'other').required(),
       description: Joi.string().required(),
     };

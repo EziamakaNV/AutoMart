@@ -14,16 +14,16 @@ const router = express.Router();
 
 router.post('/', Authentication.verifyToken, multipartMiddleware, CarController.createCar);
 
-router.patch('/:carId/status', Authentication.verifyToken, CarController.updateStatus);
+router.patch('/:car_id/status', Authentication.verifyToken, CarController.updateStatus);
 
-router.patch('/:carId/price', Authentication.verifyToken, CarController.updatePrice);
+router.patch('/:car_id/price', Authentication.verifyToken, CarController.updatePrice);
 
 router.get('/myCar', Authentication.verifyToken, CarController.viewMyCars);
 
-router.get('/:carId', Authentication.verifyToken, CarController.viewSpecificCar);
+router.get('/:car_id', Authentication.verifyToken, CarController.viewSpecificCar);
 
 router.get('/', Authentication.verifyToken, CarController.viewCars);
 
-router.delete('/:carId', Authentication.adminVerifyToken, CarController.deleteCar);
+router.delete('/:car_id', Authentication.adminVerifyToken, CarController.deleteCar);
 
 export default router;

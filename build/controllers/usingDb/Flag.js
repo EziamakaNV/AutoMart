@@ -27,7 +27,7 @@ class FlagController {
   static async createFlag(req, res) {
     try {
       const flagDetails = {
-        carId: req.body.carId,
+        car_id: req.body.car_id,
         reason: req.body.reason,
         description: req.body.description
       };
@@ -42,7 +42,7 @@ class FlagController {
         });
       } else {
         // Get car details
-        const carAd = await _Car.default.findOne(flagDetails.carId);
+        const carAd = await _Car.default.findOne(flagDetails.car_id);
 
         if (!carAd) {
           res.status(404).json({
@@ -63,7 +63,7 @@ class FlagController {
             // Create flag
             const newFlag = {
               owner: req.user.id,
-              carId: carAd.id,
+              car_id: carAd.id,
               reason: flagDetails.reason,
               description: flagDetails.description
             };

@@ -24,11 +24,11 @@ const multipartMiddleware = multipart({
 const router = _express.default.Router();
 
 router.post('/', _Authentication.default.verifyToken, multipartMiddleware, _Car.default.createCar);
-router.patch('/:carId/status', _Authentication.default.verifyToken, _Car.default.updateStatus);
-router.patch('/:carId/price', _Authentication.default.verifyToken, _Car.default.updatePrice);
+router.patch('/:car_id/status', _Authentication.default.verifyToken, _Car.default.updateStatus);
+router.patch('/:car_id/price', _Authentication.default.verifyToken, _Car.default.updatePrice);
 router.get('/myCar', _Authentication.default.verifyToken, _Car.default.viewMyCars);
-router.get('/:carId', _Authentication.default.verifyToken, _Car.default.viewSpecificCar);
+router.get('/:car_id', _Authentication.default.verifyToken, _Car.default.viewSpecificCar);
 router.get('/', _Authentication.default.verifyToken, _Car.default.viewCars);
-router.delete('/:carId', _Authentication.default.adminVerifyToken, _Car.default.deleteCar);
+router.delete('/:car_id', _Authentication.default.adminVerifyToken, _Car.default.deleteCar);
 var _default = router;
 exports.default = _default;

@@ -13,8 +13,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class Validation {
   static signUpValidation(validationObject) {
     const schema = {
-      firstName: _joi.default.string().min(3).max(15).required(),
-      lastName: _joi.default.string().min(3).max(15).required(),
+      first_name: _joi.default.string().min(3).max(15).required(),
+      last_name: _joi.default.string().min(3).max(15).required(),
       email: _joi.default.string().email().required(),
       password: _joi.default.string().min(6).max(20).required(),
       address: _joi.default.string().min(15).max(50).required()
@@ -37,15 +37,15 @@ class Validation {
       price: _joi.default.number().integer().min(1).max(999999999999).required(),
       manufacturer: _joi.default.string().min(3).max(50).required(),
       model: _joi.default.string().min(3).max(50).required(),
-      bodyType: _joi.default.string().min(3).max(15).required()
+      body_type: _joi.default.string().min(3).max(15).required()
     };
     return _joi.default.validate(validationObject, schema);
   }
 
   static newOrderValidation(validationObject) {
     const schema = {
-      carId: _joi.default.number().integer().required(),
-      amount: _joi.default.number().integer().min(1).max(999999999999).required()
+      car_id: _joi.default.number().integer().required(),
+      price: _joi.default.number().integer().min(1).max(999999999999).required()
     };
     return _joi.default.validate(validationObject, schema);
   }
@@ -53,15 +53,15 @@ class Validation {
   static orderUpdate(validationObject) {
     const schema = {
       orderId: _joi.default.number().integer().required(),
-      amount: _joi.default.number().integer().min(1).max(999999999999).required()
+      price: _joi.default.number().integer().min(1).max(999999999999).required()
     };
     return _joi.default.validate(validationObject, schema);
   }
 
   static carStatusUpdate(validationObject) {
     const schema = {
-      status: _joi.default.string().valid('sold').required(),
-      carId: _joi.default.number().integer().required()
+      status: _joi.default.string().valid('sold'),
+      car_id: _joi.default.number().integer().required()
     };
     return _joi.default.validate(validationObject, schema);
   }
@@ -69,14 +69,14 @@ class Validation {
   static carPriceUpdate(validationObject) {
     const schema = {
       price: _joi.default.number().integer().min(1).max(999999999999).required(),
-      carId: _joi.default.number().integer().required()
+      car_id: _joi.default.number().integer().required()
     };
     return _joi.default.validate(validationObject, schema);
   }
 
   static viewSpecificCar(validationObject) {
     const schema = {
-      carId: _joi.default.number().integer().required()
+      car_id: _joi.default.number().integer().required()
     };
     return _joi.default.validate(validationObject, schema);
   }
@@ -92,14 +92,14 @@ class Validation {
 
   static deleteCar(validationObject) {
     const schema = {
-      carId: _joi.default.number().integer().required()
+      car_id: _joi.default.number().integer().required()
     };
     return _joi.default.validate(validationObject, schema);
   }
 
   static newFlagValidation(validationObject) {
     const schema = {
-      carId: _joi.default.number().integer().required(),
+      car_id: _joi.default.number().integer().required(),
       reason: _joi.default.string().valid('offensive content', 'fraud', 'duplicate ad', 'other').required(),
       description: _joi.default.string().required()
     };

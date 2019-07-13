@@ -6,7 +6,7 @@ class CarModel {
   static createCar(car) {
     return new Promise((resolve, reject) => {
       const query = 'INSERT INTO cars(owner, created_on, state, status, price, manufacturer, model, body_type, image_url) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
-      const values = [car.ownerId, moment(new Date()), car.state, car.status, car.price, car.manufacturer, car.model, car.bodyType, car.imageUrl || null];
+      const values = [car.ownerId, moment(new Date()), car.state, car.status, car.price, car.manufacturer, car.model, car.body_type, car.imageUrl || null];
       db.query(query, values).then(result => resolve(result.rows[0])).catch(err => reject(err));
     });
   }

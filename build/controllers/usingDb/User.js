@@ -30,8 +30,8 @@ class UserController {
   static async signup(req, res) {
     try {
       const _req$body = req.body,
-            firstName = _req$body.firstName,
-            lastName = _req$body.lastName,
+            first_name = _req$body.first_name,
+            last_name = _req$body.last_name,
             password = _req$body.password,
             address = _req$body.address; // Remove empty spaces from the email and set to lowercase
 
@@ -39,8 +39,8 @@ class UserController {
       // Use Joi to validate input
 
       const validationObject = {
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         email,
         password,
         address
@@ -67,12 +67,12 @@ class UserController {
           const saltRounds = 10;
           const hashedPassword = await _bcrypt.default.hash(password, saltRounds);
           const userObject = {
-            firstName,
-            lastName,
+            first_name,
+            last_name,
             email,
             password: hashedPassword,
             address,
-            isAdmin: false
+            is_admin: false
           };
           const newUser = await _User.default.createUser(userObject); // Generate jwt
 
@@ -89,8 +89,8 @@ class UserController {
             httpOnly: true
           });
           res.cookie('user', JSON.stringify({
-            firstName,
-            lastName
+            first_name,
+            last_name
           }), {
             maxAge: 31540000000
           }); // Final response
@@ -100,8 +100,8 @@ class UserController {
             data: {
               token,
               id: newUser.id,
-              firstName,
-              lastName,
+              first_name,
+              last_name,
               email,
               hashedPassword
             },
@@ -156,8 +156,8 @@ class UserController {
             // on the client side with Js
 
             res.cookie('user', JSON.stringify({
-              firstName: user.firstName,
-              lastName: user.lastName
+              first_name: user.first_name,
+              last_name: user.last_name
             }), {
               maxAge: 31540000000
             });
@@ -166,8 +166,8 @@ class UserController {
               data: {
                 token,
                 id: user.id,
-                first_name: user.firstName,
-                last_name: user.lastName,
+                first_name: user.first_name,
+                last_name: user.last_name,
                 email
               }
             });

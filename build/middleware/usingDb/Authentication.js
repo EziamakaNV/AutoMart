@@ -62,7 +62,7 @@ class Authentication {
       try {
         const user = await _jsonwebtoken.default.verify(token, process.env.JWT_SECRET); // Check if the user is an admin
 
-        const isUserAdmin = await _User.default.isAdmin(user.id);
+        const isUserAdmin = await _User.default.is_admin(user.id);
 
         if (isUserAdmin) {
           req.user = user;

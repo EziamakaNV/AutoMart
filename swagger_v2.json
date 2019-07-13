@@ -6,7 +6,7 @@
     "title": "Auto Mart"
   },
   "host": "",
-  "basePath": "/api/v2",
+  "basePath": "/api/v1",
   "tags": [
     {
       "name": "auth",
@@ -52,11 +52,11 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
+                "first_name": {
                   "type": "string",
                   "example": "James"
                 },
-                "lastName": {
+                "last_name": {
                   "type": "string",
                   "example": "Doe"
                 },
@@ -96,11 +96,11 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "firstName": {
+                    "first_name": {
                       "type": "string",
                       "example": "Jean"
                     },
-                    "lastName": {
+                    "last_name": {
                       "type":"string",
                       "example": "Dee"
                     },
@@ -279,7 +279,7 @@
                   "type": "string",
                   "example": "Camry"
                 },
-                "bodyType": {
+                "body_type": {
                   "type": "string",
                   "example": "car"
                 }
@@ -320,7 +320,7 @@
         }
       }
     },
-    "/car/{carId}/status": {
+    "/car/{car_id}/status": {
       "patch": {
         "tags": [
           "cars"
@@ -331,27 +331,11 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "description": "ID of the car ad",
             "required": true,
             "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "sold",
-                  "required": true
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -367,7 +351,7 @@
         }
       }
     },
-    "/car/{carId}/price": {
+    "/car/{car_id}/price": {
       "patch": {
         "tags": [
           "cars"
@@ -378,7 +362,7 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "description": "ID of the car ad",
             "required": true,
@@ -414,7 +398,7 @@
         }
       }
     },
-    "/car/{carId}": {
+    "/car/{car_id}": {
       "get": {
         "tags": [
           "cars"
@@ -425,7 +409,7 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "description": "ID of the car ad",
             "required": true,
@@ -454,7 +438,7 @@
         ],
         "parameters": [
           {
-            "name": "carId",
+            "name": "car_id",
             "in": "path",
             "description": "ID of the car ad",
             "required": true,
@@ -555,7 +539,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "carId": {
+                "car_id": {
                   "type": "integer",
                   "example": 1
                 },
@@ -638,7 +622,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "amount": {
+                "price": {
                   "type": "integer",
                   "example": 10000,
                   "required": true
@@ -681,7 +665,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "carId": {
+                "car_id": {
                   "type": "integer",
                   "example": 1
                 },
