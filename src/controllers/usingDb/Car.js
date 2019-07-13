@@ -206,12 +206,15 @@ class CarController {
           response(res, 400, error);
         } else {
           const cars = await CarModel.findAllAvailable();
-          response(res, 200, { token: req.token, ...cars });
+          response(res, 200, [{ token: req.token }, ...cars]);
         }
       } else {
       // Only admins can view this
         const is_admin = await UserModel.is_admin(req.user.id);
         if (is_admin) {
+          const cars = await CarModel.findAll();
+          response(res, 200, cars);
+        } else if (req.token) {
           const cars = await CarModel.findAll();
           response(res, 200, cars);
         } else {
@@ -249,7 +252,7 @@ class CarController {
     try {
       const myCars = await CarModel.findMyCars(req.user.id);
       if (myCars) {
-        response(res, 200, { ...myCars, token: req.token });
+        response(res, 200, [...myCars, { token: req.token }]);
       } else {
         response(res, 404, 'No Ads found for the user');
       }

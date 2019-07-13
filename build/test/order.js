@@ -28,7 +28,7 @@ describe('POST /api/v1/order', () => {
     it('The request should be successful when all parameters are supplied correctly', done => {
       _chai.default.request(_server.default).post('/api/v1/order').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU').send({
         car_id: 5,
-        price: 500000
+        amount: 500000
       }).end((err, res) => {
         orderId = res.body.data.id;
         expect(err).to.be.null;
@@ -91,7 +91,7 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
       // First make the API request to create an order with user two
       _chai.default.request(_server.default).post('/api/v1/order').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg').send({
         car_id: 2,
-        price: 500000
+        amount: 500000
       }).end((err, res) => {
         console.log("response body ".concat(res.body.data));
         orderId = res.body.data.id;

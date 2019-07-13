@@ -28,7 +28,7 @@ class OrderController {
     try {
       const orderDetails = {
         car_id: req.body.car_id,
-        price: req.body.price
+        amount: req.body.amount
       };
 
       const _Validation$newOrderV = _Validation.default.newOrderValidation(orderDetails),
@@ -63,14 +63,15 @@ class OrderController {
             const newOrder = {
               buyer: req.user.id,
               car_id: carAd.id,
-              amount: orderDetails.price
+              amount: orderDetails.amount
             };
             const createdOrder = await _Order.default.createOrder(newOrder);
             res.status(201).json({
               status: 201,
               data: _objectSpread({}, createdOrder, {
                 price: carAd.price,
-                price_offered: orderDetails.price
+                price_offered: orderDetails.price,
+                token: req.token
               })
             });
           }
@@ -117,7 +118,8 @@ class OrderController {
                   car_id: updatedOrder.car_id,
                   status: updatedOrder.status,
                   old_price_offered: initialOrderAmount,
-                  new_price_offered: updatedOrder.amount
+                  new_price_offered: updatedOrder.amount,
+                  token: req.token
                 }
               });
             } else {
@@ -152,7 +154,9 @@ class OrderController {
       const myOrders = await _Order.default.findMyOrders(req.user.id);
 
       if (myOrders) {
-        (0, _Response.default)(res, 200, myOrders);
+        (0, _Response.default)(res, 200, [{
+          token: req.token
+        }, ...myOrders]);
       } else {
         (0, _Response.default)(res, 404, 'No Orders found for the user');
       }
@@ -176,7 +180,9 @@ class OrderController {
         const order = await _Order.default.getOrder(req.user.id, orderId);
 
         if (order) {
-          (0, _Response.default)(res, 200, order);
+          (0, _Response.default)(res, 200, _objectSpread({
+            token: req.token
+          }, order));
         } else {
           (0, _Response.default)(res, 404, 'Order not found');
         }
