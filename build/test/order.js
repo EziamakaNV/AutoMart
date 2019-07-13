@@ -76,7 +76,7 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
       _chai.default.request(_server.default).patch('/api/v1/order/221/price').type('form').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU2MzAwNjQwMCwiZXhwIjoxNTk0NTQyNDAwfQ.2xDhAMm61yjjzajMojpFDEzqLD2B9GEMRD9NJ8fCpqc').send({
         price: 500000
       }).end((err, res) => {
-        console.log(res.body.error);
+        res.body.error;
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(200);
         expect(res.body, 'response body').to.be.a('object');
@@ -94,7 +94,7 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
         car_id: 2,
         amount: 500000
       }).end((err, res) => {
-        console.log("response body ".concat(res.body.data));
+        "response body ".concat(res.body.data);
         orderId = res.body.data.id;
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(201);

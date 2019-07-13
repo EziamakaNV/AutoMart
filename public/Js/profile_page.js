@@ -88,7 +88,7 @@ const filter = async () => {
   
     const responseBody = await response.json();
     if (response.status === 200) {
-      console.log(responseBody);
+      (responseBody);
       if (responseBody.data.length === 0) {
         loader.style.display = 'none';
         errorMessage.textContent = 'No Ads match your filter specifications';
