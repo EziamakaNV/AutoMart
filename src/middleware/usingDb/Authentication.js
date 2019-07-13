@@ -18,6 +18,7 @@ class Authentication {
         const user = await jwt.verify(token, process.env.JWT_SECRET);
         // Create user object in the request
         req.user = user;
+        req.token = token;
         next();
         // Check if the user is still in the DB
         // const userExists = await UserModel.findUser(user.email);
@@ -46,6 +47,7 @@ class Authentication {
         const isUserAdmin = await UserModel.is_admin(user.id);
         if (isUserAdmin) {
           req.user = user;
+          req.token = token;
           next();
         } else {
           response(res, 401, 'You are not an Admin');

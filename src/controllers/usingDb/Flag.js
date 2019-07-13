@@ -41,7 +41,7 @@ class FlagController {
             const createdFlag = await FlagModel.createFlag(newFlag);
             res.status(201).json({
               status: 201,
-              data: { ...createdFlag },
+              data: { ...createdFlag, token: req.token },
             });
           }
         }

@@ -113,7 +113,7 @@ class CarController {
         // Check if the owner of the ad is the one updating the ad
           if (carAd.owner === req.user.id) {
             const updatedCar = await CarModel.updateStatus(car_id, 'sold');
-            response(res, 200, { email: req.user.email, ...updatedCar });
+            response(res, 200, { email: req.user.email, ...updatedCar, token: req.token });
           } else {
             response(res, 401, 'You do not own this Ad');
           }
@@ -143,7 +143,7 @@ class CarController {
         // Check if the owner of the ad is the one updating the ad
           if (carAd.owner === req.user.id) {
             const updatedCar = await CarModel.updatePrice(car_id, price);
-            response(res, 200, { email: req.user.email, ...updatedCar });
+            response(res, 200, { email: req.user.email, ...updatedCar, token: req.token });
           } else {
             response(res, 401, 'You do not own this Ad');
           }
@@ -168,7 +168,7 @@ class CarController {
       // Check if the car exists
         const carAd = await CarModel.findOne(car_id);
         if (carAd) {
-          response(res, 200, carAd);
+          response(res, 200, { ...carAd, token: req.token });
         } else {
           response(res, 400, 'The Car Ad does not exist');
         }
@@ -206,7 +206,7 @@ class CarController {
           response(res, 400, error);
         } else {
           const cars = await CarModel.findAllAvailable();
-          response(res, 200, cars);
+          response(res, 200, { token: req.token, ...cars });
         }
       } else {
       // Only admins can view this
@@ -249,7 +249,7 @@ class CarController {
     try {
       const myCars = await CarModel.findMyCars(req.user.id);
       if (myCars) {
-        response(res, 200, myCars);
+        response(res, 200, { ...myCars, token: req.token });
       } else {
         response(res, 404, 'No Ads found for the user');
       }
