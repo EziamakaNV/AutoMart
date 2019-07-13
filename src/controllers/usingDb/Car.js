@@ -115,7 +115,7 @@ class CarController {
             const updatedCar = await CarModel.updateStatus(car_id, 'sold');
             response(res, 200, { email: req.user.email, ...updatedCar, token: req.token });
           } else {
-            response(res, 401, 'You do not own this Ad');
+            response(res, 400, 'You do not own this Ad');
           }
         } else {
           response(res, 400, 'The Car Ad Doesnt Exist');
@@ -145,7 +145,7 @@ class CarController {
             const updatedCar = await CarModel.updatePrice(car_id, price);
             response(res, 200, { email: req.user.email, ...updatedCar, token: req.token });
           } else {
-            response(res, 401, 'You do not own this Ad');
+            response(res, 400, 'You do not own this Ad');
           }
         } else {
           response(res, 400, 'The Car Ad Doesnt Exist');
@@ -218,7 +218,7 @@ class CarController {
           const cars = await CarModel.findAll();
           response(res, 200, cars);
         } else {
-          response(res, 401, 'You are not an Admin');
+          response(res, 400, 'You are not an Admin');
         }
       }
     } catch (error) {

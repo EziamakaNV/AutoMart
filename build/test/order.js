@@ -60,10 +60,10 @@ describe('POST /api/v1/order', () => {
     // Jwt missing in cookie
     _chai.default.request(_server.default).post('/api/v1/order').end((err, res) => {
       expect(err).to.be.null;
-      expect(res).to.have.status(401);
+      expect(res).to.have.status(400);
       expect(res.body, 'response body').to.be.a('object');
       expect(res.body, 'response body').to.haveOwnProperty('status');
-      expect(res.body.status, 'status property').to.equal(401);
+      expect(res.body.status, 'status property').to.equal(400);
       expect(res.body, 'response body').to.haveOwnProperty('error');
       expect(res.body.error).to.be.a('string');
       done();
@@ -108,10 +108,10 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
           price: 500000
         }).end((error, resp) => {
           expect(error).to.be.null;
-          expect(resp, 'response object status').to.have.status(401);
+          expect(resp, 'response object status').to.have.status(400);
           expect(resp.body, 'response body').to.be.a('object');
           expect(resp.body, 'response body').to.haveOwnProperty('status');
-          expect(resp.body.status, 'status property').to.equal(401);
+          expect(resp.body.status, 'status property').to.equal(400);
           expect(resp.body, 'response body').to.haveOwnProperty('error');
           expect(resp.body.error, 'error property').to.be.a('string');
           done();
@@ -152,10 +152,10 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
     // Jwt missing in cookie
     _chai.default.request(_server.default).patch('/api/v1/order/1/price').type('form').end((err, res) => {
       expect(err).to.be.null;
-      expect(res).to.have.status(401);
+      expect(res).to.have.status(400);
       expect(res.body, 'response body').to.be.a('object');
       expect(res.body, 'response body').to.haveOwnProperty('status');
-      expect(res.body.status, 'status property').to.equal(401);
+      expect(res.body.status, 'status property').to.equal(400);
       expect(res.body, 'response body').to.haveOwnProperty('error');
       expect(res.body.error).to.be.a('string');
       done();
@@ -182,10 +182,10 @@ describe('GET /api/v1/order/myOrder', () => {
       // Jwt missing in cookie
       _chai.default.request(_server.default).get('/api/v1/order/myOrder').end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error).to.be.a('string');
         done();
@@ -213,10 +213,10 @@ describe('GET /api/v1/order/myOrder/:orderId', () => {
       // Jwt missing in cookie
       _chai.default.request(_server.default).get('/api/v1/order/myOrder/152').end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error).to.be.a('string');
         done();

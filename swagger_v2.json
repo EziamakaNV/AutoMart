@@ -202,14 +202,14 @@
               }
             }
           },
-          "401": {
+          "400": {
             "description": "Incorrect Credentials",
             "schema": {
               "type": "object",
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 401
+                  "example": 400
                 },
                 "error": {
                   "type": "string",
@@ -234,7 +234,7 @@
           "200": {
             "description": "successful operation"
           },
-          "401": {
+          "400": {
             "description": "Unsuccessul due to a missing token or you dont have Admin privileges"
           }
         }
@@ -345,7 +345,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -392,7 +392,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -423,7 +423,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -452,7 +452,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -474,7 +474,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -512,7 +512,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -580,7 +580,7 @@
               }
             }
           },
-          "401": {
+          "400": {
             "description": "Unauthorized",
             "schema": {
               "type": "object",
@@ -638,7 +638,7 @@
           "400": {
             "description": "Bad request"
           },
-          "401":{
+          "400":{
             "description":"Unauthorized"
           }
         }
@@ -710,7 +710,7 @@
               }
             }
           },
-          "401": {
+          "400": {
             "description": "Unauthorized",
             "schema": {
               "type": "object",

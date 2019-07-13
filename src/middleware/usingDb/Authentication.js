@@ -12,7 +12,7 @@ class Authentication {
     const token = req.cookies.jwt || req.body.token;
     // Check for the token
     if (!token) {
-      res.status(401).json({ status: 401, error: 'Missing token', success: false });
+      res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else {
       try {
         const user = await jwt.verify(token, process.env.JWT_SECRET);
@@ -27,7 +27,7 @@ class Authentication {
         //   req.user = user;
         //   next();
         // } else {
-        //   response(res, 401, 'Malicious token request. You dont exist on the DB!');
+        //   response(res, 400, 'Malicious token request. You dont exist on the DB!');
         // }
       } catch (error) {
         res.status(500).json({ status: 500, error: `Issue with jwt token. Problem: ${error}` });
@@ -39,7 +39,7 @@ class Authentication {
     const token = req.cookies.jwt || req.body.token;
     // Check for the token
     if (!token) {
-      res.status(401).json({ status: 401, error: 'Missing token', success: false });
+      res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else {
       try {
         const user = await jwt.verify(token, process.env.JWT_SECRET);
@@ -54,7 +54,7 @@ class Authentication {
           req.token = token;
           next();
         } else {
-          response(res, 401, 'You are not an Admin');
+          response(res, 400, 'You are not an Admin');
         }
       } catch (error) {
         res.status(500).json({ status: 500, error: `Issue with jwt token. Problem: ${error}` });
