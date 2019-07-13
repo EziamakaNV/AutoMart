@@ -49,10 +49,6 @@ class Authentication {
           req.user = user;
           req.token = token;
           next();
-        } else if (token) {
-          req.user = user;
-          req.token = token;
-          next();
         } else {
           response(res, 400, 'You are not an Admin');
         }
