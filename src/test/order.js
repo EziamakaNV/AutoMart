@@ -80,13 +80,14 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
   describe('A request with a valid token in the cookie (Client logged in)', () => {
     it('The request should be successful when all parameters are supplied correctly', (done) => {
       chai.request(server)
-        .patch('/api/v1/order/1/price')
+        .patch('/api/v1/order/221/price')
         .type('form')
-        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
+        .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJraWxsYmlsbEB0ZXN0LmNvbSIsImlhdCI6MTU2MzAwNjQwMCwiZXhwIjoxNTk0NTQyNDAwfQ.2xDhAMm61yjjzajMojpFDEzqLD2B9GEMRD9NJ8fCpqc')
         .send({
           price: 500000,
         })
         .end((err, res) => {
+          console.log(res.body.error);
           expect(err).to.be.null;
           expect(res, 'response object status').to.have.status(200);
           expect(res.body, 'response body').to.be.a('object');

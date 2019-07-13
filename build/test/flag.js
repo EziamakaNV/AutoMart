@@ -24,10 +24,11 @@ describe('POST /api/v1/flag', () => {
     let flagId;
     it('The request should be successful when all parameters are supplied correctly', done => {
       _chai.default.request(_server.default).post('/api/v1/flag').type('json').set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqcEBob2d3YXJ0cy5jb20iLCJpYXQiOjE1NTg2MDQzNTEsImV4cCI6MTU5MDE0MDM1MX0.JAM_xR0UEPbdAF5LJC7CwO7nMECAlWJ_nhsXZX-pzWU').send({
-        car_id: 1,
+        car_id: 5,
         reason: 'fraud',
         description: 'The ad is fake'
       }).end((err, res) => {
+        console.log(res.body.error);
         flagId = res.body.data.id;
         expect(err).to.be.null;
         expect(res, 'response object status').to.have.status(201);
