@@ -68,10 +68,10 @@ describe('POST /api/v1/flag', () => {
       .post('/api/v1/flag')
       .end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error).to.be.a('string');
         done();

@@ -163,7 +163,7 @@ class CarController {
               token: req.token
             }));
           } else {
-            (0, _Response.default)(res, 401, 'You do not own this Ad');
+            (0, _Response.default)(res, 400, 'You do not own this Ad');
           }
         } else {
           (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
@@ -202,7 +202,7 @@ class CarController {
               token: req.token
             }));
           } else {
-            (0, _Response.default)(res, 401, 'You do not own this Ad');
+            (0, _Response.default)(res, 400, 'You do not own this Ad');
           }
         } else {
           (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
@@ -295,7 +295,7 @@ class CarController {
           const cars = await _Car.default.findAll();
           (0, _Response.default)(res, 200, cars);
         } else {
-          (0, _Response.default)(res, 401, 'You are not an Admin');
+          (0, _Response.default)(res, 400, 'You are not an Admin');
         }
       }
     } catch (error) {

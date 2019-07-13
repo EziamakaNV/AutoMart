@@ -53,8 +53,8 @@ class OrderController {
           const previousOrderExists = await _Order.default.previousOrderExists(carAd.id, req.user.id);
 
           if (previousOrderExists) {
-            res.status(401).json({
-              status: 401,
+            res.status(400).json({
+              status: 400,
               error: 'You already have an order pending for this ad',
               success: false
             });
@@ -123,15 +123,15 @@ class OrderController {
                 }
               });
             } else {
-              res.status(401).json({
-                status: 401,
+              res.status(400).json({
+                status: 400,
                 error: 'This order is no longer pending',
                 success: true
               });
             }
           } else {
-            res.status(401).json({
-              status: 401,
+            res.status(400).json({
+              status: 400,
               error: 'You do not own this order',
               success: false
             });

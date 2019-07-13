@@ -127,17 +127,17 @@ describe('POST /api/v1/auth/signin', () => {
         done();
       });
     });
-    it('should respond with 401 status and error properties if invalid credentials are submitted', done => {
+    it('should respond with 400 status and error properties if invalid credentials are submitted', done => {
       _chai.default.request(_server.default).post('/api/v1/auth/signin').type('form').send({
         email: 'example@test.com',
         password: 'nothing'
       }).end((err, res) => {
         // eslint-disable-next-line no-unused-expressions
         expect(err).to.be.null;
-        expect(res, 'response object status').to.have.status(401);
+        expect(res, 'response object status').to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error, 'error property').to.be.a('string');
         done();

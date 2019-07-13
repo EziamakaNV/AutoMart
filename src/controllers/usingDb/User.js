@@ -95,10 +95,10 @@ class UserController {
               status: 200,
               data: { token, id: user.id, first_name: user.first_name, last_name: user.last_name, email } });
           } else {
-            res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
+            res.status(400).json({ status: 400, error: 'The Email/Paswword is incorrect' });
           }
         } else {
-          res.status(401).json({ status: 401, error: 'The Email/Paswword is incorrect' });
+          res.status(400).json({ status: 400, error: 'The Email/Paswword is incorrect' });
         }
       }
     } catch (error) {

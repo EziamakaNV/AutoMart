@@ -54,8 +54,8 @@ class FlagController {
           const previousFlagExists = await _Flag.default.previousFlagExists(carAd.id, req.user.id);
 
           if (previousFlagExists) {
-            res.status(401).json({
-              status: 401,
+            res.status(400).json({
+              status: 400,
               error: 'You have already flagged this ad',
               success: false
             });

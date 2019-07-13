@@ -29,7 +29,7 @@ class FlagController {
           // Ensure one cant flag a car ad more than once
           const previousFlagExists = await FlagModel.previousFlagExists(carAd.id, req.user.id);
           if (previousFlagExists) {
-            res.status(401).json({ status: 401, error: 'You have already flagged this ad', success: false });
+            res.status(400).json({ status: 400, error: 'You have already flagged this ad', success: false });
           } else {
             // Create flag
             const newFlag = {

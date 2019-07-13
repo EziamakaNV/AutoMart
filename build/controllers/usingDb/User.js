@@ -172,14 +172,14 @@ class UserController {
               }
             });
           } else {
-            res.status(401).json({
-              status: 401,
+            res.status(400).json({
+              status: 400,
               error: 'The Email/Paswword is incorrect'
             });
           }
         } else {
-          res.status(401).json({
-            status: 401,
+          res.status(400).json({
+            status: 400,
             error: 'The Email/Paswword is incorrect'
           });
         }

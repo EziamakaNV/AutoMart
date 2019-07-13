@@ -17,10 +17,10 @@ describe('POST /api/v1/car/', () => {
       .post('/api/v1/car')
       .end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error).to.be.a('string');
         done();
@@ -140,10 +140,10 @@ describe('PATCH /api/v1/car/<:car-id>/status', () => {
             })
             .end((error, resp) => {
               expect(error).to.be.null;
-              expect(resp, 'response object status').to.have.status(401);
+              expect(resp, 'response object status').to.have.status(400);
               expect(resp.body, 'response body').to.be.a('object');
               expect(resp.body, 'response body').to.haveOwnProperty('status');
-              expect(resp.body.status, 'status property').to.equal(401);
+              expect(resp.body.status, 'status property').to.equal(400);
               expect(resp.body, 'response body').to.haveOwnProperty('error');
               expect(resp.body.error, 'data property').to.be.a('string');
               done();
@@ -182,10 +182,10 @@ describe('PATCH /api/v1/car/<:car-id>/status', () => {
       .type('form')
       .end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error).to.be.a('string');
         done();
@@ -249,10 +249,10 @@ describe('PATCH /api/v1/car/<:car-id>/price', () => {
             })
             .end((error, resp) => {
               expect(error).to.be.null;
-              expect(resp, 'response object status').to.have.status(401);
+              expect(resp, 'response object status').to.have.status(400);
               expect(resp.body, 'response body').to.be.a('object');
               expect(resp.body, 'response body').to.haveOwnProperty('status');
-              expect(resp.body.status, 'status property').to.equal(401);
+              expect(resp.body.status, 'status property').to.equal(400);
               expect(resp.body, 'response body').to.haveOwnProperty('error');
               expect(resp.body.error, 'data property').to.be.a('string');
               done();
@@ -310,10 +310,10 @@ describe('PATCH /api/v1/car/<:car-id>/price', () => {
       .type('form')
       .end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(400);
         expect(res.body, 'response body').to.be.a('object');
         expect(res.body, 'response body').to.haveOwnProperty('status');
-        expect(res.body.status, 'status property').to.equal(401);
+        expect(res.body.status, 'status property').to.equal(400);
         expect(res.body, 'response body').to.haveOwnProperty('error');
         expect(res.body.error).to.be.a('string');
         done();
@@ -365,10 +365,10 @@ describe('GET /api/v1/car/<:car-id>', () => {
         .get('/api/v1/car/1')
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           expect(res.body, 'response body').to.be.a('object');
           expect(res.body, 'response body').to.haveOwnProperty('status');
-          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body.status, 'status property').to.equal(400);
           expect(res.body, 'response body').to.haveOwnProperty('error');
           expect(res.body.error).to.be.a('string');
           done();
@@ -455,10 +455,10 @@ describe('GET /api/v1/car?status=available and GET /api/v1/car?status=available&
         .get('/api/v1/car?status=available')
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           expect(res.body, 'response body').to.be.a('object');
           expect(res.body, 'response body').to.haveOwnProperty('status');
-          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body.status, 'status property').to.equal(400);
           expect(res.body, 'response body').to.haveOwnProperty('error');
           expect(res.body.error).to.be.a('string');
           done();
@@ -517,10 +517,10 @@ describe('DELETE /api/v1/car/<:car-id>', () => {
     //     .end((err, res) => {
     //       console.log(res.body.error);
     //       expect(err).to.be.null;
-    //       expect(res).to.have.status(401);
+    //       expect(res).to.have.status(400);
     //       expect(res.body, 'response body').to.be.a('object');
     //       expect(res.body, 'response body').to.haveOwnProperty('status');
-    //       expect(res.body.status, 'status property').to.equal(401);
+    //       expect(res.body.status, 'status property').to.equal(400);
     //       expect(res.body, 'response body').to.haveOwnProperty('error');
     //       expect(res.body.error).to.be.a('string');
     //       done();
@@ -533,10 +533,10 @@ describe('DELETE /api/v1/car/<:car-id>', () => {
         .delete('/api/v1/car/1')
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           expect(res.body, 'response body').to.be.a('object');
           expect(res.body, 'response body').to.haveOwnProperty('status');
-          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body.status, 'status property').to.equal(400);
           expect(res.body, 'response body').to.haveOwnProperty('error');
           expect(res.body.error).to.be.a('string');
           done();
@@ -572,10 +572,10 @@ describe('GET /api/v1/car', () => {
     //     .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
     //     .end((err, res) => {
     //       expect(err).to.be.null;
-    //       expect(res).to.have.status(401);
+    //       expect(res).to.have.status(400);
     //       expect(res.body, 'response body').to.be.a('object');
     //       expect(res.body, 'response body').to.haveOwnProperty('status');
-    //       expect(res.body.status, 'status property').to.equal(401);
+    //       expect(res.body.status, 'status property').to.equal(400);
     //       expect(res.body, 'response body').to.haveOwnProperty('error');
     //       expect(res.body.error).to.be.a('string');
     //       done();
@@ -588,10 +588,10 @@ describe('GET /api/v1/car', () => {
         .get('/api/v1/car')
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           expect(res.body, 'response body').to.be.a('object');
           expect(res.body, 'response body').to.haveOwnProperty('status');
-          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body.status, 'status property').to.equal(400);
           expect(res.body, 'response body').to.haveOwnProperty('error');
           expect(res.body.error).to.be.a('string');
           done();
@@ -626,10 +626,10 @@ describe('GET /api/v1/car/myCar', () => {
         .get('/api/v1/car/myCar')
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           expect(res.body, 'response body').to.be.a('object');
           expect(res.body, 'response body').to.haveOwnProperty('status');
-          expect(res.body.status, 'status property').to.equal(401);
+          expect(res.body.status, 'status property').to.equal(400);
           expect(res.body, 'response body').to.haveOwnProperty('error');
           expect(res.body.error).to.be.a('string');
           done();
