@@ -103,7 +103,8 @@ class CarController {
   static async updateStatus(req, res) {
     try {
       const car_id = Number(req.params.car_id);
-      const validationObject = { car_id };
+      const { status } = req.body;
+      const validationObject = { car_id, status };
       const { error } = Validation.carStatusUpdate(validationObject);
 
       if (error) {
