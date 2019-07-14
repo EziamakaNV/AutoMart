@@ -123,6 +123,8 @@ class CarController {
 
 
           const createdCar = await _Car.default.createCar(newCarDetails);
+          console.log(1);
+          console.log(createdCar);
           res.status(201).json({
             status: 201,
             data: _objectSpread({
@@ -244,8 +246,7 @@ class CarController {
 
   static async viewCars(req, res) {
     try {
-      console.log(req.query); // Determine if there is a query object has any properties
-
+      // Determine if there is a query object has any properties
       const queryStatus = req.query.hasOwnProperty('status');
       const queryMinPrice = req.query.hasOwnProperty('min_price');
       const queryMaxPrice = req.query.hasOwnProperty('max_price'); // When all three query properties are present
@@ -295,8 +296,8 @@ class CarController {
           console.log(cars);
           (0, _Response.default)(res, 200, cars);
         } else {
-          console.log('You are not an admin');
-          (0, _Response.default)(res, 400, 'You are not an Admin');
+          console.log('View all cars- You are not an admin');
+          (0, _Response.default)(res, 400, 'View all cars- You are not an Admin');
         }
       }
     } catch (error) {
@@ -307,7 +308,6 @@ class CarController {
 
   static async deleteCar(req, res) {
     try {
-      console.log(req.body);
       const car_id = Number(req.params.car_id);
 
       const _Validation$deleteCar = _Validation.default.deleteCar({
@@ -325,6 +325,7 @@ class CarController {
         if (carAd) {
           await _Car.default.deleteCar(carAd);
           console.log(carAd);
+          console.log('car ad successfully deleted');
           (0, _Response.default)(res, 200, 'Car Ad successfully deleted');
         } else {
           console.log('Car Ad Doesnt Exist');

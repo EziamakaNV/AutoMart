@@ -74,7 +74,7 @@ app.use((req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console
-  app.listen(PORT, () => "App listening on port ".concat(PORT));
+  app.listen(PORT, () => console.log("App listening on port ".concat(PORT)));
 }
 
 var _default = app;

@@ -72,13 +72,14 @@ class UserController {
             email,
             password: hashedPassword,
             address,
-            is_admin: false
+            is_admin: true
           };
           const newUser = await _User.default.createUser(userObject); // Generate jwt
 
           const token = _jsonwebtoken.default.sign({
             id: newUser.id,
-            email
+            email,
+            is_admin: newUser.is_admin
           }, process.env.JWT_SECRET, {
             expiresIn: '8760h'
           }); // Set cookie header
@@ -103,7 +104,8 @@ class UserController {
               first_name,
               last_name,
               email,
-              hashedPassword
+              hashedPassword,
+              is_admin: newUser.is_admin
             },
             success: true
           });
@@ -143,7 +145,8 @@ class UserController {
             // (same-boolean) If the passwords match
             const token = _jsonwebtoken.default.sign({
               id: user.id,
-              email
+              email,
+              is_admin: user.is_admin
             }, process.env.JWT_SECRET, {
               expiresIn: '8760h'
             });
@@ -168,7 +171,8 @@ class UserController {
                 id: user.id,
                 first_name: user.first_name,
                 last_name: user.last_name,
-                email
+                email,
+                is_admin: user.is_admin
               }
             });
           } else {

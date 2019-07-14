@@ -48,17 +48,17 @@ class UserController {
           // Hash password
           const saltRounds = 10;
           const hashedPassword = await bcrypt.hash(password, saltRounds);
-          const userObject = { first_name, last_name, email, password: hashedPassword, address, is_admin: false };
+          const userObject = { first_name, last_name, email, password: hashedPassword, address, is_admin: true };
           const newUser = await UserModel.createUser(userObject);
           // Generate jwt
-          const token = jwt.sign({ id: newUser.id, email }, process.env.JWT_SECRET, { expiresIn: '8760h' });
+          const token = jwt.sign({ id: newUser.id, email, is_admin: newUser.is_admin }, process.env.JWT_SECRET, { expiresIn: '8760h' });
           // Set cookie header
           res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
           res.cookie('user', JSON.stringify({ first_name, last_name }), { maxAge: 31540000000 });
           // Final response
           res.status(200).json({
             status: 200,
-            data: { token, id: newUser.id, first_name, last_name, email, hashedPassword },
+            data: { token, id: newUser.id, first_name, last_name, email, hashedPassword, is_admin: newUser.is_admin },
             success: true,
           });
         }
@@ -85,7 +85,7 @@ class UserController {
         // Compare passwords
           const match = await bcrypt.compare(password, user.password);
           if (match) { // (same-boolean) If the passwords match
-            const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET, { expiresIn: '8760h' });
+            const token = jwt.sign({ id: user.id, email, is_admin: user.is_admin }, process.env.JWT_SECRET, { expiresIn: '8760h' });
             res.cookie('jwt', token, { maxAge: 31540000000, httpOnly: true });
             // httpOnly not set because
             // I want to be able to read the cookie
@@ -93,7 +93,7 @@ class UserController {
             res.cookie('user', JSON.stringify({ first_name: user.first_name, last_name: user.last_name }), { maxAge: 31540000000 });
             res.status(200).json({
               status: 200,
-              data: { token, id: user.id, first_name: user.first_name, last_name: user.last_name, email } });
+              data: { token, id: user.id, first_name: user.first_name, last_name: user.last_name, email, is_admin: user.is_admin } });
           } else {
             res.status(400).json({ status: 400, error: 'The Email/Paswword is incorrect' });
           }
