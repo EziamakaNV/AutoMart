@@ -51,6 +51,7 @@ class Authentication {
   }
 
   static async adminVerifyToken(req, res, next) {
+    console.log(req.body);
     const token = req.cookies.jwt || req.body.token; // Check for the token
 
     if (!token) {

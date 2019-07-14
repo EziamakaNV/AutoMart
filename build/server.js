@@ -41,7 +41,7 @@ const allowedOrigins = ['https://adc-autograder.herokuapp.com', 'https://github.
 const corsOptions = {
   credentials: true,
   origin: (_origin, callback) => {
-    console.log(_origin);
+    _origin;
 
     if (allowedOrigins.indexOf(_origin) !== -1 || !_origin) {
       callback(null, true);
@@ -74,7 +74,7 @@ app.use((req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
   // eslint-disable-next-line no-console
-  app.listen(PORT, () => console.log("App listening on port ".concat(PORT)));
+  app.listen(PORT, () => "App listening on port ".concat(PORT));
 }
 
 var _default = app;

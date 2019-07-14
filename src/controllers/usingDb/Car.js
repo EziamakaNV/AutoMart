@@ -59,7 +59,7 @@ class CarController {
             // Delete temporary image file
             fs.unlink(imageFileName, (er) => {
               if (er) throw er;
-              console.log('Image File Deleted');
+              ('Image File Deleted');
             });
           }
         } else {
@@ -225,6 +225,7 @@ class CarController {
 
   static async deleteCar(req, res) {
     try {
+      console.log(req.body);
       const car_id = Number(req.params.car_id);
       const { error } = Validation.deleteCar({ car_id });
 

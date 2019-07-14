@@ -83,7 +83,7 @@ class CarController {
 
             _fs.default.unlink(imageFileName, er => {
               if (er) throw er;
-              console.log('Image File Deleted');
+              'Image File Deleted';
             });
           }
         } else {
@@ -302,6 +302,7 @@ class CarController {
 
   static async deleteCar(req, res) {
     try {
+      console.log(req.body);
       const car_id = Number(req.params.car_id);
 
       const _Validation$deleteCar = _Validation.default.deleteCar({

@@ -87,7 +87,7 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
           price: 500000,
         })
         .end((err, res) => {
-          console.log(res.body.error);
+          (res.body.error);
           expect(err).to.be.null;
           expect(res, 'response object status').to.have.status(200);
           expect(res.body, 'response body').to.be.a('object');
@@ -111,7 +111,7 @@ describe('PATCH /api/v1/order/<:order-id>/price', () => {
           amount: 500000,
         })
         .end((err, res) => {
-          console.log(`response body ${res.body.data}`);
+          (`response body ${res.body.data}`);
           orderId = res.body.data.id;
           expect(err).to.be.null;
           expect(res, 'response object status').to.have.status(201);

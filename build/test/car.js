@@ -408,7 +408,7 @@ describe('DELETE /api/v1/car/<:car-id>', () => {
     //     .delete('/api/v1/car/1')
     //     .set('Cookie', 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ0ZXN0QHRlc3Rlci5jb20iLCJpYXQiOjE1NTg2MDIxMDgsImV4cCI6MTU5MDEzODEwOH0.SgG1OgwgrjF76K9U6edowCEpS5HFJP2hy_06DvwV3jg')
     //     .end((err, res) => {
-    //       console.log(res.body.error);
+    //       (res.body.error);
     //       expect(err).to.be.null;
     //       expect(res).to.have.status(400);
     //       expect(res.body, 'response body').to.be.a('object');

@@ -24,7 +24,7 @@ describe('POST /api/v1/flag', () => {
           description: 'The ad is fake',
         })
         .end((err, res) => {
-          console.log(res.body.error);
+          (res.body.error);
           flagId = res.body.data.id;
           expect(err).to.be.null;
           expect(res, 'response object status').to.have.status(201);
