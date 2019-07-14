@@ -268,7 +268,10 @@ class CarController {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailableRange(minPrice, maxPrice);
-          (0, _Response.default)(res, 200, cars);
+          (0, _Response.default)(res, 200, {
+            token: req.token,
+            cars
+          });
         }
       } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
         const status = req.query.status;
@@ -282,9 +285,10 @@ class CarController {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailable();
-          (0, _Response.default)(res, 200, [{
-            token: req.token
-          }, ...cars]);
+          (0, _Response.default)(res, 200, {
+            token: req.token,
+            cars
+          });
         }
       } else {
         // Only admins can view this
@@ -294,7 +298,10 @@ class CarController {
           const cars = await _Car.default.findAll();
           console.log('is_admin- true');
           console.log(cars);
-          (0, _Response.default)(res, 200, cars);
+          (0, _Response.default)(res, 200, {
+            token: req.token,
+            cars
+          });
         } else {
           console.log('View all cars- You are not an admin');
           (0, _Response.default)(res, 400, 'View all cars- You are not an Admin');
@@ -326,7 +333,10 @@ class CarController {
           await _Car.default.deleteCar(carAd);
           console.log(carAd);
           console.log('car ad successfully deleted');
-          (0, _Response.default)(res, 200, 'Car Ad successfully deleted');
+          (0, _Response.default)(res, 200, {
+            token: req.token,
+            message: 'Car Ad Success'
+          });
         } else {
           console.log('Car Ad Doesnt Exist');
           (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
@@ -343,9 +353,7 @@ class CarController {
       const myCars = await _Car.default.findMyCars(req.user.id);
 
       if (myCars) {
-        (0, _Response.default)(res, 200, [...myCars, {
-          token: req.token
-        }]);
+        (0, _Response.default)(res, 200, myCars);
       } else {
         (0, _Response.default)(res, 404, 'No Ads found for the user');
       }

@@ -199,7 +199,7 @@ class CarController {
           response(res, 400, error);
         } else {
           const cars = await CarModel.findAllAvailableRange(minPrice, maxPrice);
-          response(res, 200, cars);
+          response(res, 200, { token: req.token, cars });
         }
       } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
         const { status } = req.query;
@@ -208,7 +208,7 @@ class CarController {
           response(res, 400, error);
         } else {
           const cars = await CarModel.findAllAvailable();
-          response(res, 200, [{ token: req.token }, ...cars]);
+          response(res, 200, { token: req.token, cars });
         }
       } else {
       // Only admins can view this
@@ -217,7 +217,7 @@ class CarController {
           const cars = await CarModel.findAll();
           console.log('is_admin- true');
           console.log(cars);
-          response(res, 200, cars);
+          response(res, 200, { token: req.token, cars });
         } else {
           console.log('View all cars- You are not an admin');
           response(res, 400, 'View all cars- You are not an Admin');
@@ -244,7 +244,7 @@ class CarController {
           await CarModel.deleteCar(carAd);
           console.log(carAd);
           console.log('car ad successfully deleted');
-          response(res, 200, 'Car Ad successfully deleted');
+          response(res, 200, { token: req.token, message: 'Car Ad Success' });
         } else {
           console.log('Car Ad Doesnt Exist');
           response(res, 400, 'The Car Ad Doesnt Exist');
@@ -260,7 +260,7 @@ class CarController {
     try {
       const myCars = await CarModel.findMyCars(req.user.id);
       if (myCars) {
-        response(res, 200, [...myCars, { token: req.token }]);
+        response(res, 200, myCars);
       } else {
         response(res, 404, 'No Ads found for the user');
       }
