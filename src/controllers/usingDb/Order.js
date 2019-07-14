@@ -101,7 +101,7 @@ class OrderController {
     try {
       const myOrders = await OrderModel.findMyOrders(req.user.id);
       if (myOrders) {
-        response(res, 200, [{ token: req.token }, ...myOrders]);
+        response(res, 200, myOrders);
       } else {
         response(res, 404, 'No Orders found for the user');
       }

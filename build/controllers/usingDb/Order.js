@@ -154,9 +154,7 @@ class OrderController {
       const myOrders = await _Order.default.findMyOrders(req.user.id);
 
       if (myOrders) {
-        (0, _Response.default)(res, 200, [{
-          token: req.token
-        }, ...myOrders]);
+        (0, _Response.default)(res, 200, myOrders);
       } else {
         (0, _Response.default)(res, 404, 'No Orders found for the user');
       }
