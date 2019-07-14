@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable linebreak-style */
 import jwt from 'jsonwebtoken';
 
@@ -9,8 +10,9 @@ require('dotenv').config();
 
 class Authentication {
   static async verifyToken(req, res, next) {
-    console.log(req.body);
     console.log(req.headers);
+    console.log(req.query);
+    console.log(req.body);
     const token = req.cookies.jwt || req.body.token || req.headers.token;
     // Check for the token
     if (!token) {
@@ -39,8 +41,9 @@ class Authentication {
   }
 
   static async adminVerifyToken(req, res, next) {
-    console.log(req.body);
     console.log(req.headers);
+    console.log(req.query);
+    console.log(req.body);
     const token = req.cookies.jwt || req.body.token || req.headers.token;
     // Check for the token
     if (!token) {
