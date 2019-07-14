@@ -40,6 +40,7 @@ class Authentication {
     const token = req.cookies.jwt || req.body.token;
     // Check for the token
     if (!token) {
+      console.log('Missing token');
       res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else {
       try {
@@ -47,13 +48,16 @@ class Authentication {
         // Check if the user is an admin
         const isUserAdmin = await UserModel.is_admin(user.id);
         if (isUserAdmin) {
+          console.log('is admin -true');
           req.user = user;
           req.token = token;
           next();
         } else {
+          console.log('you are not an admin');
           response(res, 400, 'You are not an Admin');
         }
       } catch (error) {
+        console.log(error);
         res.status(500).json({ status: 500, error: `Issue with jwt token. Problem: ${error}` });
       }
     }

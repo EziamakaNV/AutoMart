@@ -311,6 +311,7 @@ class CarController {
             error = _Validation$deleteCar.error;
 
       if (error) {
+        console.log(error);
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the Ad exists
@@ -318,12 +319,15 @@ class CarController {
 
         if (carAd) {
           await _Car.default.deleteCar(carAd);
+          console.log(carAd);
           (0, _Response.default)(res, 200, 'Car Ad successfully deleted');
         } else {
+          console.log('Car Ad Doesnt Exist');
           (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
         }
       }
     } catch (error) {
+      console.log(error);
       (0, _Response.default)(res, 500, error);
     }
   }

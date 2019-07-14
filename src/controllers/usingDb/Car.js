@@ -230,18 +230,22 @@ class CarController {
       const { error } = Validation.deleteCar({ car_id });
 
       if (error) {
+        console.log(error);
         response(res, 400, error);
       } else {
       // Check if the Ad exists
         const carAd = await CarModel.findOne(car_id);
         if (carAd) {
           await CarModel.deleteCar(carAd);
+          console.log(carAd);
           response(res, 200, 'Car Ad successfully deleted');
         } else {
+          console.log('Car Ad Doesnt Exist');
           response(res, 400, 'The Car Ad Doesnt Exist');
         }
       }
     } catch (error) {
+      console.log(error);
       response(res, 500, error);
     }
   }
