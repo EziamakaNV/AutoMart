@@ -19,7 +19,8 @@ require('dotenv').config();
 class Authentication {
   static async verifyToken(req, res, next) {
     console.log(req.body);
-    const token = req.cookies.jwt || req.body.token; // Check for the token
+    console.log(req.headers);
+    const token = req.cookies.jwt || req.body.token || req.headers.token; // Check for the token
 
     if (!token) {
       console.log('missing token');
@@ -54,7 +55,8 @@ class Authentication {
 
   static async adminVerifyToken(req, res, next) {
     console.log(req.body);
-    const token = req.cookies.jwt || req.body.token; // Check for the token
+    console.log(req.headers);
+    const token = req.cookies.jwt || req.body.token || req.headers.token; // Check for the token
 
     if (!token) {
       console.log('Missing token');
