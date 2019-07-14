@@ -142,8 +142,10 @@ class CarController {
   static async updateStatus(req, res) {
     try {
       const car_id = Number(req.params.car_id);
+      const status = req.body.status;
       const validationObject = {
-        car_id
+        car_id,
+        status
       };
 
       const _Validation$carStatus = _Validation.default.carStatusUpdate(validationObject),
