@@ -244,7 +244,8 @@ class CarController {
 
   static async viewCars(req, res) {
     try {
-      // Determine if there is a query object has any properties
+      console.log(req.query); // Determine if there is a query object has any properties
+
       const queryStatus = req.query.hasOwnProperty('status');
       const queryMinPrice = req.query.hasOwnProperty('min_price');
       const queryMaxPrice = req.query.hasOwnProperty('max_price'); // When all three query properties are present
@@ -290,12 +291,16 @@ class CarController {
 
         if (is_admin) {
           const cars = await _Car.default.findAll();
+          console.log('is_admin- true');
+          console.log(cars);
           (0, _Response.default)(res, 200, cars);
         } else {
+          console.log('You are not an admin');
           (0, _Response.default)(res, 400, 'You are not an Admin');
         }
       }
     } catch (error) {
+      console.log(error);
       (0, _Response.default)(res, 500, error);
     }
   }

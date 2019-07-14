@@ -18,9 +18,11 @@ require('dotenv').config();
 
 class Authentication {
   static async verifyToken(req, res, next) {
+    console.log(req.body);
     const token = req.cookies.jwt || req.body.token; // Check for the token
 
     if (!token) {
+      console.log('missing token');
       res.status(400).json({
         status: 400,
         error: 'Missing token',
