@@ -18,7 +18,7 @@ class FlagController {
 
       const { error } = Validation.newFlagValidation(flagDetails);
 
-      if (req.token) {
+      if (false) {
         res.status(400).json({ status: 400, error: `Issue with parameters supplies. Problem: ${error}` });
       } else {
         // Get car details

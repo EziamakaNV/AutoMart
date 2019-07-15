@@ -41,7 +41,7 @@ class CarController {
           };
 
           const { error } = Validation.newCarValidation(validationObject);
-          if (req.token) {
+          if (false) {
             res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
           } else {
             // Upload to cloudinary
@@ -84,7 +84,7 @@ class CarController {
         };
 
         const { error } = Validation.newCarValidation(validationObject);
-        if (req.token) {
+        if (false) {
           res.status(400).json({ status: 400, error: `Issue with parameters supplied. Problem ${error}`, success: false });
         } else {
           const newCarDetails = { ...validationObject, ownerId: req.user.id, ownerEmail: req.user.email };
@@ -107,7 +107,7 @@ class CarController {
       const validationObject = { car_id, status };
       const { error } = Validation.carStatusUpdate(validationObject);
 
-      if (req.token) {
+      if (false) {
         response(res, 400, error);
       } else {
       // Check if the car id exists
@@ -137,7 +137,7 @@ class CarController {
       const validationObject = { price, car_id };
       const { error } = Validation.carPriceUpdate(validationObject);
 
-      if (req.token) {
+      if (false) {
         response(res, 400, error);
       } else {
       // Check if the car id exists
@@ -165,7 +165,7 @@ class CarController {
       const validationObject = { car_id };
       const { error } = Validation.viewSpecificCar(validationObject);
 
-      if (req.token) {
+      if (false) {
         response(res, 400, error);
       } else {
       // Check if the car exists
@@ -196,7 +196,7 @@ class CarController {
         const maxPrice = Number(req.query.max_price);
         const { error } = Validation.viewCars({ status, minPrice, maxPrice });
 
-        if (req.token) {
+        if (false) {
           response(res, 400, error);
         } else {
           const cars = await CarModel.findAllAvailableRange(minPrice, maxPrice);
@@ -205,7 +205,7 @@ class CarController {
       } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
         const { status } = req.query;
         const { error } = Validation.viewCars({ status });
-        if (req.token) {
+        if (false) {
           response(res, 400, error);
         } else {
           const cars = await CarModel.findAllAvailable();
@@ -218,7 +218,7 @@ class CarController {
           const cars = await CarModel.findAll();
           console.log('is_admin- true');
           console.log(cars);
-          response(res, 200, { token: req.token, cars });
+          response(res, 200, cars);
         } else {
           console.log('View all cars- You are not an admin');
           response(res, 400, 'View all cars- You are not an Admin');
@@ -235,7 +235,7 @@ class CarController {
       const car_id = Number(req.params.car_id);
       const { error } = Validation.deleteCar({ car_id });
 
-      if (req.token) {
+      if (false) {
         console.log(error);
         response(res, 400, error);
       } else {
