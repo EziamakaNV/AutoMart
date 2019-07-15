@@ -21,7 +21,6 @@ const allowedOrigins = ['https://adc-autograder.herokuapp.com', 'https://github.
 const corsOptions = {
   credentials: true,
   origin: (origin, callback) => {
-    (origin);
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {

@@ -10,13 +10,13 @@ require('dotenv').config();
 
 class Authentication {
   static async verifyToken(req, res, next) {
-    console.log(req.headers);
-    console.log(req.query);
-    console.log(req.body);
+    (req.headers);
+    (req.query);
+    (req.body);
     const token = req.cookies.jwt || req.body.token || req.headers.token;
     // Check for the token
     if (!token) {
-      console.log('missing token');
+      ('missing token');
       res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else {
       try {
@@ -41,13 +41,13 @@ class Authentication {
   }
 
   static async adminVerifyToken(req, res, next) {
-    console.log(req.headers);
-    console.log(req.query);
-    console.log(req.body);
+    (req.headers);
+    (req.query);
+    (req.body);
     const token = req.cookies.jwt || req.body.token || req.headers.token;
     // Check for the token
     if (!token) {
-      console.log('Missing token');
+      ('Missing token');
       res.status(400).json({ status: 400, error: 'Missing token', success: false });
     } else {
       try {
@@ -55,16 +55,16 @@ class Authentication {
         // Check if the user is an admin
         const isUserAdmin = await UserModel.is_admin(user.id);
         if (isUserAdmin) {
-          console.log('is admin -true');
+          ('is admin -true');
           req.user = user;
           req.token = token;
           next();
         } else {
-          console.log('you are not an admin');
+          ('you are not an admin');
           response(res, 400, 'You are not an Admin');
         }
       } catch (error) {
-        console.log(error);
+        (error);
         res.status(500).json({ status: 500, error: `Issue with jwt token. Problem: ${error}` });
       }
     }

@@ -123,8 +123,8 @@ class CarController {
 
 
           const createdCar = await _Car.default.createCar(newCarDetails);
-          console.log(1);
-          console.log(createdCar);
+          1;
+          createdCar;
           res.status(201).json({
             status: 201,
             data: _objectSpread({
@@ -270,10 +270,7 @@ class CarController {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailableRange(minPrice, maxPrice);
-          (0, _Response.default)(res, 200, {
-            token: req.token,
-            cars
-          });
+          (0, _Response.default)(res, 200, cars);
         }
       } else if (queryStatus && !queryMinPrice && !queryMaxPrice) {
         const status = req.query.status;
@@ -287,10 +284,7 @@ class CarController {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailable();
-          (0, _Response.default)(res, 200, {
-            token: req.token,
-            cars
-          });
+          (0, _Response.default)(res, 200, cars);
         }
       } else {
         // Only admins can view this
@@ -298,16 +292,12 @@ class CarController {
 
         if (is_admin) {
           const cars = await _Car.default.findAll();
-          console.log('is_admin- true');
-          console.log(cars);
           (0, _Response.default)(res, 200, cars);
         } else {
-          console.log('View all cars- You are not an admin');
           (0, _Response.default)(res, 400, 'View all cars- You are not an Admin');
         }
       }
     } catch (error) {
-      console.log(error);
       (0, _Response.default)(res, 500, error);
     }
   }
@@ -322,7 +312,6 @@ class CarController {
             error = _Validation$deleteCar.error;
 
       if (error) {
-        console.log(error);
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the Ad exists
@@ -330,19 +319,15 @@ class CarController {
 
         if (carAd) {
           await _Car.default.deleteCar(carAd);
-          console.log(carAd);
-          console.log('car ad successfully deleted');
           (0, _Response.default)(res, 200, {
             token: req.token,
-            message: 'Car Ad Success'
+            message: 'Car Ad Successfully deleted'
           });
         } else {
-          console.log('Car Ad Doesnt Exist');
           (0, _Response.default)(res, 400, 'The Car Ad Doesnt Exist');
         }
       }
     } catch (error) {
-      console.log(error);
       (0, _Response.default)(res, 500, error);
     }
   }

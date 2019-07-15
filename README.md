@@ -45,14 +45,18 @@ Before running the project, install the following
 ### Pivotal Tracker stories
 [https://www.pivotaltracker.com/n/projects/2345861](https://www.pivotaltracker.com/n/projects/2345861)
 
+### FrontEnd App (Hosted)
+[https://eziamakanv.github.io/AutoMartFrontEnd](https://eziamakanv.github.io/AutoMartFrontEnd)
+
+### FrontEnd App (Repository)
+[https://github.com/EziamakaNV/AutoMartFrontEnd](https://github.com/EziamakaNV/AutoMartFrontEnd)
+
 ### UI Template
 [https://eziamakanv.github.io/AutoMart](https://eziamakanv.github.io/AutoMart)
 
 ### Hosted App API Doc
 [https://automobile-mart.herokuapp.com/api/v1/docs](https://automobile-mart.herokuapp.com/api/v1/docs)
 
-### Hosted FrontEnd App
-[https://eziamakanv.github.io/AutoMartFrontEnd](https://eziamakanv.github.io/AutoMartFrontEnd)
 
 ## API Endpoints
 POST 'https://automobile-mart.herokuapp.com/api/v1/auth/signup' - Create a user account
