@@ -34,7 +34,7 @@ class OrderController {
       const _Validation$newOrderV = _Validation.default.newOrderValidation(orderDetails),
             error = _Validation$newOrderV.error;
 
-      if (false) {
+      if (error) {
         res.status(400).json({
           status: 400,
           error: "Issue with parameters supplies. Problem: ".concat(error)
@@ -93,7 +93,7 @@ class OrderController {
       }),
             error = _Validation$orderUpda.error;
 
-      if (false) {
+      if (error) {
         res.status(400).json({
           status: 400,
           error: "".concat(error),
@@ -171,7 +171,7 @@ class OrderController {
     }),
           error = _Validation$getPartic.error;
 
-    if (false) {
+    if (error) {
       (0, _Response.default)(res, 400, error);
     } else {
       try {
