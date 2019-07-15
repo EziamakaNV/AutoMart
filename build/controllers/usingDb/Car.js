@@ -58,7 +58,7 @@ class CarController {
           const _Validation$newCarVal = _Validation.default.newCarValidation(validationObject),
                 error = _Validation$newCarVal.error;
 
-          if (error) {
+          if (req.token) {
             res.status(400).json({
               status: 400,
               error: "Issue with parameters supplied. Problem ".concat(error),
@@ -109,7 +109,7 @@ class CarController {
         const _Validation$newCarVal2 = _Validation.default.newCarValidation(validationObject),
               error = _Validation$newCarVal2.error;
 
-        if (error) {
+        if (req.token) {
           res.status(400).json({
             status: 400,
             error: "Issue with parameters supplied. Problem ".concat(error),
@@ -151,7 +151,7 @@ class CarController {
       const _Validation$carStatus = _Validation.default.carStatusUpdate(validationObject),
             error = _Validation$carStatus.error;
 
-      if (error) {
+      if (req.token) {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the car id exists
@@ -190,7 +190,7 @@ class CarController {
       const _Validation$carPriceU = _Validation.default.carPriceUpdate(validationObject),
             error = _Validation$carPriceU.error;
 
-      if (error) {
+      if (req.token) {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the car id exists
@@ -227,7 +227,7 @@ class CarController {
       const _Validation$viewSpeci = _Validation.default.viewSpecificCar(validationObject),
             error = _Validation$viewSpeci.error;
 
-      if (error) {
+      if (req.token) {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the car exists
@@ -266,7 +266,7 @@ class CarController {
         }),
               error = _Validation$viewCars.error;
 
-        if (error) {
+        if (req.token) {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailableRange(minPrice, maxPrice);
@@ -283,7 +283,7 @@ class CarController {
         }),
               error = _Validation$viewCars2.error;
 
-        if (error) {
+        if (req.token) {
           (0, _Response.default)(res, 400, error);
         } else {
           const cars = await _Car.default.findAllAvailable();
@@ -324,7 +324,7 @@ class CarController {
       }),
             error = _Validation$deleteCar.error;
 
-      if (error) {
+      if (req.token) {
         console.log(error);
         (0, _Response.default)(res, 400, error);
       } else {

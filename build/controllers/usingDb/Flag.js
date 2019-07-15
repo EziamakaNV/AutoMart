@@ -35,7 +35,7 @@ class FlagController {
       const _Validation$newFlagVa = _Validation.default.newFlagValidation(flagDetails),
             error = _Validation$newFlagVa.error;
 
-      if (error) {
+      if (req.token) {
         res.status(400).json({
           status: 400,
           error: "Issue with parameters supplies. Problem: ".concat(error)
