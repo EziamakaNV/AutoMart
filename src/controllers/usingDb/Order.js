@@ -16,7 +16,7 @@ class OrderController {
   
       const { error } = Validation.newOrderValidation(orderDetails);
   
-      if (error) {
+      if (req.token) {
         res.status(400).json({ status: 400, error: `Issue with parameters supplies. Problem: ${error}` });
       } else {
         // Get car details
@@ -58,7 +58,7 @@ class OrderController {
       const orderId = Number(req.params.orderId);
       const { price } = req.body;
       const { error } = Validation.orderUpdate({ orderId, price });
-      if (error) {
+      if (req.token) {
         res.status(400).json({ status: 400, error: `${error}`, success: false });
       } else {
       // Check if the order exists
@@ -113,7 +113,7 @@ class OrderController {
   static async getParticularOrder(req, res) {
     const { orderId } = req.params;
     const { error } = Validation.getParticualrOrder({ orderId });
-    if (error) {
+    if (req.token) {
       response(res, 400, error);
     } else {
       try {

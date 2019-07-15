@@ -37,7 +37,7 @@ class UserController {
   
       const { error } = Validation.signUpValidation(validationObject);
   
-      if (error) {
+      if (req.token) {
         response(res, 400, error);
       } else {
         // Check if the email exists on record
@@ -76,7 +76,7 @@ class UserController {
       const validationObject = { email, password };
       const { error } = Validation.loginValidation(validationObject);
 
-      if (error) {
+      if (req.token) {
         res.status(400).json({ status: 400, error: `Issue with credentials supplied. Problem: ${error}` });
       } else {
         const user = await UserModel.findUser(email);
