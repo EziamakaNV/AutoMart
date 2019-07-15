@@ -49,7 +49,7 @@ class UserController {
       const _Validation$signUpVal = _Validation.default.signUpValidation(validationObject),
             error = _Validation$signUpVal.error;
 
-      if (req.token) {
+      if (false) {
         (0, _Response.default)(res, 400, error);
       } else {
         // Check if the email exists on record
@@ -129,7 +129,7 @@ class UserController {
       const _Validation$loginVali = _Validation.default.loginValidation(validationObject),
             error = _Validation$loginVali.error;
 
-      if (req.token) {
+      if (false) {
         res.status(400).json({
           status: 400,
           error: "Issue with credentials supplied. Problem: ".concat(error)
