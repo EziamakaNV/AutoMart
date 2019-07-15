@@ -336,6 +336,22 @@
             "description": "ID of the car ad",
             "required": true,
             "type": "integer"
+          },
+          {
+            "name": "status",
+            "in": "body",
+            "description": "status of the car ad",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "type":"object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example":"sold"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -344,9 +360,6 @@
           },
           "400": {
             "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       }
@@ -391,9 +404,6 @@
           },
           "400": {
             "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       }
@@ -419,12 +429,6 @@
         "responses": {
           "200": {
             "description": "Successful operation"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       },
@@ -448,12 +452,6 @@
         "responses": {
           "200": {
             "description": "Successful operation"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       }
@@ -473,9 +471,6 @@
           },
           "400": {
             "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       }
@@ -511,9 +506,6 @@
           },
           "400": {
             "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       }
@@ -579,20 +571,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                }
-              }
-            }
           }
         }
       }
@@ -637,9 +615,6 @@
           },
           "400": {
             "description": "Bad request"
-          },
-          "400":{
-            "description":"Unauthorized"
           }
         }
       }
@@ -698,20 +673,6 @@
           },
           "400": {
             "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unauthorized",
             "schema": {
               "type": "object",
               "properties": {

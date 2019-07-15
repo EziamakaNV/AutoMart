@@ -20,13 +20,13 @@ require('dotenv').config();
 
 class Authentication {
   static async verifyToken(req, res, next) {
-    console.log(req.headers);
-    console.log(req.query);
-    console.log(req.body);
+    req.headers;
+    req.query;
+    req.body;
     const token = req.cookies.jwt || req.body.token || req.headers.token; // Check for the token
 
     if (!token) {
-      console.log('missing token');
+      'missing token';
       res.status(400).json({
         status: 400,
         error: 'Missing token',
@@ -57,13 +57,13 @@ class Authentication {
   }
 
   static async adminVerifyToken(req, res, next) {
-    console.log(req.headers);
-    console.log(req.query);
-    console.log(req.body);
+    req.headers;
+    req.query;
+    req.body;
     const token = req.cookies.jwt || req.body.token || req.headers.token; // Check for the token
 
     if (!token) {
-      console.log('Missing token');
+      'Missing token';
       res.status(400).json({
         status: 400,
         error: 'Missing token',
@@ -76,16 +76,16 @@ class Authentication {
         const isUserAdmin = await _User.default.is_admin(user.id);
 
         if (isUserAdmin) {
-          console.log('is admin -true');
+          'is admin -true';
           req.user = user;
           req.token = token;
           next();
         } else {
-          console.log('you are not an admin');
+          'you are not an admin';
           (0, _Response.default)(res, 400, 'You are not an Admin');
         }
       } catch (error) {
-        console.log(error);
+        error;
         res.status(500).json({
           status: 500,
           error: "Issue with jwt token. Problem: ".concat(error)

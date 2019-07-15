@@ -390,7 +390,7 @@ describe('GET /api/v1/car?status=available and GET /api/v1/car?status=available&
           expect(res.body, 'response body').to.haveOwnProperty('status');
           expect(res.body.status, 'status property').to.equal(200);
           expect(res.body, 'response body').to.haveOwnProperty('data');
-          expect(res.body.data, 'data property').to.be.a('object');
+          expect(res.body.data, 'data property').to.be.a('array');
           done();
         });
     });
@@ -406,7 +406,7 @@ describe('GET /api/v1/car?status=available and GET /api/v1/car?status=available&
           expect(res.body, 'response body').to.haveOwnProperty('status');
           expect(res.body.status, 'status property').to.equal(200);
           expect(res.body, 'response body').to.haveOwnProperty('data');
-          expect(res.body.data, 'data property').to.be.a('object');
+          expect(res.body.data, 'data property').to.be.a('array');
           done();
         });
     });
